@@ -1,0 +1,127 @@
+.mainLogin {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr auto;
+}
+
+.drawContainer {
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.back {
+  display: flex;
+  justify-self: flex-end;
+  align-self: flex-start;
+
+  position: absolute;
+  top: 50px;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.back span {
+  display: flex;
+  align-items: center;
+  column-gap: 0.75rem;
+}
+
+.field button {
+  /* padding: 0; */
+}
+
+.field a {
+  width: 100%;
+  height: 100%;
+  padding: 0.25rem;
+}
+
+.back:hover {
+  color: var(--bg-gray300);
+}
+
+.formContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  grid-column: 1/-1;
+  padding: 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.form h4 {
+  text-align: center;
+  color: var(--bg-blue200);
+}
+
+.formPaper {
+  padding: 1.5rem;
+  min-width: 350px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.textSm {
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.fieldCenter {
+  text-align: center;
+}
+
+.field span {
+  transition: all 0.5s ease;
+}
+
+.field span:hover {
+  color: var(--bg-gray300);
+  text-decoration: underline;
+}
+
+/* forget Password */
+
+.menu {
+  display: flex;
+  align-items: center;
+  width: 30%;
+  justify-content: space-around;
+}
+
+.menu {
+  transition: all 0.5s ease;
+}
+
+.menu span {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  column-gap: 0.75rem;
+}
+
+.menu span:hover {
+  color: var(--bg-gray300);
+}
+
+@media screen and (min-width: 768px) {
+  .drawContainer {
+    display: flex;
+  }
+  .formContainer {
+    grid-column: 2/-1;
+  }
+}

@@ -1,0 +1,16 @@
+.inputGroup {
+  /* display: flex; */
+  /* align-items: center; */
+  position: relative;
+}
+
+.inputGroup input {
+  width: 100%;
+}
+
+.inputGroup svg {
+  position: absolute;
+  top: 30%;
+  right: 2%;
+  cursor: pointer;
+}

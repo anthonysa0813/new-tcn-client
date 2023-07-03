@@ -1,0 +1,143 @@
+.formGrid {
+  background-color: var(--bg-blueLight);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  position: relative;
+  min-width: 50%;
+  height: 100%;
+  z-index: 20000;
+  overflow: auto;
+}
+
+.title {
+  font-size: 24px;
+  color: var(--bg-blue200);
+}
+
+.boxClose {
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.svg {
+  font-size: 30px;
+  /* background-color: var(--bg-white200); */
+  border-radius: 50%;
+}
+
+.formBody {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.field {
+}
+
+.field input {
+  /* padding: 0.25rem 0.5rem; */
+  width: 100%;
+
+  padding: 9px;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  /* border: 1px solid #e1e1e1; */
+}
+
+.field datalist:focus {
+  border: 2px solid var(--bg-blue200) !important;
+}
+
+.fieldSecondaryGrid {
+  display: flex;
+  flex-direction: column;
+}
+
+.firstInput,
+.secondInput {
+  display: flex;
+  gap: 1rem;
+  margin-block: 0.5rem;
+}
+
+.fieldSecond span {
+  /* color: var(--bg-gray300); */
+}
+
+.fieldSecond input {
+  padding: 0.25rem 0.5rem;
+  /* width: 50%; */
+  border-radius: 0.5rem;
+  border: none;
+  /* outline: none; */
+  /* border: 1px solid #e1e1e1; */
+}
+
+.presentField input {
+  width: auto;
+  margin-inline-end: 1rem;
+}
+
+.fieldTextArea {
+  grid-column: 1/-1;
+  display: flex;
+  flex-direction: column;
+  margin-block-end: 1rem;
+}
+
+.fieldTextArea textarea {
+  border-radius: 0.5rem;
+  color: var(--bg-black100);
+}
+
+.referenceField {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  border: 1px solid var(--bg-blue200);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.titleReference {
+  grid-column: 1/-1;
+}
+
+.fieldSecond {
+  grid-column: 1/-1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  /* border: 2px solid brown; */
+}
+
+@media screen and (min-width: 768px) {
+  .fieldSecondaryGrid {
+    display: flex;
+    /* flex-direction: row; */
+  }
+
+  .fieldSecond {
+    grid-column: 1/2;
+  }
+  .fieldSecondary {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media screen and (min-width: 1850px) {
+  .fieldSecond {
+    /* grid-column: 1/2; */
+  }
+}

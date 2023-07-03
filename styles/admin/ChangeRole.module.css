@@ -1,0 +1,87 @@
+.mainGrid h1 {
+  font-size: 1.5rem;
+  color: var(--bg-blue200);
+}
+.searchField {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.searchField input {
+  width: 100%;
+  border-radius: 0.5rem;
+  outline: none;
+  border: none;
+  border: 1px solid var(--bg-black);
+  padding: 0.25rem 0.5rem;
+}
+
+.searchField input:focus {
+  border: 2px solid var(--bg-blue200);
+}
+
+.fieldUser {
+  margin-block: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-blueLight);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--bg-blue200);
+}
+
+.field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  background-color: var(--bg-bluePrimary);
+  color: var(--bg-white);
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.button:active {
+  transform: scale(0.95);
+}
+
+.watchAllUsersButton {
+  background-color: white;
+  color: var(--bg-green);
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  border: 2px solid var(--bg-green);
+  margin-block: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.watchAllUsersButton:hover {
+  background-color: var(--bg-green);
+  color: white;
+}
+
+@media screen and (min-width: 768px) {
+  .mainGrid h1 {
+    font-size: 2rem;
+  }
+
+  .searchField {
+    width: 50%;
+    flex-direction: row;
+  }
+
+  .searchField input {
+    max-width: 50%;
+  }
+
+  .fieldUser {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

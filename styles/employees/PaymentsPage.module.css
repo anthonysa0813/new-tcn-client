@@ -1,0 +1,52 @@
+.paymentsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.paymentCard {
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 1rem;
+  width: 100%;
+  border-top: 1px solid var(--bg-gray100);
+  border-bottom: 1px solid var(--bg-gray100);
+}
+
+.voucher {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.voucher a:hover {
+  background-color: var(--bg-blue200);
+  color: white;
+  transition: 0.3s ease all;
+}
+
+.buttonVoucher {
+  border: 1px solid var(--bg-blue200);
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  color: var(--bg-blue200);
+}
+
+.activeText {
+  color: var(--bg-green);
+  font-weight: 600;
+}
+
+@media screen and (min-width: 768px) {
+  .paymentsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
+}

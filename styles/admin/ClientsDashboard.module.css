@@ -1,0 +1,22 @@
+.asideHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.debug {
+  border: 3px solid brown;
+}
+
+.table {
+  width: 100%;
+}
+
+.tableHead {
+  padding: 24px 32px;
+  background-color: var(--bg-white);
+}
+
+.text-black {
+  color: black;
+}

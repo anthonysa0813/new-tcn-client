@@ -1,0 +1,48 @@
+.icon {
+  width: 40px;
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.infoHero {
+  /* border: 3px solid brown; */
+}
+.hero {
+  color: var(--bg-black200);
+  background-color: var(--bg-blueSecondary200);
+}
+
+.infoGrid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  height: 250px;
+}
+
+.buttonApply {
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  background-color: var(--bg-bluePrimary);
+  color: var(--bg-white200);
+  border: none;
+  outline: none;
+  font-weight: bold;
+  transition: all ease-in-out;
+  cursor: pointer;
+}
+
+.buttonApply:hover {
+  background-color: var(--bg-blueSecondary100);
+}
+
+.details {
+  margin-block: 50px;
+}
+
+.infoContainer p {
+  font-size: 20px;
+}

@@ -1,0 +1,204 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700&display=swap");
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-white: #ffffff;
+  --bg-gray300: #8e8ea1;
+  --bg-gray200: #c1c1c5;
+  --bg-gray100: #e1e1e1;
+  --bg-white200: #f3f3f3;
+  --bg-green: #00a389;
+  --bg-green100: #17c964;
+  --bg-purple: #6e1dd6;
+  --bg-black200: #333331;
+  --bg-black100: #131519;
+  --bg-black: #22242c;
+  --bg-red: #990033;
+  --bg-blue200: #175676;
+  --bg-bluePrimary: #0072f5;
+  --bg-blueSecondary: #b7d5f8;
+  --bg-blueSecondary200: #cee4fe;
+  --bg-blueSecondary300: #5ea2ef;
+  --bg-blueSecondary400: #0072f5;
+  --bg-blueSecondary500: #009ada;
+  --bg-blueSecondary100: #1976d2;
+
+  --bg-blue100: #cce6f4;
+  --bg-blueLight: #f2f6f7;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.btn {
+  border-radius: 0.25rem;
+  color: white;
+  font-size: 12px;
+}
+
+.bg-2 {
+  padding: 0.5rem 0.25rem;
+}
+
+.gray {
+  background: var(--bg-gray300);
+}
+.purple {
+  background-color: var(--bg-purple);
+}
+.green {
+  background-color: var(--bg-green);
+}
+.dark {
+  background-color: var(--bg-black);
+}
+
+.primary {
+  background-color: var(--bg-bluePrimary) !important;
+}
+
+.red {
+  background-color: var(--bg-red) !important;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}
+
+.wrapper {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.debug {
+  border: 3px solid brown;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.text-center {
+  text-align: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}
+
+.btn {
+  border: none;
+  padding: 0.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.btn:active {
+  transform: scale(1.05);
+}
+
+.btn-outline_danger {
+  /* padding: 0.25rem 0.5rem !important; */
+  background-color: var(--bg-red) !important;
+  color: var(--bg-blue100) !important;
+}
+
+.bg-dark {
+  background-color: var(--bg-black);
+  color: white;
+}
+
+.bg-blueLight {
+  background-color: var(--bg-blueLight);
+}
+
+.bg-blueSecondary {
+  background-color: var(--bg-blueSecondary500);
+}
+.bg-primary {
+  background-color: var(--bg-blue200);
+  color: white;
+}
+
+.bg-danger {
+  background-color: var(--bg-red);
+  color: white;
+}
+
+/* main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 150px);
+} */
+
+.wrapper h1 {
+  text-align: center;
+}
+
+.text-success {
+  color: var(--bg-green);
+}
+
+.text-danger {
+  color: var(--bg-red);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.react-datalist-input__listbox {
+  height: 200px;
+  overflow: auto;
+}
+
+input:focus {
+  border-width: 2px;
+  border-color: #1976d2;
+}
+
+@media screen and (min-width: 768px) {
+  .btn {
+    width: auto;
+  }
+}

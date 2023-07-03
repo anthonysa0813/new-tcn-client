@@ -1,0 +1,53 @@
+.info {
+  width: 100%;
+}
+
+.title {
+  font-size: 1.5rem;
+  color: var(--bg-blue200);
+}
+
+.field input {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  border: 1px solid var(--bg-gray200);
+  padding: 0.25rem;
+}
+
+.field input:focus {
+  border: 2px solid var(--bg-blueSecondary100);
+}
+
+.field {
+  display: flex;
+  gap: 0.75rem;
+  margin-block: 1rem;
+  flex-direction: column;
+}
+
+/* .fieldButton button {
+  padding: 0.5rem;
+  background-color: var(--bg-black);
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.45rem 2rem;
+  width: 100%;
+  cursor: pointer;
+} */
+
+@media screen and (min-width: 768px) {
+  .info {
+    width: 50%;
+  }
+
+  .field {
+    flex-direction: row;
+  }
+
+  .fieldButton button {
+    width: auto;
+    padding: 0.5rem 2rem;
+  }
+}

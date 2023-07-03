@@ -1,0 +1,23 @@
+
+.profileGrid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 90vh;
+}
+
+.asideMenu {
+    padding: 2rem;
+    width: 400px;
+    box-shadow:  5px 5px 80px #e1e1e1,
+    -5px -5px 80px #ffffff;
+}
+
+.mainProfile {
+    padding: 2rem;
+    text-align: center;
+
+}
+
+.asideMenu ul {
+    margin: 0;
+}

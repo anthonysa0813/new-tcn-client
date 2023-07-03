@@ -1,0 +1,9 @@
+.debug {
+  border: 3px solid brown;
+}
+
+.mainGrid {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: auto 1fr;
+}

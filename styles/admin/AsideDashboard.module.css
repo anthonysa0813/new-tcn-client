@@ -1,0 +1,90 @@
+.aside {
+  background: var(--bg-blueLight);
+  height: auto;
+  width: auto;
+}
+
+.asideContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80vh;
+}
+
+.image {
+  display: none;
+}
+
+.title {
+  margin-block-end: 52px;
+}
+
+.asideContainer .menu {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  width: auto;
+  padding: 1rem;
+}
+
+.textBlock {
+  display: block;
+}
+
+.textNone {
+  display: none;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.5rem;
+  cursor: pointer;
+}
+
+.profile h4 {
+  margin: 0;
+}
+.menu a {
+  column-gap: 0.5rem;
+  display: flex;
+}
+
+.activeLink {
+  color: var(--bg-blue200);
+  font-weight: bold;
+  background-color: var(--bg-white);
+  border-radius: 0.5rem;
+  display: flex;
+}
+.boxIcon {
+  display: block;
+  margin-block-end: 30px;
+  border-bottom: 1px solid var(--bg-gray100);
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5rem;
+  align-items: center;
+  padding-block: 2rem;
+}
+
+@media screen and (min-width: 768px) {
+  .asideContainer {
+    grid-template-rows: auto 1fr auto;
+    padding: 10px;
+  }
+  .aside {
+    grid-column: 1/2;
+    width: auto;
+    padding: 0;
+
+    /* padding: 10px; */
+  }
+  .menu a {
+    display: flex;
+    padding: 0.5rem;
+  }
+}

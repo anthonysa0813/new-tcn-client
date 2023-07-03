@@ -1,0 +1,80 @@
+.showServiceGrid {
+  background-color: var(--bg-blueLight);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  position: relative;
+  min-width: 300px;
+  height: 100%;
+  max-width: 600px;
+  overflow: auto;
+}
+
+.boxClose {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.boxClose svg {
+  font-size: 30px;
+}
+
+.infHead {
+}
+
+.infoHead h1 {
+  font-size: 1.75rem;
+  color: var(--bg-blue200);
+}
+.infHead .nameBussiness {
+  font-size: 1.5rem;
+  color: var(--bg-black);
+  font-weight: 700;
+}
+
+.fieldRef {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 1rem;
+  border: 2px solid var(--bg-blue100);
+  border-radius: 0.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  /* row-gap: 1rem; */
+  margin-block: 1rem;
+}
+.fieldHeadRef {
+  grid-column: 1/-1;
+}
+
+.fieldHeadRef p {
+  font-size: 2rem;
+  color: var(--bg-blue200);
+}
+
+.field p {
+  font-weight: 700;
+  color: var(--bg-blue200);
+}
+
+.fieldRef .field {
+  font-weight: 700;
+  color: var(--bg-blue200);
+}
+
+.fieldRef .field span {
+  color: var(--bg-black);
+  font-size: 0.85rem;
+}
+
+@media screen and (min-width: 768px) {
+  .infoHead h1 {
+    font-size: 2.5rem;
+  }
+  .showServiceGrid {
+    padding: 1rem 2rem;
+  }
+}

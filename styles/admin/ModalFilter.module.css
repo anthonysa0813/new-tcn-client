@@ -1,0 +1,41 @@
+.modalFilterGrid {
+  background-color: var(--bg-blueLight);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  min-height: 300px;
+  max-height: 400px;
+  position: relative;
+}
+
+.modalFilterGrid h1 {
+  color: var(--bg-blue200);
+  font-size: 1.5rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  margin-block: 1rem;
+}
+
+.boxClose {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.boxClose svg {
+  font-size: 30px;
+}
+
+.input {
+  padding: 5px;
+  border-radius: 0.25rem;
+  border: none;
+  outline: none;
+  border: 1px solid var(--bg-gray200);
+}
+.input:focus {
+  border-color: var(--bg-blue200);
+}

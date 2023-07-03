@@ -1,0 +1,245 @@
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-block: 2rem;
+}
+
+.alert {
+  border: 2px solid var(--bg-blue300);
+  border-radius: 0.5rem;
+  color: var(--bg-blue200);
+}
+.alertCotent {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  border: 2px solid var(--bg-blue200);
+  border-radius: 0.5rem;
+  padding: 0.25rem 1rem;
+  width: auto;
+  column-gap: 0.5rem;
+}
+
+.buttonBack {
+  display: flex;
+  column-gap: 0.25rem;
+  align-items: center;
+}
+
+.alertCotent svg {
+  width: 50px;
+  height: 50px;
+}
+
+.subText {
+  color: var(--bg-gray300);
+  font-size: 10px;
+}
+
+.field {
+  padding-block: 2rem;
+  border-bottom: 1px solid var(--bg-gray100);
+  display: grid;
+  grid-template-columns: 1fr;
+  position: relative;
+}
+
+.profileProfesional {
+  padding-block: 2rem;
+}
+
+.inputSection select {
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--bg-blue200);
+  color: var(--bg-blue200);
+}
+
+.inputSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  row-gap: 1rem;
+  margin-block-start: 1rem;
+}
+
+.button svg {
+  margin-inline-end: 0.5rem;
+}
+
+.input {
+  border: none;
+  outline: none;
+  border: 1.5px solid var(--bg-gray300);
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+.titleHead {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  /* padding-inline: 1rem; */
+}
+.titleHead p {
+  font-weight: 500;
+}
+
+.infoLeft {
+  /* display: flex; */
+  align-items: center;
+}
+
+.titleProfile {
+  display: flex;
+  align-items: center;
+}
+
+.experienceHead {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: center o !important;
+}
+
+.experienceHead button {
+  margin-block: 1rem;
+  width: 100%;
+}
+
+.titleHeadSecondary {
+  display: flex;
+  align-items: center;
+  padding-inline-start: 0.5rem;
+  column-gap: 0.5rem;
+  margin-block-start: 1rem;
+}
+
+.titleHead h3 {
+  margin: 0;
+}
+
+/* skills option */
+
+.experienceContainer {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+  align-items: center;
+  margin-block: 2rem;
+}
+
+.selection select {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  border-color: var(--bg-blue200);
+  color: var(--bg-blue200);
+}
+
+.listGridLang {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-block-start: 1rem;
+}
+
+.listGridLang span {
+  background-color: var(--bg-blue200);
+  color: white;
+  padding: 0.25rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 1rem;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.listGridLang span:active {
+  transform: scale(0.9);
+}
+
+.experiencesList {
+  /* border: 3px solid brown; */
+  /* margin-block-start: 2rem; */
+  padding: 2rem;
+}
+
+.experienceGrid {
+  display: flex;
+  justify-content: space-between;
+  margin-block: 1rem;
+  padding-block-end: 1rem;
+  border-bottom: 0.5px solid var(--bg-gray100);
+}
+
+.infoExperience h5 {
+  color: var(--bg-blue200);
+}
+.infoExperience span {
+  font-size: 12px;
+  color: var(--bg-gray300);
+}
+.titleBussiness {
+  /* color: red !important; */
+  color: var(--bg-black) !important;
+  font-weight: 700;
+}
+
+.actionsExperiences {
+  display: flex;
+  column-gap: 1rem;
+}
+.actionsExperiences svg {
+  font-size: 20px;
+}
+
+.reference {
+  margin-block: 1rem;
+}
+
+.readMore span:hover {
+  color: var(--bg-black);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 640px) {
+  .field {
+    grid-template-columns: 40% 1fr;
+  }
+
+  .inputSection {
+    width: 70%;
+  }
+
+  .alertCotent {
+    font-size: 16px;
+  }
+  .alertCotent {
+    width: 80%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .inputSection button {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .experienceHead {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .experienceHead button {
+    width: auto;
+  }
+  .alertCotent svg {
+    width: 25px;
+    height: 25px;
+  }
+}

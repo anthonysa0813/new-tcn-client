@@ -1,0 +1,89 @@
+.mainModal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContainer {
+  background-color: var(--bg-white);
+  padding: 2rem;
+  border-radius: 1rem;
+
+  position: relative;
+  width: 90%;
+  /* width: 90%; */
+  min-width: 300px;
+  max-width: 400px;
+}
+
+.modalContainer h3 {
+  text-align: center;
+  color: var(--bg-blue200);
+}
+
+.modalContainer form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.field a {
+  font-weight: 700;
+}
+.field a:hover {
+  color: var(--bg-blue200);
+}
+
+.field input {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid;
+  background-color: transparent;
+}
+
+.button {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  outline: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: var(--bg-black);
+  color: white;
+  margin-block-start: 1rem;
+  transition: all 0.3s;
+}
+.button:hover {
+  background-color: var(--bg-black100);
+}
+
+.button:active {
+  transform: scale(0.9);
+}
+
+.button:hover {
+  background-color: var(--bg-black100);
+}
+
+.form .iconClose {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 2rem;
+  background-color: white;
+  border-radius: 50%;
+}

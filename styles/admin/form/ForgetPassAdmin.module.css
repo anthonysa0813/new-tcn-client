@@ -1,0 +1,29 @@
+.formContainer {
+  padding: 1rem 1.5rem;
+}
+
+.formContainer h2 {
+  font-size: 28px;
+  margin-block-start: 1rem;
+
+  color: var(--bg-bluePrimary);
+}
+.formContainer h3 {
+  font-size: 18px;
+  text-align: start;
+  /* margin-block-start: 1rem; */
+}
+
+.fieldBack {
+  display: flex;
+  align-items: center;
+}
+
+.fieldBack:hover {
+  color: var(--bg-gray300);
+  cursor: pointer;
+}
+
+.field {
+  margin-block: 1rem;
+}

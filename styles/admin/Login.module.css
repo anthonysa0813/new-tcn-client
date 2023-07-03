@@ -1,0 +1,49 @@
+.main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.debug {
+  border: 3px solid brown;
+}
+
+.form {
+  /* border: 2px solid brown; */
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.field {
+  width: 100%;
+}
+
+.field div {
+  width: 100%;
+}
+
+.fieldCenter {
+  text-align: center;
+}
+
+.imageContainer {
+  position: relative;
+  cursor: pointer;
+  margin-block-end: 1rem;
+  text-align: center;
+}
+
+.imageContainer h5 {
+  position: absolute;
+  right: 10%;
+  top: 70%;
+  color: var(--bg-blue200);
+}
+
+.field span:hover {
+  color: var(--bg-gray300);
+  cursor: pointer;
+}

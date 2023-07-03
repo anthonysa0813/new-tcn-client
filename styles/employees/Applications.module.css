@@ -1,0 +1,76 @@
+.applicationsGrid {
+  display: grid;
+  /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
+  grid-template-rows: 1fr;
+  gap: 2rem;
+  width: 100%;
+  /* border: 3px solid brown; */
+}
+
+.applicationsGrid h3 {
+  font-size: 1.25rem;
+}
+.wrapper {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.status {
+  margin-block-end: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.status span {
+  margin-inline-start: 1rem;
+}
+
+.serviceCard {
+  border: 2px solid var(--bg-blue200);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+.serviceCardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.serviceCardBody {
+  transition: all 0.3s ease;
+}
+
+.serviceCardBody p {
+  opacity: 1;
+}
+
+.serviceCard button {
+  background-color: var(--bg-blue200);
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 0.25rem;
+}
+
+.icon {
+  transition: all 0.3s;
+}
+
+.activeDetails {
+  transform: rotate(180deg);
+}
+
+@media screen and (min-width: 768px) {
+  .applicationsGrid {
+    width: 70%;
+  }
+  .applicationsGrid h3 {
+    font-size: 1.5rem;
+  }
+}

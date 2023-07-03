@@ -1,0 +1,29 @@
+.tableService {
+  margin-block: 2rem;
+}
+.tableHead {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  /* border: 3px solid brown; */
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--bg-blue200);
+}
+
+.tableHead h4 {
+  margin: 0;
+}
+
+.field span {
+  color: var(--bg-blue200);
+}
+
+@media screen and (min-width: 768px){
+  .title {
+  	font-size: 1.5rem;
+   }
+}

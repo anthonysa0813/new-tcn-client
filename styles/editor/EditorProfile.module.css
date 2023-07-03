@@ -1,0 +1,19 @@
+.editorGrid {
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  margin-block: 2rem;
+}
+
+.subText {
+  color: var(--bg-gray300);
+  font-size: 10px;
+}
+
+.input {
+  border: none;
+  outline: none;
+  border: 1.5px solid var(--bg-gray300);
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  width: 70%;
+}

@@ -1,0 +1,261 @@
+.main {
+  height: 100vh;
+  padding-block: 1rem;
+}
+.bannerColumn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+.back {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  margin-block-start: 2rem;
+}
+
+.back span {
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.back:hover {
+  color: var(--bg-gray300);
+}
+
+.field span {
+  color: var(--bg-red);
+}
+
+.registerSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.registerSection h1 {
+  color: var(--bg-blue200);
+  margin-block-start: 2rem;
+}
+
+.formContainer {
+  /* display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 2rem;
+  margin: 40px auto;
+}
+.wrapper {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.wrapper p {
+  margin-block-end: 1rem;
+  color: var(--bg-gray300);
+}
+
+.formContent {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  /* border: 3px solid brown; */
+  gap: 1rem;
+}
+.cvText {
+  color: var(--bg-blue200);
+}
+
+.field {
+  /* border: 3px solid brown; */
+}
+
+.fieldSelect {
+  display: flex;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.textInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.subText {
+  color: var(--bg-gray300);
+  font-size: 10px;
+}
+
+.optionsJob {
+  grid-column: 1/-1;
+  display: flex;
+  column-gap: 1rem;
+}
+
+.fieldJob {
+  display: flex;
+  column-gap: 1rem;
+}
+
+.titleJob {
+  display: block;
+}
+
+.fieldText {
+  grid-column: 1/-1;
+}
+
+.fieldText textarea {
+  max-width: 100%;
+  display: block;
+}
+
+.nextAction {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.activeData {
+  /* background: red; */
+}
+
+.field input {
+  display: block;
+  width: 100%;
+}
+
+.select {
+  border-radius: 0.25rem;
+  border: none;
+  border: 1px solid var(--bg-gray300);
+  padding: 0.25rem;
+  width: 100%;
+}
+
+.custom-file-upload label {
+  font-size: 0.85rem;
+  color: var(--bg-gray300);
+}
+.field input[type="file"]::file-selector-button {
+  border: 2px solid var(--bg-bluePrimary);
+  content: "cv";
+  padding: 0.5rem;
+
+  border-radius: 0.2em;
+  background-color: var(--bg-blueLight);
+  transition: 1s;
+  width: 100%;
+}
+
+.field input[type="file"]::file-selector-button:hover {
+  background-color: var(--bg-gray100);
+}
+.fieldText textarea {
+  border-radius: 0.25rem;
+  width: 100%;
+}
+
+.titlePdf {
+  color: var(--bg-gray200);
+}
+
+.buttonField {
+  grid-column: 1/-1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonField .register {
+  background-color: var(--bg-black);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: 0.3s all ease;
+}
+
+.register:hover {
+  cursor: pointer;
+  background-color: black;
+}
+
+.account {
+  border: none;
+  background: none;
+  color: var(--bg-purple);
+}
+
+.fieldButton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.fieldRow {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: flex-start;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.fieldRow input {
+  width: auto;
+}
+
+/* media queries */
+
+@media screen and (min-width: 540px) {
+  /* .main {
+    height: 100vh;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .bannerColumn {
+    grid-column: 1/2;
+    height: auto;
+  }
+  .registerSection {
+    grid-column: 2/-1;
+  }
+  .formContent {
+    display: grid;
+    grid-template-columns: 1fr;
+   
+    gap: 1rem;
+  } */
+}
+
+@media screen and (min-width: 720px) {
+  .main {
+    height: 100vh;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr auto;
+    padding: 0;
+  }
+  .formContent {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* border: 3px solid brown; */
+    gap: 1rem;
+  }
+
+  .bannerColumn {
+    display: flex;
+    padding: 1rem;
+  }
+}

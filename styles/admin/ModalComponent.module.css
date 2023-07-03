@@ -1,0 +1,24 @@
+.debug {
+}
+
+.modalContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* height: 100vh; */
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding-block: 5rem;
+  padding-inline: 0.5rem;
+  backdrop-filter: blur(5px);
+  z-index: 20000;
+}
+.centerModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

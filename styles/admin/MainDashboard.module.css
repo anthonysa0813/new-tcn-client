@@ -1,0 +1,12 @@
+.mainContainer {
+  padding: 1rem;
+  background: var(--bg-white);
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+@media screen and (min-width: 768px) {
+  .mainContainer {
+    padding: 40px 50px;
+  }
+}

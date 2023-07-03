@@ -1,0 +1,50 @@
+.formLang {
+  background: var(--bg-blueLight);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  row-gap: 1rem;
+  position: relative;
+  height: auto;
+  min-height: 500px;
+  max-height: 500px;
+}
+
+.formLang h2 {
+  font-size: 24px;
+  color: var(--bg-blue200);
+  text-align: center;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-block-end: 1rem;
+}
+
+.field input {
+  border-radius: 0.25rem;
+  border: none;
+  outline: none;
+  border: 1px solid var(--bg-black100);
+  padding: 0.25rem 0.5rem;
+}
+
+.field input:focus {
+  border: 2px solid var(--bg-blueSecondary100);
+}
+
+.boxClose {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.boxClose svg {
+  font-size: 30px;
+}
+
+.formLang button {
+  margin-block-start: 1.5rem;
+}

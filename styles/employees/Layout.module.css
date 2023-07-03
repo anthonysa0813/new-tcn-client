@@ -1,0 +1,143 @@
+.mainLayout {
+  position: relative;
+}
+
+.mainLayout h4 {
+  color: var(--bg-blue200);
+}
+
+.mainLayout h3 {
+  font-size: 1.5rem;
+  color: var(--bg-blue200);
+}
+
+.title {
+  font-size: 1.25rem;
+}
+
+.profileGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+
+  /* min-height: 100vh; */
+}
+
+.asideMenu {
+  padding: 1rem;
+  width: auto;
+  /* box-shadow: 5px 5px 80px #e1e1e1, -2px -2px 80px #ffffff; */
+  background-color: var(--bg-blueLight);
+  position: absolute;
+  top: 0;
+  /* border: 2px solid brown; */
+  z-index: 10px;
+
+  /* grid-column: 1/-1; */
+}
+
+.active {
+  width: 100%;
+  position: fixed;
+  height: 100vh;
+  background-color: var(--bg-blueLight);
+  z-index: 50000;
+}
+
+.mainProfile {
+  padding: 1rem;
+
+  /* overflow-y: auto; */
+}
+
+.mainProfile h1 {
+  font-size: 1.25rem;
+}
+
+.asideMenu ul {
+  margin: 0;
+}
+
+.boxMenu {
+  /* background-color: red; */
+  display: flex;
+  /* padding: 0.25rem 0.5rem; */
+  width: 30px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--bg-black);
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.boxMenu:hover {
+  background-color: var(--bg-black);
+  color: var(--bg-white);
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  margin-block-start: 2rem;
+}
+
+.navigation a {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.link {
+  display: block;
+}
+
+.activeLink {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+@media screen and (min-width: 640px) {
+  .asideMenu {
+    padding: 1rem;
+    width: auto;
+  }
+  .profileGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    min-height: 100vh;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .mainProfile {
+    padding: 2rem;
+    /* border: 3px solid green; */
+    /* overflow-y: auto; */
+  }
+  .profileGrid {
+    grid-template-columns: auto 1fr;
+  }
+  .asideMenu {
+    padding: 2rem;
+    position: static;
+    z-index: 10;
+  }
+  /* .mainLayout h4 {
+    font-size: 2rem;
+  } */
+  .mainLayout h3 {
+    font-size: 2.5rem;
+    /* color: var(--bg-blue200); */
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .mainProfile {
+    padding: 5rem;
+  }
+}

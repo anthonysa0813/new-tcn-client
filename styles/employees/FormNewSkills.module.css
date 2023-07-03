@@ -1,0 +1,39 @@
+.formNewSkill {
+  background-color: var(--bg-blueLight);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  height: auto;
+  /* min-height: 400px;
+  max-height: 500px; */
+  position: relative;
+}
+
+.formNewSkill h1 {
+  font-size: 2rem;
+  color: var(--bg-blue200);
+}
+
+.field input {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border: 1px solid var(--bg-black100);
+  border-radius: 0.25rem;
+  margin-block: 20px;
+}
+
+.field input:focus {
+  border: 2px solid #1976d2;
+}
+
+.boxClose {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.boxClose svg {
+  font-size: 30px;
+}
