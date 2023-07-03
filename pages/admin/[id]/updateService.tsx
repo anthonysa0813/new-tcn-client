@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useContext, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
@@ -50,11 +51,11 @@ interface FormProp {
 const notify = () => toast.success("Se actualizó el puesto!");
 const notifyWarning = (message: string) => toast.warning(message);
 
-const UpdateService = ({ id }: Prop) => {
+const UpdateService = () => {
   const [descriptionState, setDescriptionState] = useState("");
   const [requirementsState, setRequirementsState] = useState("");
   const router = useRouter();
-  console.log(id);
+  console.log(router);
 
   const [initialValues, setInitialValues] = useState<FormProp>({
     title: "",
@@ -89,8 +90,8 @@ const UpdateService = ({ id }: Prop) => {
   const { role } = userGlobal;
 
   useEffect(() => {
-    if (id) {
-      ServiceApi.get(`/${id}`).then((res) => {
+    if (router.query.id) {
+      ServiceApi.get(`/${router.query.id}`).then((res) => {
         setForm({
           title: res.data.title,
           schedule: res.data.schedule,
@@ -108,7 +109,7 @@ const UpdateService = ({ id }: Prop) => {
         setRequirementsState(res.data.requirements);
       });
     }
-  }, [id]);
+  }, [router.query.id]);
 
   useEffect(() => {
     if (role !== "ROLE_ADMIN") {
@@ -367,15 +368,15 @@ const UpdateService = ({ id }: Prop) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { id } = ctx.params as { id: string };
-  console.log({ id });
+// export const getServerSideProps: GetServerSideProps = async (ctx) => {
+//   const { id } = ctx.params as { id: string };
+//   console.log({ id });
 
-  return {
-    props: {
-      id,
-    },
-  };
-};
+//   return {
+//     props: {
+//       id,
+//     },
+//   };
+// };
 
 export default UpdateService;
