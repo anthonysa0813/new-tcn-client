@@ -4,9 +4,13 @@
 }
 
 .wrapper {
-  width: 80%;
+  width: 100%;
   /* background-color: red; */
   margin: 0 auto;
+}
+
+.textSm {
+  font-size: 0.7rem;
 }
 
 .isPostulateActive {

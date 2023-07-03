@@ -185,22 +185,22 @@ const ServiceCard = ({ service }: Prop) => {
               <Grid.Container gap={2}>
                 <Grid>
                   <Button bordered color="primary" auto>
-                    {service.salary}
+                    <span className={styles.textSm}>{service.salary}</span>
                   </Button>
                 </Grid>
                 <Grid>
                   <Button bordered color="primary" auto>
-                    {service.schedule}
+                    <span className={styles.textSm}>{service.schedule}</span>
                   </Button>
                 </Grid>
                 <Grid>
                   <Button bordered color="primary" auto>
-                    {service.type}
+                    <span className={styles.textSm}>{service.type}</span>
                   </Button>
                 </Grid>
                 <Grid>
                   <Button bordered color="primary" auto>
-                    {service.typeJob}
+                    <span className={styles.textSm}>{service.typeJob}</span>
                   </Button>
                 </Grid>
               </Grid.Container>
