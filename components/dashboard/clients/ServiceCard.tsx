@@ -207,10 +207,20 @@ const ServiceCard = ({ service }: Prop) => {
             </div>
           </div>
           <div className={styles.actions}>
-            <button className={styles.button} onClick={() => setVisible(true)}>
+            {/* <button className={styles.button} onClick={() => setVisible(true)}>
               Ver detalles
-            </button>
-            <button
+            </button> */}
+            <Link href={`/jobs/${service._id || ""}/${service.slug}`}>
+              <Button
+                shadow
+                color="primary"
+                auto
+                // onClick={() => setVisible(true)}
+              >
+                Ver detalles
+              </Button>
+            </Link>
+            {/* <button
               className={`${
                 isPostulate ? styles.buttonDisabled : styles.button
               }`}
@@ -218,7 +228,16 @@ const ServiceCard = ({ service }: Prop) => {
               disabled={isPostulate ? true : false}
             >
               {isPostulate ? "Postulado" : "Postular"}
-            </button>
+            </button> */}
+            <Button
+              shadow
+              color={isPostulate ? "gradient" : "success"}
+              auto
+              onClick={() => applicationJob(service?._id)}
+              disabled={isPostulate ? true : false}
+            >
+              {isPostulate ? "Postulado" : "Postular"}
+            </Button>
           </div>
         </div>
       </div>

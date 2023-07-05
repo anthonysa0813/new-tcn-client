@@ -93,7 +93,6 @@ const FormExperienceSecondary: NextPage<Prop> = ({
     setTokenValue(token || "");
   }, []);
 
-
   useEffect(() => {
     let id: EmployeeInterface | null = null;
     id = JSON.parse(localStorage.getItem("employee") || "");
@@ -111,7 +110,7 @@ const FormExperienceSecondary: NextPage<Prop> = ({
       subAreaPosition: currentExperience?.subarea || "",
       country: currentExperience?.country || "",
       startJob: currentExperience?.dateStart || "",
-      finalJob: currentExperience?.dateEnd || "",
+      dateEnd: currentExperience?.dateEnd || "",
       currentJob: true,
       refBoss: currentExperience?.nameRef || "",
       refCountryBoss: currentExperience?.countryRef || "",
@@ -144,7 +143,7 @@ const FormExperienceSecondary: NextPage<Prop> = ({
     country,
     currentJob,
     descriptionJob,
-    finalJob,
+    dateEnd,
     nameCompany,
     nivelExperience,
     positionJob,
@@ -189,7 +188,8 @@ const FormExperienceSecondary: NextPage<Prop> = ({
       country: country || "",
       level: nivelExperience || "",
       dateStart: startJob,
-      dateEnd: currentJob ? "--" : finalJob || "",
+      // dateEnd: currentJob ? "--" : dateEnd || "",
+      dateEnd: dateEnd,
       currentJob: switchCurrentJob,
       employee: idEmployee,
       nameRef: refBoss || "",
@@ -199,7 +199,6 @@ const FormExperienceSecondary: NextPage<Prop> = ({
     };
 
     if (editMode !== undefined) {
-      console.log({dataForm});
       EmployeeApi.put(
         `/experiences/${idEmployee}/${currentExperience?._id}`,
         dataForm
@@ -467,16 +466,16 @@ const FormExperienceSecondary: NextPage<Prop> = ({
             <div className={styles.fieldSecond}>
               <label htmlFor="">Fecha de Finalización</label>
               <TextField
-                id="finalJob"
+                id="dateEnd"
                 type="date"
                 variant="outlined"
                 sx={{ width: "100%" }}
                 size="small"
-                {...getFieldProps("finalJob")}
+                {...getFieldProps("dateEnd")}
               />
 
-              {errors.finalJob || touched.finalJob || (
-                <span className="text-danger ">{errors.finalJob} </span>
+              {errors.dateEnd || touched.dateEnd || (
+                <span className="text-danger ">{errors.dateEnd} </span>
               )}
             </div>
           </div>

@@ -14,6 +14,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import { EmployeeApi } from "../../../apis/employee";
 import { TokenContext } from "../../../context/CurrentToken";
+import { Button, Grid } from "@nextui-org/react";
 
 interface Prop {
   id: string;
@@ -31,6 +32,7 @@ const PageByJob = ({ id }: Prop) => {
     if (id) {
       console.log(query.id);
       ServiceApi.get(`${id}`).then((res) => {
+        console.log(res);
         setJobState(res.data);
       });
     }
@@ -88,7 +90,7 @@ const PageByJob = ({ id }: Prop) => {
       <ToastContainer />
 
       <section className={styles.hero}>
-        <div className="wrapper">
+        <div className={styles.wrapper}>
           <div className={styles.infoGrid}>
             <div className={styles.infoHero}>
               <div className={styles.iconContainer}>
@@ -121,7 +123,7 @@ const PageByJob = ({ id }: Prop) => {
               className={styles.buttonApply}
               onClick={() => applicationJob(jobState._id)}
             >
-              Enviar solicitud
+              Postular
             </button>
           </div>
         </div>
@@ -136,6 +138,30 @@ const PageByJob = ({ id }: Prop) => {
           <div className={styles.infoContainer}>
             <p dangerouslySetInnerHTML={{ __html: jobState.requirements }}></p>
           </div>
+        </div>
+        <div className="characters">
+          <Grid.Container gap={2}>
+            <Grid>
+              <Button bordered color="primary" auto>
+                <span className={styles.textSm}>{jobState.salary}</span>
+              </Button>
+            </Grid>
+            <Grid>
+              <Button bordered color="primary" auto>
+                <span className={styles.textSm}>{jobState.schedule}</span>
+              </Button>
+            </Grid>
+            <Grid>
+              <Button bordered color="primary" auto>
+                <span className={styles.textSm}>{jobState.type}</span>
+              </Button>
+            </Grid>
+            <Grid>
+              <Button bordered color="primary" auto>
+                <span className={styles.textSm}>{jobState.typeJob}</span>
+              </Button>
+            </Grid>
+          </Grid.Container>
         </div>
       </main>
     </>
