@@ -32,8 +32,11 @@ const CampaignEmployees = () => {
         return res.json();
       })
       .then((serv) => {
-        console.log(serv.services);
-        setServices(serv.services);
+        const servciesActives = serv.services.filter(
+          (service: ServiceI) => service.status
+        );
+        console.log({ services: servciesActives });
+        setServices(servciesActives);
       });
   }, []);
 

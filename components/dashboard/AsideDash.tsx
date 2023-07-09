@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import { UserResponse } from "../../interfaces";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 const Image = dynamic(() => import("next/image").then((res) => res.default));
 
@@ -179,6 +180,25 @@ const AsideDash = () => {
                 >
                   {" "}
                   Puestos Disponibles
+                </span>
+              </Link>
+            </Tooltip>
+            <Tooltip
+              title="Historial de Puestos desactivados"
+              arrow
+              placement="right"
+              color="dark"
+            >
+              <Link
+                href="/admin/historial"
+                className={pathActive("historial") ? styles.activeLink : ""}
+              >
+                <MenuBookIcon />
+                <span
+                  className={`${showMenu ? styles.textBlock : styles.textNone}`}
+                >
+                  {" "}
+                  Historial de Puestos
                 </span>
               </Link>
             </Tooltip>

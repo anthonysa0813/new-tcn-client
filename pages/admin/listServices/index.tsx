@@ -6,6 +6,7 @@ import ServiceItem from "../../../components/servcies/ServiceItem";
 import dynamic from "next/dynamic";
 import { TokenContext } from "../../../context/CurrentToken";
 import { API_URL } from "../../../utils/constanstApi";
+import { useRouter } from "next/router";
 
 const Head = dynamic(() => import("next/head").then((res) => res.default));
 
@@ -16,6 +17,7 @@ interface Prop {
 const ListServicesPage = () => {
   const [servicesArr, setServicesArr] = useState<ServiceI[] | []>([]);
   const { privateToken } = useContext(TokenContext);
+  const router = useRouter();
 
   useEffect(() => {
     fetch(`https://work.contactamericas.com/api/services`)
@@ -23,7 +25,11 @@ const ListServicesPage = () => {
         return res.json();
       })
       .then((res) => {
-        setServicesArr(res.services);
+        const servciesActives = res.services.filter(
+          (service: ServiceI) => service.status
+        );
+        setServicesArr(servciesActives);
+        // setServicesArr(res.services);
       });
   }, []);
 
@@ -41,7 +47,8 @@ const ListServicesPage = () => {
         fetch(`${process.env.NEXT_PUBLIC_DB_URL}/services`)
           .then((res) => res.json())
           .then((data) => {
-            setServicesArr(data.services);
+            // console.log({ servciesActives });
+            router.reload();
           });
       }
     });

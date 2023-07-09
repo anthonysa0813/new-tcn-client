@@ -16,11 +16,11 @@ const HomeAdmin = () => {
   const { employeeGlobal, setEmployeeGlobal } =
     useContext<EmployeeContextProps>(EmployeeContext);
   const router = useRouter();
-  // useEffect(() => {
-  //   if (!token || Object.values(userGlobal).includes("")) {
-  //     router.push("/admin/login");
-  //   }
-  // }, [token, router, userGlobal]);
+  useEffect(() => {
+    if (!token) {
+      router.push("/admin/login");
+    }
+  }, [token]);
 
   return (
     <LayoutDashboard>
