@@ -39,23 +39,25 @@ const Navbar = () => {
   const router = useRouter();
   const logout = () => {
     setEmployeeGlobal({} as EmployeeInterface);
-    localStorage.removeItem("countries");
-    localStorage.removeItem("employee");
-    localStorage.removeItem("email");
+    // localStorage.removeItem("countries");
+    // localStorage.removeItem("employee");
+    // localStorage.removeItem("email");
     Cookies.remove("token");
+    Cookies.remove("employee");
+
     router.push("/");
   };
 
-  useEffect(() => {
-    const resEmployeeLocalStorage =
-      window.localStorage.getItem("employee") || "";
-    if (Boolean(resEmployeeLocalStorage)) {
-      const localStoraEmployee = JSON.parse(
-        window.localStorage.getItem("employee") || ""
-      );
-      setEmployeeGlobal(localStoraEmployee);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const resEmployeeLocalStorage =
+  //     window.localStorage.getItem("employee") || "";
+  //   if (Boolean(resEmployeeLocalStorage)) {
+  //     const localStoraEmployee = JSON.parse(
+  //       window.localStorage.getItem("employee") || ""
+  //     );
+  //     setEmployeeGlobal(localStoraEmployee);
+  //   }
+  // }, []);
 
   return (
     <>

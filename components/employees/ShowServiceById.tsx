@@ -19,20 +19,18 @@ const ShowServiceById = ({
   idService = "",
   idEmployee = "",
   setShowService,
-  exp
+  exp,
 }: Prop) => {
   const [experence, setExperence] = useState<Experience>(exp as Experience);
 
- 
-
   return (
     <section className={styles.showServiceGrid}>
-      <div className={styles.boxClose}>
+      {/* <div className={styles.boxClose}>
         <CloseIcon
           onClick={() => setShowService(false)}
           className={styles.svg}
         />
-      </div>
+      </div> */}
       <div className={styles.infoHead}>
         <h1>
           {experence.title} - {experence.nameBussiness}

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Navbar from "../../components/menu/Navbar";
 import styles from "../../styles/employees/Layout.module.css";
 import dynamic from "next/dynamic";
@@ -14,17 +14,20 @@ const AsideMenuEmployee = dynamic(() =>
 );
 
 const LayoutEmployee = ({ children }: Prop) => {
-  const {
-    employeeGlobal: { name },
-  } = useContext(EmployeeContext);
+  const { employeeGlobal } = useContext(EmployeeContext);
+  const { name } = employeeGlobal;
+
+  useEffect(() => {
+    console.log({ employeeGlobal });
+  }, []);
 
   return (
     <div className={styles.mainLayout}>
       <Navbar />
       <main>
         <div className={styles.profileGrid}>
-          {Boolean(name) && <AsideMenuEmployee />}
-          {/* <AsideMenuEmployee /> */}
+          {Boolean(Object.keys(employeeGlobal).length) && <AsideMenuEmployee />}
+
           <div className={`${styles.mainProfile}`}>{children}</div>
         </div>
       </main>

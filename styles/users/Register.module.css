@@ -1,6 +1,6 @@
 .main {
   padding-block: 1rem;
-  border: 3px solid brown;
+  /* border: 3px solid brown; */
 }
 
 .formContainer {
@@ -39,6 +39,40 @@
 } */
 
 .buttonContent {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* border: 2px solid brown; */
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.buttonFileUpload {
+  width: 100%;
+}
+
+.custom-file-upload label {
+  font-size: 0.85rem;
+  color: var(--bg-gray300);
+}
+
+.subfield input[type="file"]::file-selector-button {
+  border: 2px solid var(--bg-bluePrimary);
+  content: "cv";
+  padding: 0.5rem;
+
+  border-radius: 0.2em;
+  background-color: var(--bg-blueLight);
+  transition: 1s;
+  width: 100%;
+}
+
+.subfield input[type="file"]::file-selector-button:hover {
+  background-color: var(--bg-gray100);
+}
+.subfieldText textarea {
+  border-radius: 0.25rem;
   width: 100%;
 }
 .buttonContent input {
@@ -143,6 +177,13 @@
   color: var(--bg-purple);
 }
 
+.fileContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 @media screen and (min-width: 580px) {
   .field {
     column-gap: 2rem;
@@ -158,5 +199,9 @@
   }
   .buttonContent {
     width: 70%;
+    flex-direction: row;
+  }
+  .buttonFileUpload {
+    width: auto;
   }
 }

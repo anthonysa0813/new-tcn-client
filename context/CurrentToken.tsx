@@ -5,6 +5,8 @@ import {
   SetStateAction,
   useEffect,
 } from "react";
+import Cookies from "js-cookie";
+import { EmployeeInterface } from "../interfaces";
 
 type ChildrenType = {
   children: JSX.Element | JSX.Element[];
@@ -27,9 +29,10 @@ export const TokenContextProvider = ({ children }: ChildrenType) => {
   const [privateToken, setPrivateToken] = useState({} as ContextType);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const tokenSecret = sessionStorage.getItem("token");
-      setPrivateToken({ token: tokenSecret || "" });
+    const cookieToken = Cookies.get("token");
+    if (cookieToken) {
+      // const tokenSecret = sessionStorage.getItem("token");
+      setPrivateToken({ token: cookieToken || "" });
     }
   }, []);
 

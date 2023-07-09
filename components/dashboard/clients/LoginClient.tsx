@@ -84,13 +84,18 @@ const LoginClient = ({ setShowForgetPasswordForm }: Prop) => {
         }
         if (res.employee) {
           if (res.employee.status) {
-            localStorage.setItem("employee", JSON.stringify(res.employee));
-            sessionStorage.setItem("token", res.token);
+            // localStorage.setItem("employee", JSON.stringify(res.employee));
+            // sessionStorage.setItem("token", res.token);
             setPrivateToken({
               token: res.token,
             });
             setLoading(false);
-            Cookies.set("token", res.token, { expires: 7 });
+            const expirationDate = new Date();
+            expirationDate.setTime(expirationDate.getTime() + 30 * 60 * 1000); //
+            Cookies.set("token", res.token, { expires: expirationDate });
+            Cookies.set("employee", JSON.stringify(res.employee), {
+              expires: expirationDate,
+            });
             setEmployeeGlobal(res.employee);
             notifySuccess();
             setTimeout(() => {

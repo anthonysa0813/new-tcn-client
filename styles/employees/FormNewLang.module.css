@@ -1,5 +1,5 @@
 .formLang {
-  background: var(--bg-blueLight);
+  /* background: var(--bg-blueLight); */
   padding: 2rem;
   border-radius: 0.5rem;
   row-gap: 1rem;
@@ -26,7 +26,7 @@
   border: none;
   outline: none;
   border: 1px solid var(--bg-black100);
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 0.5rem;
 }
 
 .field input:focus {

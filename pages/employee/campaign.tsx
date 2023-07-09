@@ -51,7 +51,7 @@ const CampaignEmployees = () => {
           <div className={styles.wrapper}>
             <div className={styles.mainContainer}>
               {services?.length > 0 ? (
-                <h3>Puestos de trabajos</h3>
+                <h3>Puestos de trabajo</h3>
               ) : (
                 <h3>No hay puestos disponibles por el momento</h3>
               )}

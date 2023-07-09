@@ -42,17 +42,8 @@ const ApplicationsPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (window.localStorage !== undefined) {
-      const getId: EmployeeInterface = JSON.parse(
-        localStorage.getItem("employee") || ""
-      );
-      setEmployeeGlobal(getId);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (Boolean(Object.values(employeeGlobal).length)) {
-      getInfo(employeeGlobal.id);
+    if (Boolean(Object.keys(employeeGlobal).length)) {
+      getInfo(employeeGlobal.id || "");
     }
   }, [employeeGlobal]);
 
@@ -67,6 +58,7 @@ const ApplicationsPage = () => {
     );
     const data = await res.json();
 
+    console.log({ employeeGlobal: employeeGlobal, privateToken });
     const { data: getInfoApplication } = await EmployeeApi.get(
       `/employees/get-applications-jobs/${employeeGlobal.id}`,
       {
@@ -112,4 +104,3 @@ const ApplicationsPage = () => {
 };
 
 export default ApplicationsPage;
-

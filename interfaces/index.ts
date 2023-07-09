@@ -48,7 +48,7 @@ export interface ClientData {
 }
 
 export interface EmployeeInterface {
-  id: string;
+  id?: string;
   name: string;
   surnames: string;
   email: string;
@@ -65,10 +65,11 @@ export interface EmployeeInterface {
   linkedin?: string;
   github?: string;
   confirmPassword?: string;
+  district?: string;
   statusJob?: string;
   dni?: string;
   languages?: LangObject[] | [];
-  experiences: Experience[] | [];
+  experiences?: Experience[] | [];
 }
 
 export interface ChangeStatusRequest {
@@ -106,6 +107,7 @@ export interface ServiceI {
   slug?: string;
   whatsapp?: string;
   supervisor?: string;
+  localCurrency?: string;
 }
 
 export interface CourntriesDataResponse {

@@ -48,10 +48,21 @@
 
 .card {
   border: 1px solid #e1e1e1;
+  /* border: 1px solid brown; */
+
   border-radius: 0.5rem;
   overflow: auto;
 
   /* padding-block: 1rem; */
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
+  /* border: 1px solid brown; */
+  width: 100%;
 }
 
 .card:hover {
@@ -100,7 +111,7 @@
 .actions {
   padding: 1rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 1rem;
 }
 
@@ -238,5 +249,11 @@
   }
   .title {
     font-size: 1.25rem;
+  }
+  .actions {
+    flex-direction: column;
+  }
+  .cardContainer {
+    flex-direction: row;
   }
 }

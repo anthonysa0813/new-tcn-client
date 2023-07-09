@@ -8,6 +8,8 @@ import Link from "next/link";
 import { EmployeeApi } from "../../../apis/employee";
 import { TokenContext } from "../../../context/CurrentToken";
 import { Chip } from "@mui/material";
+import { CurrentLangContext } from "../../../context/CurrentLang";
+import { getExperienceByEmployee } from "../../../apis/experience/useFecthExperience";
 
 type Props = {
   data: EmployeeInterface[];
@@ -42,6 +44,49 @@ const TableListStaticData = ({
   const [initialSliceValue, setInitialSliceValue] = useState(0);
   const { userGlobal } = useContext(UserContext);
   const { privateToken } = useContext(TokenContext);
+  const [currentLang, setCurrentLang] = useState<LangObject[] | []>([]);
+
+  useEffect(() => {
+    if (currentData.length > 0) {
+      EmployeeApi.get<EmployeeInterface>(`/employees/${currentEmployee.id}`, {
+        headers: {
+          Authorization: privateToken.token,
+        },
+      }).then((res) => {
+        // console.log({ res });
+        setExperienceUser(res.data.experiences || []);
+        setLang(res.data.languages || []);
+        setCurrentLang(res.data.languages || []);
+      });
+
+      // current employeeJobStatus
+      getExperienceByEmployee(
+        "get-applications-jobs",
+        currentEmployee.id || "",
+        privateToken.token
+      ).then((res) => {
+        console.log({ res });
+      });
+
+      // get skill by user
+      EmployeeApi.get(`/knoledge/${currentData[0].id}`, {
+        headers: {
+          Authorization: privateToken.token,
+        },
+      }).then((res) => {
+        console.log(res.data);
+      });
+
+      // traer experiencia por usuario
+      getExperienceByEmployee(
+        "experiences",
+        currentEmployee.id || "",
+        privateToken.token
+      ).then((res) => {
+        // console.log("res", res.data);
+      });
+    }
+  }, [currentEmployee]);
 
   useEffect(() => {
     if (currentData.length > 0) {
@@ -50,8 +95,7 @@ const TableListStaticData = ({
           Authorization: privateToken.token,
         },
       }).then((res) => {
-        console.log(res.data);
-        setExperienceUser(res.data.experiences);
+        setExperienceUser(res.data.experiences || []);
         setLang(res.data.languages || []);
       });
 
@@ -69,7 +113,6 @@ const TableListStaticData = ({
   }, [currentData]);
   useEffect(() => {
     setcurrentData(data.slice(initialSliceValue, offsetSliceValue));
-    console.log(currentData);
   }, [data, offsetSliceValue, initialSliceValue]);
 
   const changeStatusJob = async (idJob: string, idEmployee: string) => {
@@ -123,7 +166,7 @@ const TableListStaticData = ({
                     <DropDownSelect
                       key={user.id}
                       idService={idService}
-                      idUser={user.id}
+                      idUser={user.id || ""}
                       idJob={idService}
                       statusUser={user.statusJob || ""}
                     />
@@ -153,7 +196,9 @@ const TableListStaticData = ({
           <div className={styles.gridBody}>
             <div className={styles.field}>
               <strong>País:</strong>
-              <p>{currentEmployee.country}</p>
+              <p>
+                {currentEmployee.country} - {currentEmployee.district}
+              </p>
             </div>
             <div className={styles.field}>
               <strong>Email:</strong>
@@ -198,7 +243,9 @@ const TableListStaticData = ({
                 auto
                 size="sm"
                 style={{ marginBlock: "1rem" }}
-                onClick={() => changeStatusJob(idService, currentEmployee.id)}
+                onClick={() =>
+                  changeStatusJob(idService, currentEmployee.id || "")
+                }
               >
                 <Link href={currentEmployee.cv || ""} target="_blank">
                   abrir el enlace del cv
@@ -208,7 +255,7 @@ const TableListStaticData = ({
             <div className={styles.field}>
               <strong>Idiomas:</strong>
               <ul style={{ display: "flex", gap: "1rem" }}>
-                {lang.map((lg) => {
+                {currentLang.map((lg) => {
                   return (
                     <Chip
                       key={lg.idEmployee}

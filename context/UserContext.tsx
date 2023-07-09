@@ -1,5 +1,12 @@
-import { createContext, Dispatch, SetStateAction, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { ContextInitial, UserResponse } from "../interfaces";
+import Cookies from "js-cookie";
 
 type UserContextProps = {
   userGlobal: UserResponse;
@@ -22,6 +29,14 @@ const UserContextProvider = ({ children }: ChildrenType) => {
     role: "",
     name: "",
   });
+
+  useEffect(() => {
+    const authValue = Cookies.get("auth");
+    if (authValue) {
+      const auth: UserResponse = JSON.parse(authValue);
+      setUserGlobal(auth);
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={{ userGlobal, setUserGlobal }}>

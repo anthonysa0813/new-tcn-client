@@ -107,9 +107,9 @@ const FormNewSkills = ({
 
   return (
     <form className={styles.formNewSkill} onSubmit={onSubmit}>
-      <div className={styles.boxClose}>
+      {/* <div className={styles.boxClose}>
         <CloseIcon onClick={openSkill} className={styles.svg} />
-      </div>
+      </div> */}
       <h1>Añade una nueva Habilidad</h1>
       <ToastContainer />
       <div className={styles.field}>

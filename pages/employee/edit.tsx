@@ -14,17 +14,19 @@ import {
 } from "../../context/EmployeeContext";
 import { GetServerSideProps } from "next";
 import DatalistInput from "react-datalist-input";
-import { countriesDataResponse } from "../../utils/activitiesToBussiness";
+import {
+  countriesDataResponse,
+  districtsDataResponse,
+} from "../../utils/activitiesToBussiness";
 import dynamic from "next/dynamic";
 import { EmployeeInterface } from "../../interfaces";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { Input, TextField } from "@material-ui/core";
 import { InputFileUpload } from "../../components/buttons";
-import ModalComponent from "../../components/dashboard/ModalComponent";
 import { TokenContext } from "../../context/CurrentToken";
+import { Modal, Button as ButtonNextUi, Text } from "@nextui-org/react";
+import Cookies from "js-cookie";
 
 // new icons material ui
-
 const MailIcon = dynamic(() =>
   import("@mui/icons-material/Mail").then((res) => res.default)
 );
@@ -54,7 +56,14 @@ const Tooltip = dynamic(() =>
 );
 
 const EditPage = ({ data }: any) => {
-  const [formValues, setFormValues] = useState({
+  const [visible, setVisible] = useState(false);
+  const handler = () => setVisible(true);
+
+  const closeHandler = () => {
+    setVisible(false);
+    console.log("closed");
+  };
+  const [formValues, setFormValues] = useState<EmployeeInterface>({
     name: "",
     surnames: "",
     email: "",
@@ -66,6 +75,7 @@ const EditPage = ({ data }: any) => {
     typeJob: "",
     password: "",
     confirmPassword: "",
+    district: "",
   });
   const {
     name,
@@ -78,36 +88,65 @@ const EditPage = ({ data }: any) => {
     typeJob,
     phone,
     password,
+    district,
   } = formValues;
   const [countryCurrent, setCountryCurrent] = useState("");
+  const [districtCurrent, setDistrictCurrent] = useState("");
   const router = useRouter();
   const notify = () => toast.success("Se actualizó satisfactoriamente!");
   const { employeeGlobal, setEmployeeGlobal } =
     useContext<EmployeeContextProps>(EmployeeContext);
   const [idLocalStorage, setIdLocalStorage] = useState({} as any);
   const [localEmployee, setlocalEmployee] = useState({} as EmployeeInterface);
-  const [allCountries, setAllCountries] = useState<any>({});
-  const [tokenUser, setTokenUser] = useState("");
-  const { privateToken } = useContext(TokenContext);
+  const { privateToken, setPrivateToken } = useContext(TokenContext);
+  const [cvValue, setCvValue] = useState("" as any);
+  const [cvId, setCvId] = useState("");
+  const [activeButton, setActiveButton] = useState(true);
+  const [saveNameCv, setSaveNameCv] = useState("");
+  const [currentToken, setCurrentToken] = useState("");
 
   const { id } = employeeGlobal;
 
   useEffect(() => {
-    if (window.localStorage) {
-      const getId: EmployeeInterface = JSON.parse(
-        localStorage.getItem("employee") || ""
-      );
-      setlocalEmployee(getId);
-      setIdLocalStorage(getId.id || "");
-
-      setCountryCurrent(getId.country || "");
+    if (cvValue.target?.value.includes(".pdf")) {
+      // const fileName =
+      setActiveButton(false);
+      // const nameCv = cvValue.target?.value.split(".");
+      // console.log(nameCv);
+    } else {
+      setActiveButton(true);
     }
-    fetch(`${process.env.NEXT_PUBLIC_DB_URL}/employees/${idLocalStorage}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setFormValues(data);
+  }, [cvValue]);
+
+  useEffect(() => {
+    if (Boolean(Object.keys(employeeGlobal).length)) {
+      console.log({
+        employeeGlobal,
+        privateToken,
       });
-  }, []);
+
+      setCurrentToken(privateToken.token || "");
+      setlocalEmployee(employeeGlobal);
+      setIdLocalStorage(employeeGlobal.id || "");
+
+      setCountryCurrent(employeeGlobal.country || "");
+      fetch(
+        `${process.env.NEXT_PUBLIC_DB_URL}/employees/${employeeGlobal.id}`,
+        {
+          headers: {
+            Authorization: privateToken.token || "",
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setFormValues(data);
+
+          // setCountryCurrent(data.country || "");
+          localStorage.setItem("employee", JSON.stringify(data));
+        });
+    }
+  }, [employeeGlobal]);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_DB_URL}/employees/${employeeGlobal.id}`, {
@@ -116,9 +155,14 @@ const EditPage = ({ data }: any) => {
       },
     })
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: EmployeeInterface) => {
         // setCountryCurrent(data.country);
-        console.log({ data });
+        if (data.cv) {
+          const cvLink = data.cv?.split("curriculums/");
+          setCvId(cvLink[1]);
+        }
+        console.log(data);
+        setDistrictCurrent(data.district || "");
         setFormValues(data);
       });
     localStorage.setItem(
@@ -136,6 +180,12 @@ const EditPage = ({ data }: any) => {
     });
   };
 
+  const handleFile = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setCvValue(e);
+  };
+
   const readInputTypeFile = (e: any) => {
     setFormValues({
       ...formValues,
@@ -150,13 +200,22 @@ const EditPage = ({ data }: any) => {
     dataform.append("surnames", surnames);
     dataform.append("email", email);
     dataform.append("password", password);
-    dataform.append("callingCode", callingCode);
-    dataform.append("country", country);
-    dataform.append("message", message);
+    dataform.append("callingCode", callingCode || "");
+    dataform.append("country", countryCurrent || "");
+    dataform.append("district", districtCurrent || "");
+    dataform.append("message", message || "");
     dataform.append("cv", cv);
-    dataform.append("typeJob", typeJob);
-    dataform.append("phone", phone);
+    dataform.append("typeJob", typeJob || "");
+    dataform.append("phone", phone || "");
     sendData(dataform);
+  };
+
+  const handleSubmitFile = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    let dataform = new FormData();
+    // console.log(cvValue);
+    dataform.append("cv", cvValue.target.files[0]);
+    sendUpdateCv(dataform);
   };
 
   const sendData = async (dataObject: FormData) => {
@@ -173,14 +232,113 @@ const EditPage = ({ data }: any) => {
       );
       const data = await res.json();
       notify();
+      console.log(data);
+      fetch(
+        `${process.env.NEXT_PUBLIC_DB_URL}/employees/${employeeGlobal.id}`,
+        {
+          headers: {
+            Authorization: privateToken.token,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data: EmployeeInterface) => {
+          window.localStorage.setItem("employee", JSON.stringify(data));
+        });
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const sendUpdateCv = async (dataObject: FormData) => {
+    try {
+      // localhost:5050/api/upload?iduser=64a6e9ba89a66d2dcabfbc36&idcv=18bc03ca-9e7c-400e-854b-9d87548a4425.pdf
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_DB_URL}/upload?iduser=${idLocalStorage}&idcv=${cvId}`,
+        {
+          method: "PUT",
+          body: dataObject,
+          // headers: {
+          //   Authorization: privateToken.token,
+          // },
+        }
+      );
+      const data = await res.json();
+      setCvValue("");
+      setFormValues({
+        ...formValues,
+        cv: data.cv,
+      });
+      notify();
       return data;
     } catch (error) {
       console.log(error);
     }
   };
 
+  const saveFile = async () => {
+    // console.log({
+    //   idLocalStorage,
+    //   cvId,
+    //   cvValue,
+    // });
+  };
+
   return (
     <>
+      <Modal
+        closeButton
+        aria-labelledby="modal-title"
+        open={visible}
+        onClose={closeHandler}
+        width="500px"
+      >
+        <Modal.Header>
+          <Text id="modal-title" size={32}>
+            Editar CV
+          </Text>
+        </Modal.Header>
+        <Modal.Body>
+          <form
+            onSubmit={handleSubmitFile}
+            className={`${styles.subfield} ${styles["custom-file-upload"]}`}
+          >
+            <Text id="modal-title" size={14} color="error">
+              Nota: Subir CV en formato pdf
+            </Text>
+            <div className={styles.fileContainer}>
+              <label>
+                <Tooltip title="Actualizar CV - tipo (pdf)" arrow>
+                  <input
+                    type="file"
+                    name="cv"
+                    aria-label="cv"
+                    onChange={handleFile}
+                  />
+                </Tooltip>
+              </label>
+              <ButtonNextUi
+                auto
+                flat
+                color="primary"
+                onPress={saveFile}
+                disabled={activeButton}
+                type="submit"
+              >
+                Actualizar
+              </ButtonNextUi>
+            </div>
+            {cvValue?.target?.value && (
+              <p className={styles.titlePdf}>{cvValue.target.value}</p>
+            )}
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <ButtonNextUi auto flat color="error" onPress={closeHandler}>
+            Cerrar
+          </ButtonNextUi>
+        </Modal.Footer>
+      </Modal>
       <Head>
         <title>Contact Bpo | Dashboard Contact</title>
         <meta
@@ -294,6 +452,28 @@ const EditPage = ({ data }: any) => {
           </div>
           <div className={styles.field}>
             <div className={styles.textInfo}>
+              <label
+                htmlFor="
+              "
+                className={styles.label}
+              >
+                <PublicIcon style={{ height: "30px", width: 30 }} />
+                Distrito:
+              </label>
+            </div>
+            <div className={styles.buttonContent}>
+              <DatalistInput
+                className="dataList"
+                placeholder=""
+                label="Distrito"
+                onSelect={(item) => setDistrictCurrent(item.value)}
+                items={districtsDataResponse}
+                value={districtCurrent}
+              />
+            </div>
+          </div>
+          <div className={styles.field}>
+            <div className={styles.textInfo}>
               <label htmlFor="" className={styles.label}>
                 <FileIcon style={{ height: "30px", width: 30 }} />
                 CV:
@@ -303,13 +483,21 @@ const EditPage = ({ data }: any) => {
               </span>
             </div>
             <div className={styles.buttonContent}>
-              <InputFileUpload cv={employeeGlobal.cv || ""} />
+              <InputFileUpload cv={cv || ""} />
+              <ButtonNextUi
+                auto
+                shadow
+                onPress={handler}
+                className={styles.buttonFileUpload}
+              >
+                actualizar CV
+              </ButtonNextUi>
             </div>
           </div>
           <div className={styles.buttonField}>
-            <button type="submit" className={styles.register}>
-              Editar
-            </button>
+            <ButtonNextUi auto flat type="submit" color="primary">
+              <p>Guardar</p>
+            </ButtonNextUi>
           </div>
         </form>
       </LayoutEmployee>

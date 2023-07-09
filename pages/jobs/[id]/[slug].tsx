@@ -119,12 +119,15 @@ const PageByJob = ({ id }: Prop) => {
                 <span>Tipo de trabajo: Jornada Completa</span>
               </div>
             </div>
-            <button
-              className={styles.buttonApply}
+
+            <Button
+              shadow
+              color="primary"
+              auto
               onClick={() => applicationJob(jobState._id)}
             >
               Postular
-            </button>
+            </Button>
           </div>
         </div>
       </section>

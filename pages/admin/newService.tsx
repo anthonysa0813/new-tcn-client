@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../../context/UserContext";
 import { TokenContext } from "../../context/CurrentToken";
 import { InputLabel, NativeSelect } from "@material-ui/core";
+import { EmployeeContext } from "../../context/EmployeeContext";
 
 const QuillNoSSRWrapper = dynamic(import("react-quill"), {
   ssr: false,
@@ -67,6 +68,7 @@ const NewServicePage = () => {
   } = useForm<FormProp>(initialValues);
   const [error, setError] = useState(false);
   const { userGlobal } = useContext(UserContext);
+
   const { privateToken } = useContext(TokenContext);
 
   const [isDisabled, setIsDisabled] = useState(false);
@@ -84,8 +86,6 @@ const NewServicePage = () => {
       ...initialValues,
       slug: transformSlug,
     });
-    console.log(initialValues);
-    console.log({ slug });
   }, [title]);
 
   const handleChangeDescription = (e: string) => {

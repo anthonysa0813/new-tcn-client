@@ -60,12 +60,12 @@ const AsideDash = () => {
   const arrAsPath = router.asPath.split("/");
   const [showMenu, setShowMenu] = useState(false);
 
-  useEffect(() => {
-    if (window.localStorage) {
-      const auth: UserResponse = JSON.parse(localStorage.getItem("auth") || "");
-      setUserGlobal(auth);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (window.localStorage) {
+  //     const auth: UserResponse = JSON.parse(localStorage.getItem("auth") || "");
+  //     setUserGlobal(auth);
+  //   }
+  // }, []);
 
   const pathActive = (path: string) => {
     const pathName = arrAsPath[arrAsPath.length - 1];

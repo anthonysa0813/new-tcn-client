@@ -27,7 +27,6 @@ const ListUsersPage = () => {
   const [titleState, setTitleState] = useState("Lista de Todos los usuarios");
   const [firstData, setFirstData] = useState(true);
   useEffect(() => {
-    console.log({ privateToken: privateToken });
     EmployeeApi.get(`/employees?offset=${offsetNumber}&limit=10`, {
       headers: {
         Authorization: `${privateToken.token}`,

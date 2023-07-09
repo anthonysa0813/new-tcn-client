@@ -24,6 +24,10 @@ import { EmployeeApi } from "../../apis/employee";
 import { Notify } from "../../utils";
 import { useRouter } from "next/router";
 import { TokenContext } from "../../context/CurrentToken";
+import {
+  EmployeeContext,
+  EmployeeContextProps,
+} from "../../context/EmployeeContext";
 
 const CloseIcon = dynamic(() =>
   import("@mui/icons-material/Close").then((res) => res.default)
@@ -52,7 +56,7 @@ const initialCurrent = {
 };
 
 interface Prop {
-  openExperience: () => void;
+  openExperience?: () => void;
   dataListExperiences?: Experience[] | [];
   setDataListExperiences: React.Dispatch<SetStateAction<[] | Experience[]>>;
   editMode?: boolean;
@@ -82,22 +86,24 @@ const FormExperienceSecondary: NextPage<Prop> = ({
   );
   const router = useRouter();
   const { privateToken } = useContext(TokenContext);
+  const { employeeGlobal, setEmployeeGlobal } =
+    useContext<EmployeeContextProps>(EmployeeContext);
 
   const notifySuccess = (message: string) => {
     return toast.success(message);
   };
   const [tokenValue, setTokenValue] = useState("");
 
-  useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    setTokenValue(token || "");
-  }, []);
+  // useEffect(() => {
+  //   const token = sessionStorage.getItem("token");
+  //   setTokenValue(token || "");
+  // }, []);
 
   useEffect(() => {
-    let id: EmployeeInterface | null = null;
-    id = JSON.parse(localStorage.getItem("employee") || "");
-    setIdEmployee(id?.id || "");
-    console.log({ currentExperience });
+    // let id: EmployeeInterface | null = null;
+    // id = JSON.parse(localStorage.getItem("employee") || "");
+    setIdEmployee(employeeGlobal.id || "");
+    // console.log({ currentExperience });
   }, []);
 
   const { errors, touched, getFieldProps, values, handleChange } = useFormik({
@@ -208,9 +214,9 @@ const FormExperienceSecondary: NextPage<Prop> = ({
           notifySuccess("Se ha actualizado la experiencia.");
           setIsLoading(false);
           setDataListExperiences([...dataListExperiences, res]);
-          setTimeout(() => {
-            openExperience();
-          }, 2000);
+          // setTimeout(() => {
+          //   openExperience();
+          // }, 2000);
         })
         .catch((err) => {
           setIsLoading(false);
@@ -228,7 +234,7 @@ const FormExperienceSecondary: NextPage<Prop> = ({
           setIsLoading(false);
           setDataListExperiences([...dataListExperiences, res]);
           setTimeout(() => {
-            openExperience();
+            // openExperience();
             router.reload();
           }, 2000);
         })
@@ -270,12 +276,12 @@ const FormExperienceSecondary: NextPage<Prop> = ({
         <h1 className={styles.title}>
           {editMode ? "Editar" : "Añade una nueva Experiencia"}
         </h1>
-        <div className={styles.boxClose}>
+        {/* <div className={styles.boxClose}>
           <CloseIcon
             onClick={editMode ? closeEditMode : openExperience}
             className={styles.svg}
           />
-        </div>
+        </div> */}
       </div>
       <div className={styles.formBody}>
         <div className={styles.field}>

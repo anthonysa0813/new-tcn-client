@@ -1,5 +1,5 @@
 .formNewSkill {
-  background-color: var(--bg-blueLight);
+  /* background-color: var(--bg-blueLight); */
   padding: 2rem;
   border-radius: 0.5rem;
   height: auto;
@@ -15,7 +15,7 @@
 
 .field input {
   width: 100%;
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem;
   border: none;
   border: 1px solid var(--bg-black100);
   border-radius: 0.25rem;

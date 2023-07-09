@@ -2,7 +2,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
-import { Input } from "@nextui-org/react";
+import { Input, Text } from "@nextui-org/react";
 import useForm from "../../../hooks/useForm";
 import {
   createNewServicefetch,
@@ -18,6 +18,10 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { ServiceApi } from "../../../apis/services";
 import { ServiceI } from "../../../interfaces";
+import {
+  EmployeeContext,
+  EmployeeContextProps,
+} from "../../../context/EmployeeContext";
 
 const QuillNoSSRWrapper = dynamic(import("react-quill"), {
   ssr: false,
@@ -46,6 +50,7 @@ interface FormProp {
   slug?: string;
   whatsapp?: string;
   supervisor?: string;
+  localCurrency?: string;
 }
 
 const notify = () => toast.success("Se actualizó el puesto!");
@@ -67,6 +72,7 @@ const UpdateService = () => {
     slug: "",
     whatsapp: "",
     supervisor: "",
+    localCurrency: "",
   });
   const {
     title,
@@ -80,10 +86,13 @@ const UpdateService = () => {
     setForm,
     whatsapp,
     supervisor,
+    localCurrency,
   } = useForm<FormProp>(initialValues);
   const [error, setError] = useState(false);
   const { userGlobal } = useContext(UserContext);
   const { privateToken } = useContext(TokenContext);
+  const { employeeGlobal, setEmployeeGlobal } =
+    useContext<EmployeeContextProps>(EmployeeContext);
   const [currentData, setCurrentData] = useState<ServiceI>({} as ServiceI);
 
   const [isDisabled, setIsDisabled] = useState(false);
@@ -103,6 +112,7 @@ const UpdateService = () => {
           slug: res.data.slug,
           whatsapp: res.data.whatsapp,
           supervisor: res.data.supervisor,
+          localCurrency: res.data.localCurrency,
         });
         setCurrentData(res.data);
         setDescriptionState(res.data.description);
@@ -123,8 +133,6 @@ const UpdateService = () => {
       ...initialValues,
       slug: transformSlug,
     });
-    console.log(initialValues);
-    console.log({ slug });
   }, [title]);
 
   const handleChangeDescription = (e: string) => {
@@ -171,6 +179,7 @@ const UpdateService = () => {
         slug,
         supervisor,
         whatsapp,
+        localCurrency,
       },
       privateToken.token,
       currentData._id
@@ -186,7 +195,7 @@ const UpdateService = () => {
       </Head>
       <LayoutDashboard>
         <ToastContainer />
-        <div className="wrapper">
+        <div className="wrapper ">
           <form onSubmit={handleSubmit} className={`${styles.form} `}>
             <h1 className={styles.title}>Editar Puesto</h1>
             {role !== "ADMIN_ROLE" && (
@@ -228,16 +237,40 @@ const UpdateService = () => {
                     placeholder="L - V (8am -6pm)"
                   />
                 </div>
-                <div className={styles.subField}>
-                  <label>Salario:</label>
-                  <Input
-                    type="text"
-                    underlined
-                    name="salary"
-                    value={salary}
-                    onChange={onChange}
-                    placeholder="2000"
-                  />
+                <div className={styles.currencyField}>
+                  <div className={styles.subField}>
+                    <label>Salario:</label>
+                    <Input
+                      type="text"
+                      underlined
+                      name="salary"
+                      value={salary}
+                      onChange={onChange}
+                      placeholder="2000"
+                    />
+                  </div>
+                  <div className={styles.subField}>
+                    <label>Tipo de moneda:</label>
+                    <NativeSelect
+                      defaultValue={30}
+                      inputProps={{
+                        name: "type",
+                        id: "uncontrolled-native",
+                      }}
+                      value={localCurrency}
+                      name="localCurrency"
+                      onChange={(e) =>
+                        setForm((state) => ({
+                          ...state,
+                          localCurrency: e.target.value,
+                        }))
+                      }
+                    >
+                      <option value={""}>Seleccione</option>
+                      <option value={"PEN"}>PEN</option>
+                      <option value={"USD"}>USD</option>
+                    </NativeSelect>
+                  </div>
                 </div>
               </div>
               <div className={styles.fieldSecondary}>
@@ -251,12 +284,6 @@ const UpdateService = () => {
                     }}
                     value={type}
                     name="type"
-                    // onChange={(e) =>
-                    //   setInitialValues({
-                    //     ...initialValues,
-                    //     type: e.target.value,
-                    //   })
-                    // }
                     onChange={(e) =>
                       setForm((state) => ({
                         ...state,
@@ -298,7 +325,7 @@ const UpdateService = () => {
                   <label>Correo del Supervisor encargado:</label>
                   <Input
                     type="text"
-                    clearable
+                    // clearable
                     underlined
                     name="supervisor"
                     value={supervisor}
@@ -307,16 +334,26 @@ const UpdateService = () => {
                   />
                 </div>
                 <div className={styles.subField}>
-                  <label>Enlace de whatsapp:</label>
-                  <Input
-                    type="text"
-                    clearable
-                    underlined
-                    name="whatsapp"
-                    value={whatsapp}
-                    onChange={onChange}
-                    placeholder="link de whatsapp"
-                  />
+                  <label>N° whatsapp:</label>
+                  <div className="">
+                    <Input
+                      type="text"
+                      // clearable
+                      underlined
+                      name="whatsapp"
+                      value={whatsapp}
+                      onChange={onChange}
+                      placeholder="link de whatsapp"
+                      css={{
+                        display: "block",
+                      }}
+                    />
+                    {whatsapp && (
+                      <Text size={14} color="primary">
+                        https://wa.me/51{whatsapp}?text=Hola
+                      </Text>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className={styles.field} style={{ marginBlock: "3rem" }}>
@@ -339,18 +376,6 @@ const UpdateService = () => {
                   theme="snow"
                 />
               </div>
-              {/* <div className={styles.field}>
-                <label>Requerimientos:</label>
-                <Input
-                  type="text"
-                  clearable
-                  underlined
-                  name="requirements"
-                  value={requirements}
-                  onChange={onChange}
-                  placeholder="habilidades blandas, experiencia en ventas,etc..."
-                />
-              </div> */}
               <button
                 type={role !== "ADMIN_ROLE" ? "button" : "submit"}
                 className={`${styles.button} ${
@@ -358,7 +383,7 @@ const UpdateService = () => {
                 }`}
                 // disabled={true}
               >
-                Crear
+                Guardar
               </button>
             </div>
           </form>

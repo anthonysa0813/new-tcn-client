@@ -30,6 +30,7 @@ import dynamic from "next/dynamic";
 import FormExperienceSecondary from "./FormExperienceSecondary";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { TokenContext } from "../../context/CurrentToken";
+import { Modal, Button as ButtonNextUi, Text } from "@nextui-org/react";
 
 const LayoutEmployee = dynamic(() =>
   import("./layoutEmployee").then((res) => res.default)
@@ -143,7 +144,7 @@ const MoreDetails = () => {
     setshowModalExperience((state) => !state);
   };
   const [initialForm, setInitialForm] = useState({} as PropSaveInfo);
-  const [currentExpToMoDal, setCurrentExpToMoDal] = useState({} as Experience )
+  const [currentExpToMoDal, setCurrentExpToMoDal] = useState({} as Experience);
 
   const [formValue, setFormValue] = useState({
     phone: "",
@@ -187,7 +188,7 @@ const MoreDetails = () => {
 
     saveInformationGeneral<PropSaveInfo>(
       "employees",
-      idEmployee,
+      idEmployee || "",
       {
         phone,
         github,
@@ -205,18 +206,21 @@ const MoreDetails = () => {
       });
   };
 
-  useEffect(() => {
-    if (typeof window.sessionStorage !== undefined) {
-      const tok = sessionStorage.getItem("token");
-      setPrivateToken({ token: tok || "" });
-    }
-    if (window.localStorage) {
-      const getId: EmployeeInterface = JSON.parse(
-        localStorage.getItem("employee") || ""
-      );
-      setEmployeeGlobal(getId);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // if (typeof window.sessionStorage !== undefined) {
+  //   //   const tok = sessionStorage.getItem("token");
+  //   //   setPrivateToken({ token: tok || "" });
+  //   // }
+  //   if (window.localStorage) {
+  //     // const getId: EmployeeInterface = JSON.parse(
+  //     //   localStorage.getItem("employee") || ""
+  //     // );
+  //     const getId: EmployeeInterface = JSON.parse(
+  //       localStorage.getItem("employee") || ""
+  //     );
+  //     setEmployeeGlobal(getId);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (privateToken.token && employeeGlobal.id) {
@@ -399,18 +403,17 @@ const MoreDetails = () => {
               </div>
             </div>
             <div className={styles.inputSection}>
-              <Button
-                onClick={() => setShowModalSkills(!showModalSkills)}
-                style={{
-                  marginTop: 20,
-                  padding: 0,
-                  marginInlineStart: 0,
+              <ButtonNextUi
+                auto
+                shadow
+                onPress={() => setShowModalSkills(!showModalSkills)}
+                css={{
+                  marginBlockStart: "1rem",
                 }}
-                className={styles.button}
               >
                 <BsFillPlusCircleFill />
                 <p>Agregar una habilidad </p>
-              </Button>
+              </ButtonNextUi>
             </div>
           </div>
           <div className={`${styles.field}`}>
@@ -443,7 +446,7 @@ const MoreDetails = () => {
               </div>
             </div>
             <div className={styles.inputSection}>
-              <Button
+              {/* <Button
                 onClick={() => setShowModalToLang(!showModalToLang)}
                 style={{
                   marginTop: 20,
@@ -454,7 +457,18 @@ const MoreDetails = () => {
               >
                 <BsFillPlusCircleFill />
                 <p>Agregar idioma</p>
-              </Button>
+              </Button> */}
+              <ButtonNextUi
+                auto
+                shadow
+                onPress={() => setShowModalToLang(!showModalToLang)}
+                css={{
+                  marginBlockStart: "1rem",
+                }}
+              >
+                <BsFillPlusCircleFill />
+                <p>Agregar idioma</p>
+              </ButtonNextUi>
             </div>
           </div>
 
@@ -471,7 +485,7 @@ const MoreDetails = () => {
                     postulaciones.
                   </span>
                 </div>
-                <Button
+                {/* <Button
                   onClick={openExperience}
                   style={{
                     padding: 0,
@@ -481,7 +495,11 @@ const MoreDetails = () => {
                 >
                   <BsFillPlusCircleFill />
                   <p>Agregar experiencia</p>
-                </Button>
+                </Button> */}
+                <ButtonNextUi auto shadow onPress={openExperience}>
+                  <BsFillPlusCircleFill />
+                  <p>Agregar experiencia</p>
+                </ButtonNextUi>
               </div>
             </div>
             <div className={styles.experiencesList}>
@@ -504,8 +522,8 @@ const MoreDetails = () => {
                             onClick={() => {
                               setShowService(true);
                               setCurrentIdExperience(exp._id || "");
-                              setCurrentExpToMoDal(exp); 
-			   }}
+                              setCurrentExpToMoDal(exp);
+                            }}
                           >
                             Leer completo
                           </span>
@@ -529,48 +547,75 @@ const MoreDetails = () => {
                   );
                 })}
             </div>
-            <ButtonPrimary
+            {/* <ButtonPrimary
               color="dark"
               content="Guardar"
               onClick={() => console.log("click")}
               type="submit"
-            />
-            {isLoading && <Loading style={{ marginTop: "1rem" }} />}
+            /> */}
+            <ButtonNextUi auto flat type="submit" color="primary">
+              {isLoading && <Loading style={{ marginTop: "1rem" }} />}
+              <p>Guardar</p>
+            </ButtonNextUi>
           </div>
         </form>
       </LayoutEmployee>
-      {showModalToDelete && (
-        <ModalComponent>
+      <Modal
+        closeButton
+        aria-labelledby="modal-title"
+        open={showModalToDelete}
+        onClose={() => setshowModalToDelete(false)}
+        width="500px"
+      >
+        <Modal.Body>
           <FormToDeleteExp
             setshowModalToDelete={setshowModalToDelete}
             currentExperience={currentExperience}
             setDataListExperiences={setDataListExperiences}
             dataListExperiences={dataListExperiences}
           />
-        </ModalComponent>
-      )}
+        </Modal.Body>
+      </Modal>
 
-      {showModalExperience && (
-        <ModalComponent>
+      <Modal
+        closeButton
+        aria-labelledby="modal-title"
+        open={showModalExperience}
+        onClose={() => setshowModalExperience(false)}
+        width="1000px"
+      >
+        <Modal.Body>
           <FormExperienceSecondary
-            openExperience={openExperience}
+            // openExperience={showModalExperience}
             dataListExperiences={dataListExperiences}
             setDataListExperiences={setDataListExperiences}
           />
-        </ModalComponent>
-      )}
-      {showService && (
-        <ModalComponent>
+        </Modal.Body>
+      </Modal>
+      <Modal
+        closeButton
+        aria-labelledby="modal-title"
+        open={showService}
+        onClose={() => setShowService(false)}
+        width="500px"
+      >
+        <Modal.Body>
           <ShowServiceById
             idService={currentIdExperience}
             idEmployee={employeeGlobal.id}
             setShowService={setShowService}
             exp={currentExpToMoDal}
-	  />
-        </ModalComponent>
-      )}
-      {editMode && (
-        <ModalComponent>
+          />
+        </Modal.Body>
+      </Modal>
+      <Modal
+        closeButton
+        aria-labelledby="modal-title"
+        open={editMode}
+        onClose={() => setEditMode(false)}
+        width="1000px"
+      >
+        <Modal.Body>
           <FormExperienceSecondary
             openExperience={openExperience}
             dataListExperiences={dataListExperiences}
@@ -579,28 +624,39 @@ const MoreDetails = () => {
             currentExperience={currentExperience}
             setEditMode={setEditMode}
           />
-        </ModalComponent>
-      )}
-      {showModalToLang && (
-        <ModalComponent>
+        </Modal.Body>
+      </Modal>
+      <Modal
+        closeButton
+        aria-labelledby="modal-title"
+        open={showModalToLang}
+        onClose={() => setShowModalToLang(false)}
+        width="500px"
+      >
+        <Modal.Body>
           <FormNewLang
             openLang={openLang}
             setStateListLang={setStateListLang}
             stateListLang={stateListLang}
           />
-        </ModalComponent>
-      )}
-
-      {showModalSkills && (
-        <ModalComponent>
+        </Modal.Body>
+      </Modal>
+      <Modal
+        closeButton
+        aria-labelledby="modal-title"
+        open={showModalSkills}
+        onClose={() => setShowModalSkills(false)}
+        width="500px"
+      >
+        <Modal.Body>
           <FormNewSkills
             openSkill={openSkill}
-            idEmployee={idEmployee}
+            idEmployee={idEmployee || ""}
             knoledgesList={knoledgesList}
             setKnoledgesList={setKnoledgesList}
           />
-        </ModalComponent>
-      )}
+        </Modal.Body>
+      </Modal>
     </>
   );
 };

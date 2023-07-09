@@ -6,6 +6,7 @@ import {
   useEffect,
 } from "react";
 import { ContextInitial, EmployeeInterface } from "../interfaces";
+import Cookies from "js-cookie";
 
 export type EmployeeContextProps = {
   employeeGlobal: EmployeeInterface;
@@ -22,12 +23,13 @@ type ChildrenType = {
 
 const EmployeeContextProvider = ({ children }: ChildrenType) => {
   const [employeeGlobal, setEmployeeGlobal] = useState({} as EmployeeInterface);
-  // useEffect(() => {
-  //   if (typeof window.localStorage !== "undefined") {
-  //     const employee = JSON.parse(localStorage.getItem("employee") || "");
-  //     setEmployeeGlobal(employee);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const employeeValue = Cookies.get("employee");
+    if (employeeValue) {
+      const employee: EmployeeInterface = JSON.parse(employeeValue);
+      setEmployeeGlobal(employee);
+    }
+  }, []);
 
   return (
     <EmployeeContext.Provider value={{ employeeGlobal, setEmployeeGlobal }}>

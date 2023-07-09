@@ -1789,3 +1789,158 @@ export const countriesDataResponse = [
     value: "Mozambique",
   },
 ];
+
+export const districtsDataResponse = [
+  {
+    id: uuidv4(),
+    value: "Ancón",
+  },
+  {
+    id: uuidv4(),
+    value: "Ate",
+  },
+  {
+    id: uuidv4(),
+    value: "Barranco",
+  },
+  {
+    id: uuidv4(),
+    value: "Breña",
+  },
+  {
+    id: uuidv4(),
+    value: "Carabayllo",
+  },
+  {
+    id: uuidv4(),
+    value: "Chaclacayo",
+  },
+  {
+    id: uuidv4(),
+    value: "Cieneguilla",
+  },
+  {
+    id: uuidv4(),
+    value: "El Agustino",
+  },
+  {
+    id: uuidv4(),
+    value: "Independencia",
+  },
+  {
+    id: uuidv4(),
+    value: "Jesús María",
+  },
+  {
+    id: uuidv4(),
+    value: "La Molina",
+  },
+  {
+    id: uuidv4(),
+    value: "La Victoria",
+  },
+  {
+    id: uuidv4(),
+    value: "Lima",
+  },
+  {
+    id: uuidv4(),
+    value: "Lince",
+  },
+  {
+    id: uuidv4(),
+    value: "Los Olivos",
+  },
+  {
+    id: uuidv4(),
+    value: "Lurigancho",
+  },
+  {
+    id: uuidv4(),
+    value: "Magdalena del Mar",
+  },
+  {
+    id: uuidv4(),
+    value: "Miraflores",
+  },
+  {
+    id: uuidv4(),
+    value: "Pachacamac",
+  },
+  {
+    id: uuidv4(),
+    value: "Pueblo Libre",
+  },
+  {
+    id: uuidv4(),
+    value: "Puente Piedra",
+  },
+  {
+    id: uuidv4(),
+    value: "Punta Hermosa",
+  },
+  {
+    id: uuidv4(),
+    value: "Punta Negra",
+  },
+  {
+    id: uuidv4(),
+    value: "San Bartolo",
+  },
+  {
+    id: uuidv4(),
+    value: "San Borja",
+  },
+  {
+    id: uuidv4(),
+    value: "San Isidro",
+  },
+  {
+    id: uuidv4(),
+    value: "San Juan de Lurigancho",
+  },
+  {
+    id: uuidv4(),
+    value: "San Juan de Miraflores",
+  },
+  {
+    id: uuidv4(),
+    value: "San Luis",
+  },
+  {
+    id: uuidv4(),
+    value: "San Martín de Porres",
+  },
+  {
+    id: uuidv4(),
+    value: "San Miguel",
+  },
+  {
+    id: uuidv4(),
+    value: "Santa Anita",
+  },
+  {
+    id: uuidv4(),
+    value: "Santa María del Mar",
+  },
+  {
+    id: uuidv4(),
+    value: "Santa Rosa",
+  },
+  {
+    id: uuidv4(),
+    value: "Santiago de Surco",
+  },
+  {
+    id: uuidv4(),
+    value: "Surquillo",
+  },
+  {
+    id: uuidv4(),
+    value: "Villa El Salvador",
+  },
+  {
+    id: uuidv4(),
+    value: "Villa María del Triunfo",
+  },
+];

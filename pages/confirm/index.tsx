@@ -4,7 +4,7 @@ import Navbar from "../../components/menu/Navbar";
 
 const ConfirmPageJob = () => {
   const queries = useRouter();
-  console.log(queries);
+
   return (
     <>
       <Navbar />

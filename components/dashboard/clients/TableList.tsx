@@ -44,7 +44,7 @@ const TableList = ({ data, total, offsetSliceValue = 5 }: Props) => {
         },
       }).then((res) => {
         console.log(res.data);
-        setExperienceUser(res.data.experiences);
+        setExperienceUser(res.data.experiences || []);
         setLang(res.data.languages || []);
       });
 

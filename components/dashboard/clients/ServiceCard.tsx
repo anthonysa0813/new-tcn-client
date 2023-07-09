@@ -43,19 +43,19 @@ const ServiceCard = ({ service }: Prop) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (typeof window.sessionStorage !== undefined) {
-      const token = sessionStorage.getItem("token");
-      setPrivateToken({ token: token || "" });
+    // if (typeof window.sessionStorage !== undefined) {
+    //   const token = sessionStorage.getItem("token");
+    //   setPrivateToken({ token: token || "" });
+    // }
+    // const resEmployeeLocalStorage =
+    // window.localStorage.getItem("employee") || "";
+    if (Boolean(employeeGlobal)) {
+      // const getId: EmployeeInterface = JSON.parse(
+      //   localStorage.getItem("employee") || ""
+      // );
+      // setEmployeeGlobal(employeeGlobal.id || "");
     }
-    const resEmployeeLocalStorage =
-      window.localStorage.getItem("employee") || "";
-    if (Boolean(resEmployeeLocalStorage)) {
-      const getId: EmployeeInterface = JSON.parse(
-        localStorage.getItem("employee") || ""
-      );
-      setEmployeeGlobal(getId);
-      setIdEmployee(getId.id);
-    }
+    setIdEmployee(employeeGlobal.id || "");
   }, []);
 
   useEffect(() => {
@@ -98,12 +98,12 @@ const ServiceCard = ({ service }: Prop) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log("data", data);
         if (data.message) {
           const notifyError = () => toast.error(data.message);
           notifyError();
         } else {
           const notify = () => toast.success("haz aplicado a este puesto");
+          window.location.reload();
           notify();
         }
       })
@@ -177,50 +177,53 @@ const ServiceCard = ({ service }: Prop) => {
           </span>
         </div>
         <div className={styles.bodyGrid}>
-          <div className="">
-            <div className={styles.infoContainer}>
-              <p dangerouslySetInnerHTML={{ __html: service.description }}></p>
+          <div className={styles.cardContainer}>
+            <div className="">
+              <div className={styles.infoContainer}>
+                <p
+                  dangerouslySetInnerHTML={{ __html: service.description }}
+                ></p>
+              </div>
+              <div className="characters">
+                <Grid.Container gap={2}>
+                  <Grid>
+                    <Button bordered color="primary" auto>
+                      <span className={styles.textSm}>{service.salary}</span>
+                    </Button>
+                  </Grid>
+                  <Grid>
+                    <Button bordered color="primary" auto>
+                      <span className={styles.textSm}>{service.schedule}</span>
+                    </Button>
+                  </Grid>
+                  <Grid>
+                    <Button bordered color="primary" auto>
+                      <span className={styles.textSm}>{service.type}</span>
+                    </Button>
+                  </Grid>
+                  <Grid>
+                    <Button bordered color="primary" auto>
+                      <span className={styles.textSm}>{service.typeJob}</span>
+                    </Button>
+                  </Grid>
+                </Grid.Container>
+              </div>
             </div>
-            <div className="characters">
-              <Grid.Container gap={2}>
-                <Grid>
-                  <Button bordered color="primary" auto>
-                    <span className={styles.textSm}>{service.salary}</span>
-                  </Button>
-                </Grid>
-                <Grid>
-                  <Button bordered color="primary" auto>
-                    <span className={styles.textSm}>{service.schedule}</span>
-                  </Button>
-                </Grid>
-                <Grid>
-                  <Button bordered color="primary" auto>
-                    <span className={styles.textSm}>{service.type}</span>
-                  </Button>
-                </Grid>
-                <Grid>
-                  <Button bordered color="primary" auto>
-                    <span className={styles.textSm}>{service.typeJob}</span>
-                  </Button>
-                </Grid>
-              </Grid.Container>
-            </div>
-          </div>
-          <div className={styles.actions}>
-            {/* <button className={styles.button} onClick={() => setVisible(true)}>
+            <div className={styles.actions}>
+              {/* <button className={styles.button} onClick={() => setVisible(true)}>
               Ver detalles
             </button> */}
-            <Link href={`/jobs/${service._id || ""}/${service.slug}`}>
-              <Button
-                shadow
-                color="primary"
-                auto
-                // onClick={() => setVisible(true)}
-              >
-                Ver detalles
-              </Button>
-            </Link>
-            {/* <button
+              <Link href={`/jobs/${service._id || ""}/${service.slug}`}>
+                <Button
+                  shadow
+                  color="primary"
+                  auto
+                  // onClick={() => setVisible(true)}
+                >
+                  Ver detalles
+                </Button>
+              </Link>
+              {/* <button
               className={`${
                 isPostulate ? styles.buttonDisabled : styles.button
               }`}
@@ -229,15 +232,16 @@ const ServiceCard = ({ service }: Prop) => {
             >
               {isPostulate ? "Postulado" : "Postular"}
             </button> */}
-            <Button
-              shadow
-              color={isPostulate ? "gradient" : "success"}
-              auto
-              onClick={() => applicationJob(service?._id)}
-              disabled={isPostulate ? true : false}
-            >
-              {isPostulate ? "Postulado" : "Postular"}
-            </Button>
+              <Button
+                shadow
+                color={isPostulate ? "gradient" : "success"}
+                auto
+                onClick={() => applicationJob(service?._id)}
+                disabled={isPostulate ? true : false}
+              >
+                {isPostulate ? "Postulado" : "Postular"}
+              </Button>
+            </div>
           </div>
         </div>
       </div>

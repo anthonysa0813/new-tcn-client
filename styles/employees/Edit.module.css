@@ -62,6 +62,7 @@
   width: 100%;
   row-gap: 1rem;
   margin-block-start: 1rem;
+  padding-block-start: 1rem;
 }
 
 .button svg {

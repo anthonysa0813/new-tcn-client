@@ -33,7 +33,7 @@ const ForgetPassForm = ({ setShowForgetPasswordForm }: Prop) => {
       sendEmailToNewPassword("employees/forget-password", values).then(
         (res) => {
           console.log("res", res, values);
-          localStorage.setItem("email", values.email);
+          // localStorage.setItem("email", values.email);
           if (res.message === "Hubo un error") {
             toastAlertNotExistEmail();
           } else {

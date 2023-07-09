@@ -138,7 +138,7 @@ const TableToEmployee = ({
                       {userGlobal.role === "ADMIN_ROLE" ? (
                         <DropDownSelect
                           statusUser={user?.statusJob ? user?.statusJob : ""}
-                          idUser={user?.id}
+                          idUser={user?.id || ""}
                         />
                       ) : (
                         <span>{user?.statusJob}</span>

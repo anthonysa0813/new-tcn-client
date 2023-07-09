@@ -76,12 +76,17 @@ const LoginAdminFormComponent = ({ setShowForgetPass }: Prop) => {
           toastWarning(res.message);
         } else {
           const { token, user } = res;
-          console.log({res});
+          console.log({ res });
           setUserGlobal(user);
           setPrivateToken({ token });
-          localStorage.setItem("auth", JSON.stringify(user));
-          sessionStorage.setItem("token", token);
-          Cookies.set("token", token, { expires: 7 });
+          const expirationDate = new Date();
+          expirationDate.setTime(expirationDate.getTime() + 30 * 60 * 1000); //
+          // localStorage.setItem("auth", JSON.stringify(user));
+          // sessionStorage.setItem("token", token);
+          Cookies.set("token", token, { expires: expirationDate });
+          Cookies.set("auth", JSON.stringify(user), {
+            expires: expirationDate,
+          });
           toastSuccess("Bienvenido...");
           if (token && Boolean(Object.keys(user).length > 0)) {
             router.push("/admin/listServices");

@@ -57,9 +57,17 @@
   flex: 1 0 50%;
 }
 
+.currencyField {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  /* border: 2px solid brown; */
+  margin-inline-end: 5rem;
+}
+
 @media screen and (min-width: 768px) {
   .subwrapper {
-    width: 80%;
+    width: 90%;
   }
 
   .title {
@@ -71,6 +79,8 @@
 
   .fieldSecondary {
     display: flex;
+    gap: 2rem;
+
     /* align-items: center; */
   }
 

@@ -9,14 +9,12 @@ import {
   EmployeeContextProps,
 } from "../../../context/EmployeeContext";
 import dynamic from "next/dist/shared/lib/dynamic";
-import Autocomplete from "@mui/material/Autocomplete";
-import Box from "@mui/material/Box";
+
 import {
   CountryType,
   countriesDataMaterial,
 } from "../../../interfaces/countries";
 import DatalistInput from "react-datalist-input";
-import { Image } from "@nextui-org/react";
 
 const FormControl = dynamic(() =>
   import("@mui/material/FormControl").then((res) => res.default)

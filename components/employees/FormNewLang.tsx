@@ -10,6 +10,10 @@ import "react-toastify/dist/ReactToastify.css";
 import dynamic from "next/dynamic";
 import Button from "@mui/material/Button";
 import { TokenContext } from "../../context/CurrentToken";
+import {
+  EmployeeContext,
+  EmployeeContextProps,
+} from "../../context/EmployeeContext";
 
 const CloseIcon = dynamic(() =>
   import("@mui/icons-material/Close").then((res) => res.default)
@@ -34,11 +38,13 @@ const FormNewLang = ({ openLang, setStateListLang, stateListLang }: Prop) => {
     toast.success("Se ha agregado un nuevo idioma 👍");
   const [isLoading, setIsLoading] = useState(false);
   const { privateToken } = useContext(TokenContext);
+  const { employeeGlobal, setEmployeeGlobal } =
+    useContext<EmployeeContextProps>(EmployeeContext);
 
   useEffect(() => {
     let id: EmployeeInterface | null = null;
     id = JSON.parse(localStorage.getItem("employee") || "");
-    setIdEmployee(id?.id || "");
+    setIdEmployee(employeeGlobal?.id || "");
   }, [idEmployee, formLang, formOral, formWriter]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -79,9 +85,9 @@ const FormNewLang = ({ openLang, setStateListLang, stateListLang }: Prop) => {
     <form className={styles.formLang} onSubmit={handleSubmit}>
       <h2>Agrea un nuevo idioma</h2>
       <ToastContainer />
-      <div className={styles.boxClose}>
+      {/* <div className={styles.boxClose}>
         <CloseIcon onClick={openLang} className={styles.svg} />
-      </div>
+      </div> */}
       <div className={styles.field}>
         <DatalistInput
           placeholder="Nombre del idioma"
