@@ -16,6 +16,8 @@ const HomeAdmin = () => {
   const { employeeGlobal, setEmployeeGlobal } =
     useContext<EmployeeContextProps>(EmployeeContext);
   const router = useRouter();
+
+  console.log({ token });
   useEffect(() => {
     if (!token) {
       router.push("/admin/login");

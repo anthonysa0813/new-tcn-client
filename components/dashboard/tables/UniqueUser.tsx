@@ -8,6 +8,9 @@ interface Prop {
 }
 
 const UniqueUser = ({ userUniqueInfo, changeStatusFunction }: Prop) => {
+  console.log({
+    user: userUniqueInfo,
+  });
   return (
     <div className={styles.fieldUser}>
       <div className={styles.field}>
@@ -18,7 +21,7 @@ const UniqueUser = ({ userUniqueInfo, changeStatusFunction }: Prop) => {
       </div>
       <div className={styles.field}>
         <button
-          className={`${styles.button} ${
+          className={`${styles.button} p-2 ${
             userUniqueInfo.role === "ADMIN_ROLE" ? "red" : "primary"
           }`}
           onClick={() => changeStatusFunction(userUniqueInfo)}

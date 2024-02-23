@@ -1,6 +1,15 @@
 import { UserResponse } from "../../interfaces";
-export const searchUserAuth = async (endpoint: string) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_}/${endpoint}`);
+
+export const searchUserAuth = async (endpoint: string, token: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_DB_URL}/${endpoint}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    }
+  );
   const dataResponse = await response.json();
   return dataResponse;
 };

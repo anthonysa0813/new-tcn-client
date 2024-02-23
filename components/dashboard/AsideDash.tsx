@@ -79,6 +79,8 @@ const AsideDash = () => {
 
   const outSession = () => {
     Cookies.remove("token");
+    Cookies.remove("auth");
+    Cookies.remove("status");
     sessionStorage.clear();
     sessionStorage.removeItem("auth");
     router.push("/admin");
@@ -96,7 +98,7 @@ const AsideDash = () => {
           {showMenu ? (
             <>
               <Image
-                src="/images/logos/LogoContact.png"
+                src="/images/logos/logocontact.jpeg"
                 alt="Logo de Contact bpo"
                 width={150}
                 height={70}
@@ -111,7 +113,7 @@ const AsideDash = () => {
 
         <div className={styles.asideContainer}>
           <nav
-            className={`${styles.menu}  animate__animated  border ${
+            className={`${styles.menu}  animate__animated  ${
               showMenu ? "animate__fadeInLeft" : ""
             }`}
           >

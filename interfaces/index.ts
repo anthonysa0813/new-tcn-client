@@ -70,6 +70,7 @@ export interface EmployeeInterface {
   dni?: string;
   languages?: LangObject[] | [];
   experiences?: Experience[] | [];
+  skills?: any;
 }
 
 export interface ChangeStatusRequest {
@@ -103,11 +104,15 @@ export interface ServiceI {
   title: string;
   description: string;
   type?: string;
+  order?: number;
   typeJob?: string;
   slug?: string;
   whatsapp?: string;
   supervisor?: string;
   localCurrency?: string;
+  modalSalary?: boolean;
+  modalConfirm?: boolean;
+  __v?: number;
 }
 
 export interface CourntriesDataResponse {
@@ -192,3 +197,14 @@ export interface PropMessageNavbarLangs {
     plural: string;
   };
 }
+
+export interface Application {
+  confirm: string;
+  createdAt: string;
+  employee: string;
+  service: string;
+  updatedAt: string;
+  __v?: number | string;
+  _id: string;
+}
+

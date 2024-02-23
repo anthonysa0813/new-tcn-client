@@ -403,7 +403,11 @@ const MoreDetails = () => {
               </div>
             </div>
             <div className={styles.inputSection}>
-              <ButtonNextUi
+	       <button type="button" className="mt-2 gap-2 px-3 py-2 rounded-lg bg-blue-700 text-white hover:bg-blue-900 flex justify-center items-center" onClick={() => setShowModalSkills(!showModalSkills)}>
+		 <BsFillPlusCircleFill />
+                <p>Agregar una habilidad </p>
+		</button>
+             {/* <ButtonNextUi
                 auto
                 shadow
                 onPress={() => setShowModalSkills(!showModalSkills)}
@@ -413,7 +417,7 @@ const MoreDetails = () => {
               >
                 <BsFillPlusCircleFill />
                 <p>Agregar una habilidad </p>
-              </ButtonNextUi>
+              </ButtonNextUi> */}
             </div>
           </div>
           <div className={`${styles.field}`}>
@@ -446,19 +450,11 @@ const MoreDetails = () => {
               </div>
             </div>
             <div className={styles.inputSection}>
-              {/* <Button
-                onClick={() => setShowModalToLang(!showModalToLang)}
-                style={{
-                  marginTop: 20,
-                  padding: 0,
-                  marginInlineStart: 0,
-                }}
-                className={styles.button}
-              >
-                <BsFillPlusCircleFill />
+                <button type="button" className="mt-2 gap-2 px-3 py-2 rounded-lg bg-blue-700 text-white hover:bg-blue-900 flex justify-center items-center" onClick={() => setShowModalToLang(!showModalToLang)}>
+			<BsFillPlusCircleFill />
                 <p>Agregar idioma</p>
-              </Button> */}
-              <ButtonNextUi
+		</button> 
+              {/*<ButtonNextUi
                 auto
                 shadow
                 onPress={() => setShowModalToLang(!showModalToLang)}
@@ -468,7 +464,7 @@ const MoreDetails = () => {
               >
                 <BsFillPlusCircleFill />
                 <p>Agregar idioma</p>
-              </ButtonNextUi>
+              </ButtonNextUi>*/}
             </div>
           </div>
 
@@ -485,21 +481,13 @@ const MoreDetails = () => {
                     postulaciones.
                   </span>
                 </div>
-                {/* <Button
-                  onClick={openExperience}
-                  style={{
-                    padding: 0,
-                    marginInlineStart: 0,
-                  }}
-                  className={styles.button}
-                >
-                  <BsFillPlusCircleFill />
-                  <p>Agregar experiencia</p>
-                </Button> */}
+                {/* 
                 <ButtonNextUi auto shadow onPress={openExperience}>
                   <BsFillPlusCircleFill />
                   <p>Agregar experiencia</p>
-                </ButtonNextUi>
+                </ButtonNextUi>*/}
+		<button  type="button" className="mt-2 gap-2 px-3 py-2 rounded-lg bg-blue-700 text-white hover:bg-blue-900 flex justify-center items-center" onClick={openExperience}>  <BsFillPlusCircleFill />
+                  <p>Agregar experiencia</p></button>
               </div>
             </div>
             <div className={styles.experiencesList}>
@@ -553,10 +541,11 @@ const MoreDetails = () => {
               onClick={() => console.log("click")}
               type="submit"
             /> */}
-            <ButtonNextUi auto flat type="submit" color="primary">
+	
+            <button type="submit" className="w-full md:w-auto px-3 py-2 bg-zinc-900 text-white hover:bg-zinc-950 transition ease rounded-lg">
               {isLoading && <Loading style={{ marginTop: "1rem" }} />}
               <p>Guardar</p>
-            </ButtonNextUi>
+            </button>
           </div>
         </form>
       </LayoutEmployee>

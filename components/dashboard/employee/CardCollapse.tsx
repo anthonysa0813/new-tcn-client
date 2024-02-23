@@ -1,12 +1,17 @@
 import { GetServerSideProps } from "next";
 import React, { useState, useEffect } from "react";
 import styles from "../../../styles/employees/Applications.module.css";
-import { IApplicationJobResponse, Service } from "../../../interfaces/index";
+import {
+  Application,
+  IApplicationJobResponse,
+  Service,
+} from "../../../interfaces/index";
 import dynamic from "next/dynamic";
 
 interface Prop {
   service: Service;
   applications: IApplicationJobResponse[] | [];
+  status?: string;
 }
 
 const IoIosArrowUp = dynamic(
@@ -17,14 +22,32 @@ const CardCollapse = ({ service, applications }: Prop) => {
   const [activeDetails, setActiveDetails] = useState(false);
   const [currentService, setCurrentService] = useState("");
   const [totalServiceInfo, setTotalServiceInfo] = useState("");
+  const [currentStatus, setCurrentStatus] = useState("");
 
   useEffect(() => {
     applications.forEach((app) => {
       if (app.service === service._id) {
+        // setCurrentStatus(app);
+        console.log({
+          status: app.status,
+        });
         setTotalServiceInfo(app.status);
+        getInfoStatus();
       }
     });
   }, []);
+
+  const getInfoStatus = () => {
+    const data = applications.map((app) => {
+      if (app.service === service._id) {
+        if (app.status) {
+          // console.log({ status: app.status });
+          setCurrentStatus(app.status || "");
+        }
+        // return app.status;
+      }
+    });
+  };
 
   return (
     <div key={service._id} className={styles.serviceCard}>
@@ -32,9 +55,11 @@ const CardCollapse = ({ service, applications }: Prop) => {
         <div className="title">
           <h3>{service.title}</h3>
           <div className={styles.status}>
-            <strong>Estado:</strong>
-            {totalServiceInfo === "VISTO" ? (
-              <span className=" btn bg-2 purple">VISTO</span>
+            <strong>
+              Estado: <span className="text-blue-500">{currentStatus}</span>
+            </strong>
+            {totalServiceInfo === "" ? (
+              <span className=" btn bg-2 purple">Haz Postulado</span>
             ) : null}
             {totalServiceInfo === "CONTRATADO" ? (
               <span className=" btn bg-2 primary">CONTRATADO</span>
@@ -89,3 +114,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 export default CardCollapse;
+

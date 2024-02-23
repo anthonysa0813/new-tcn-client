@@ -167,10 +167,14 @@ const FormNewSkills = ({
         <div className="field" style={{ marginBlock: "1rem" }}>
           {isLoading && <Loading />}
         </div> */}
-        <Button type="submit" variant="contained" style={{ margin: 0 }}>
+	<button type="submit" className="px-3 py-2 rounded-lg bg-blue-700 hover:bg-blue-900 text-white rounded-lg flex justify-center items-center">
+	  {isLoading && <Loading />}
+          Guardar
+</button>
+        {/*<Button type="submit" variant="contained" style={{ margin: 0 }}>
           {isLoading && <Loading />}
           Guardar
-        </Button>
+        </Button>*/}
       </div>
     </form>
   );

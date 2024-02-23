@@ -2,8 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--bg-blueLight);
-  color: var(--bg-black200);
   grid-column: 1/-1;
   padding: 1rem;
 }
@@ -11,7 +9,6 @@
 .footer span {
   display: flex;
   align-items: center;
-  color: var(--bg-blue200);
 }
 
 .footer span svg {

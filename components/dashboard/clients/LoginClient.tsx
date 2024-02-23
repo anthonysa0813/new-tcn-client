@@ -96,6 +96,9 @@ const LoginClient = ({ setShowForgetPasswordForm }: Prop) => {
             Cookies.set("employee", JSON.stringify(res.employee), {
               expires: expirationDate,
             });
+	     Cookies.set("status", JSON.stringify(res.employee.status), {
+              expires: expirationDate,
+            });
             setEmployeeGlobal(res.employee);
             notifySuccess();
             setTimeout(() => {
@@ -109,7 +112,7 @@ const LoginClient = ({ setShowForgetPasswordForm }: Prop) => {
       });
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Debe de ser un email").required("Requerido"),
+      email: Yup.string().email("Debe de ser un email").required("Requerido").lowercase(),
       password: Yup.string().required("Requerido"),
     }),
   });
@@ -121,23 +124,27 @@ const LoginClient = ({ setShowForgetPasswordForm }: Prop) => {
     });
   };
 
+const lowercaseEmail = getFieldProps("email").value.toLowerCase();
+
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit} autoComplete="on">
         <ToastContainer />
         <h4>
-          Contact BPO | <span>Login</span>
+          Contact Americas | <span>Login</span>
         </h4>
         <div className={styles.field}>
           <TextField
             id="outlined-basic"
             label="Email"
+	   type="email"
             variant="outlined"
             size="small"
             {...getFieldProps("email")}
+	    className="lowercase"
           />
           {errors.email && touched.email && (
-            <span className="text-danger ">{errors.email} </span>
+            <span className="text-red-500 ">{errors.email} </span>
           )}
         </div>
         <FormControl sx={{ width: "100%" }} size="small" variant="outlined">
@@ -163,7 +170,7 @@ const LoginClient = ({ setShowForgetPasswordForm }: Prop) => {
             label="Password"
           />
           {errors.password && touched.password && (
-            <span className="text-danger ">{errors.password} </span>
+            <span className="text-red-500">{errors.password} </span>
           )}
         </FormControl>
         <div className={styles.field}>
@@ -176,7 +183,7 @@ const LoginClient = ({ setShowForgetPasswordForm }: Prop) => {
         </div>
 
         <div className={styles.field}>
-          <Button color="primary" variant="contained" type="submit">
+          <Button color="primary" variant="contained" type="submit" className=" hover:text-white bg-blue-500 text-white">
             Entrar
           </Button>
         </div>

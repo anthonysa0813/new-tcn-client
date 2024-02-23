@@ -70,12 +70,12 @@ const ForgetPassForm = ({ setShowForgetPasswordForm }: Prop) => {
           {...getFieldProps("email")}
         />
         {errors.email && touched.email && (
-          <span className="text-danger ">{errors.email} </span>
+          <span className="text-red-500 ">{errors.email} </span>
         )}
       </div>
 
       <div className={styles.field}>
-        <Button color="primary" variant="contained" type="submit">
+        <Button color="primary" variant="contained" type="submit"  className=" hover:text-white bg-blue-500 text-white">
           Enviar
         </Button>
       </div>

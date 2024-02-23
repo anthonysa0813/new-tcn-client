@@ -10,6 +10,7 @@ const nextConfig = {
     http: true,
     https: false,
   },
+  staticPageGenerationTimeout: 1000,
 };
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({

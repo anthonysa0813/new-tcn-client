@@ -92,6 +92,7 @@ const ForgetPassAdmin = ({ setShowForgetPass }: Prop) => {
             sx={{ width: "100%" }}
             variant="contained"
             type="submit"
+            className="bg-blue-500 text-white"
           >
             Enviar
           </Button>

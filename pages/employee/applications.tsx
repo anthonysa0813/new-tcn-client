@@ -81,7 +81,7 @@ const ApplicationsPage = () => {
       </Head>
       <LayoutEmployee name="aplicaciones de trabajo">
         <div className={styles.wrapper}>
-          {applicationsState.length > 0 && <h4>Mis Postulaciones</h4>}
+          {applicationsState.length > 0 && <h4 className="text-3xl my-3">Mis Postulaciones</h4>}
 
           <div className={styles.applicationsGrid}>
             {applicationsState.length === 0 && (

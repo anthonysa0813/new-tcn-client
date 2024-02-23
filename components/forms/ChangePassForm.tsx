@@ -70,12 +70,7 @@ const ChangePassForm = () => {
           </div>
         </div>
       </div>
-      <ButtonPrimary
-        color="dark"
-        content="guardar"
-        onClick={() => console.log("jeje")}
-        type="submit"
-      />
+	<button type="submit" className="w-full md:w-auto px-3 py-2 bg-zinc-900 text-white rounded-lg hover:bg-zinc-950 transition ease ">Guardar</button>
     </form>
   );
 };

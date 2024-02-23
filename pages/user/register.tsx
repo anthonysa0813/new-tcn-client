@@ -69,7 +69,7 @@ const RegisterPage: NextPage = ({ data }: any) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* <Navbar /> */}
-      <main className={styles.main}>
+      <main className={`${styles.main} dark:bg-white`}>
         <div className={styles.bannerColumn}>
           <Image
             src="/images/draw4.svg"
@@ -80,11 +80,16 @@ const RegisterPage: NextPage = ({ data }: any) => {
         </div>
         <div className={styles.registerSection}>
           <div className="wrapper">
-            <div className={styles.back} onClick={() => router.push("/")}>
+            <div
+              className={
+                "dark:text-gray-700 cursor-pointer hover:dark:text-gray-500  transition ease mt-10"
+              }
+              onClick={() => router.push("/")}
+            >
               <ArrowBackIosNewIcon />
               <span>Volver a la página principal</span>
             </div>
-            <h1>Registrate</h1>
+            <h1 className="text-2xl dark:text-gray-700">Regístrate</h1>
             <RegisterForm
               setActiveModalRegisterDone={setActiveModalRegisterDone}
             />
@@ -115,3 +120,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 export default RegisterPage;
+
+

@@ -60,7 +60,7 @@ const HistorialPage = () => {
       </Head>
       <LayoutDashboard>
         <>
-          <h1>Lista de Puestos desactivados</h1>
+          <h1 className="text-2xl">Lista de Puestos desactivados</h1>
           <hr />
           {currentServices.map((serviceItem) => {
             return (

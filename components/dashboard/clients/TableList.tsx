@@ -13,6 +13,8 @@ type Props = {
   data: EmployeeInterface[];
   total?: string | number;
   offsetSliceValue: number;
+  pageNumber?: number;
+  setPageNumber?: React.Dispatch<React.SetStateAction<number>>;
 };
 
 // interface IResponseApplication {
@@ -23,7 +25,7 @@ type Props = {
 //   __v?: number;
 // }
 
-const TableList = ({ data, total, offsetSliceValue = 5 }: Props) => {
+const TableList = ({ data, total, offsetSliceValue = 5, pageNumber, setPageNumber }: Props) => {
   const { setVisible, bindings } = useModal();
   const [currentEmployee, setCurrentEmployee] = useState<EmployeeInterface>(
     {} as EmployeeInterface
@@ -36,14 +38,16 @@ const TableList = ({ data, total, offsetSliceValue = 5 }: Props) => {
   const { privateToken } = useContext(TokenContext);
 
   useEffect(() => {
-    console.log(data);
+    console.log(currentEmployee);
     if (currentData.length > 0) {
-      EmployeeApi.get<EmployeeInterface>(`/employees/${currentData[0].id}`, {
+      EmployeeApi.get<EmployeeInterface>(`/employees/${currentEmployee.id}`, {
         headers: {
           Authorization: privateToken.token,
         },
       }).then((res) => {
-        console.log(res.data);
+        console.log({
+          lang: res.data.languages,
+        });
         setExperienceUser(res.data.experiences || []);
         setLang(res.data.languages || []);
       });
@@ -59,7 +63,7 @@ const TableList = ({ data, total, offsetSliceValue = 5 }: Props) => {
 
       // get user information
     }
-  }, [currentData]);
+  }, [currentData, currentEmployee]);
   useEffect(() => {
     setcurrentData(data.slice(initialSliceValue, offsetSliceValue));
     console.log(currentData);
@@ -79,9 +83,10 @@ const TableList = ({ data, total, offsetSliceValue = 5 }: Props) => {
         }}
       >
         <Table.Header>
-          <Table.Column>Nombre</Table.Column>
+          <Table.Column>Nombres</Table.Column>
           <Table.Column>Tlf</Table.Column>
           <Table.Column>email</Table.Column>
+          <Table.Column>País - Distrito</Table.Column>
           <Table.Column>Conocer más</Table.Column>
         </Table.Header>
         <Table.Body>
@@ -91,10 +96,12 @@ const TableList = ({ data, total, offsetSliceValue = 5 }: Props) => {
                 <Table.Cell>{user.name}</Table.Cell>
                 <Table.Cell>{user.phone}</Table.Cell>
                 <Table.Cell>{user.email}</Table.Cell>
+                <Table.Cell>{user.country} - { user.district }</Table.Cell>
                 <Table.Cell>
                   <Button
                     color="primary"
                     auto
+                    className="bg-blue-500 text-white"
                     onClick={() => {
                       setVisible(true);
                       setCurrentEmployee(user);
@@ -142,10 +149,17 @@ const TableList = ({ data, total, offsetSliceValue = 5 }: Props) => {
                   color="primary"
                   auto
                   size="sm"
+                  className={` text-white ${
+                    currentEmployee.linkedin
+                      ? "bg-gray-700 hover:bg-gray-900"
+                      : "bg-gray-400"
+                  }`}
                   style={{ marginBlock: "1rem" }}
                 >
                   <Link href={currentEmployee.linkedin || ""} target="_blank">
-                    abrir LinkeDln
+                    {!currentEmployee.linkedin
+                      ? "No tiene LinkedIn"
+                      : "abrir linkedin"}
                   </Link>
                 </Button>
               </p>
@@ -156,10 +170,15 @@ const TableList = ({ data, total, offsetSliceValue = 5 }: Props) => {
                 color="primary"
                 auto
                 size="sm"
+                className={` text-white ${
+                  currentEmployee.github
+                    ? "bg-gray-700 hover:bg-gray-900"
+                    : "bg-gray-400"
+                }`}
                 style={{ marginBlock: "1rem" }}
               >
                 <Link href={currentEmployee.github || ""} target="_blank">
-                  abrir github
+                  {!currentEmployee.github ? "No tiene GitHub" : "abrir GitHub"}
                 </Link>
               </Button>
             </div>
@@ -169,14 +188,23 @@ const TableList = ({ data, total, offsetSliceValue = 5 }: Props) => {
                 color="primary"
                 auto
                 size="sm"
+                className={` text-white ${
+                  currentEmployee.cv
+                    ? "bg-gray-700 hover:bg-gray-900"
+                    : "bg-gray-400"
+                }`}
                 style={{ marginBlock: "1rem" }}
               >
                 <Link href={currentEmployee.cv || ""} target="_blank">
-                  abrir el enlace del cv
+                  {!currentEmployee.cv ? "No tiene Cv" : "abrir Cv"}
                 </Link>
               </Button>
             </div>
             <div className={styles.field}>
+              <strong>¿Ha aplicado a alguna posición laboralmente anteriormente con nosotros?</strong>
+              <p>{currentEmployee.servicesId?.length! > 0 ? "Sí" : "No"}</p>
+            </div>
+            {/* <div className={styles.field}>
               <strong>Idiomas:</strong>
               <ul style={{ display: "flex", gap: "1rem" }}>
                 {lang.map((lg) => {
@@ -188,9 +216,9 @@ const TableList = ({ data, total, offsetSliceValue = 5 }: Props) => {
                   );
                 })}
               </ul>
-            </div>
+            </div> */}
           </div>
-          <div className={styles.field}>
+          {/* <div className={styles.field}>
             <strong>Experiencia Laboral:</strong>
             {experienceUser.map((experience) => {
               return (
@@ -245,7 +273,7 @@ const TableList = ({ data, total, offsetSliceValue = 5 }: Props) => {
                 </div>
               );
             })}
-          </div>
+          </div> */}
         </Modal.Body>
         <Modal.Footer>
           <Button auto flat color="error" onClick={() => setVisible(false)}>
@@ -253,8 +281,55 @@ const TableList = ({ data, total, offsetSliceValue = 5 }: Props) => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <div className="flex gap-3 items-center justify-center mt-5">
+        {pageNumber!! >= 1 && (
+          <button
+            onClick={() => setPageNumber!!(pageNumber!! - 1)}
+            className="w-[40px] rounded-full shadow-xl h-[40px] bg-slate-100 hover:bg-slate-200 transition ease font-bold flex justify-center items-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m15.75 19.5-7.5-7.5 7.5-7.5"
+              />
+            </svg>
+          </button>
+        )}
+        <button className="w-[40px] rounded-full shadow-xl h-[40px] bg-slate-100 hover:bg-slate-200 transition ease font-bold flex justify-center items-center">
+          <span>{pageNumber}</span>
+        </button>
+        <button
+          onClick={() => setPageNumber!!(pageNumber!! + 1)}
+          className="w-[40px] rounded-full shadow-xl h-[40px] bg-slate-100 hover:bg-slate-200 transition ease font-bold flex justify-center items-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m8.25 4.5 7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        </button>
+      </div>
     </>
   );
 };
 
 export default TableList;
+

@@ -317,16 +317,8 @@ const EditPage = ({ data }: any) => {
                   />
                 </Tooltip>
               </label>
-              <ButtonNextUi
-                auto
-                flat
-                color="primary"
-                onPress={saveFile}
-                disabled={activeButton}
-                type="submit"
-              >
-                Actualizar
-              </ButtonNextUi>
+	      <button type="submit" disabled={activeButton} onClick={saveFile} className={activeButton ? "px-3 py-2 rounded-lg bg-gray-500 text-white cursos-pointer" : "px-3 py-2 rounded-lg bg-blue-700 text-white cursos-pointer"} >Actualizar</button>
+            
             </div>
             {cvValue?.target?.value && (
               <p className={styles.titlePdf}>{cvValue.target.value}</p>
@@ -368,7 +360,7 @@ const EditPage = ({ data }: any) => {
         <form className={styles.formContainer} onSubmit={handleSubmit}>
           <div className={styles.field}>
             <div className={styles.textInfo}>
-              <label>Nombres:</label>
+              <label className={`${styles.label} text-gray-800`}>Nombres:</label>
               <span className={styles.subText}>
                 Porfavor, escribir tus nombres completos.
               </span>
@@ -386,7 +378,7 @@ const EditPage = ({ data }: any) => {
           </div>
           <div className={styles.field}>
             <div className={styles.textInfo}>
-              <label htmlFor="">Apellidos:</label>
+              <label htmlFor=""  className={`${styles.label} text-gray-800`}>Apellidos:</label>
               <span className={styles.subText}>
                 Porfavor, escribir tus Apellidos completos
               </span>
@@ -404,7 +396,7 @@ const EditPage = ({ data }: any) => {
           </div>
           <div className={styles.field}>
             <div className={styles.textInfo}>
-              <label htmlFor="" className={styles.label}>
+              <label htmlFor="" className={`${styles.label} text-gray-800`}>
                 <MailIcon style={{ height: "30px", width: 30 }} />
                 Email:
               </label>
@@ -429,7 +421,7 @@ const EditPage = ({ data }: any) => {
               <label
                 htmlFor="
               "
-                className={styles.label}
+              	className={`${styles.label} text-gray-800`}
               >
                 <PublicIcon style={{ height: "30px", width: 30 }} />
                 Dónde vives:
@@ -455,7 +447,7 @@ const EditPage = ({ data }: any) => {
               <label
                 htmlFor="
               "
-                className={styles.label}
+                className={`${styles.label} text-gray-800`}
               >
                 <PublicIcon style={{ height: "30px", width: 30 }} />
                 Distrito:
@@ -474,7 +466,7 @@ const EditPage = ({ data }: any) => {
           </div>
           <div className={styles.field}>
             <div className={styles.textInfo}>
-              <label htmlFor="" className={styles.label}>
+              <label htmlFor="" className={`${styles.label} text-gray-800`}>
                 <FileIcon style={{ height: "30px", width: 30 }} />
                 CV:
               </label>
@@ -484,20 +476,11 @@ const EditPage = ({ data }: any) => {
             </div>
             <div className={styles.buttonContent}>
               <InputFileUpload cv={cv || ""} />
-              <ButtonNextUi
-                auto
-                shadow
-                onPress={handler}
-                className={styles.buttonFileUpload}
-              >
-                actualizar CV
-              </ButtonNextUi>
+		<button className="p-2 rounded-lg bg-blue-700 text-white hover:bg-blue-900 transition ease w-full md:w-auto " type="button" onClick={handler}>actualizar CV</button>
             </div>
           </div>
           <div className={styles.buttonField}>
-            <ButtonNextUi auto flat type="submit" color="primary">
-              <p>Guardar</p>
-            </ButtonNextUi>
+		<button  className="p-2 md:px-4 rounded-lg bg-zinc-900 text-white hover:bg-zinc-950 transition ease w-full md:w-auto" type="submit">Guardar</button>
           </div>
         </form>
       </LayoutEmployee>

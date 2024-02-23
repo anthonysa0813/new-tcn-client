@@ -59,8 +59,11 @@ const notifyWarning = (message: string) => toast.warning(message);
 const UpdateService = () => {
   const [descriptionState, setDescriptionState] = useState("");
   const [requirementsState, setRequirementsState] = useState("");
+  const [showModalSalary, setShowModalSalary] = useState(false);
+  const [showModalConfirmCondition, setShowModalConfirmCondition] =
+    useState(false);
+
   const router = useRouter();
-  console.log(router);
 
   const [initialValues, setInitialValues] = useState<FormProp>({
     title: "",
@@ -115,6 +118,8 @@ const UpdateService = () => {
           localCurrency: res.data.localCurrency,
         });
         setCurrentData(res.data);
+        setShowModalSalary(res.data.modalSalary);
+        setShowModalConfirmCondition(res.data.modalConfirm);
         setDescriptionState(res.data.description);
         setRequirementsState(res.data.requirements);
       });
@@ -166,6 +171,9 @@ const UpdateService = () => {
     //   type,
     //   typeJob,
     //   slug,
+    //   supervisor,
+    //   whatsapp,
+    //   localCurrency,
     // });
     updateNewServicefetch(
       {
@@ -180,6 +188,8 @@ const UpdateService = () => {
         supervisor,
         whatsapp,
         localCurrency,
+        modalSalary: showModalSalary,
+        modalConfirm: showModalConfirmCondition,
       },
       privateToken.token,
       currentData._id
@@ -315,8 +325,8 @@ const UpdateService = () => {
                     }
                   >
                     <option value={""}>Seleccione</option>
-                    <option value={"J.Completa"}>Jornada Completa</option>
-                    <option value={"J.Part time"}>Jornada Part time</option>
+                    <option value={"Full Time"}>Jornada Completa</option>
+                    <option value={"Part time"}>Jornada Part Time</option>
                   </NativeSelect>
                 </div>
               </div>
@@ -356,6 +366,33 @@ const UpdateService = () => {
                   </div>
                 </div>
               </div>
+              <div className={styles.fieldSecondary}>
+                <input
+                  type="checkbox"
+                  name="modalSalary"
+                  checked={showModalSalary}
+                  onClick={() => setShowModalSalary(!showModalSalary)}
+                />
+                <span>
+                  Activar modal para preguntar: ¿Cuánto es su pretención
+                  salarial? <span style={{ color: "red" }}>(Opcional*)</span>
+                </span>
+              </div>
+              <div className={styles.fieldSecondary}>
+                <input
+                  type="checkbox"
+                  name="modalSalary"
+                  checked={showModalConfirmCondition}
+                  onClick={() =>
+                    setShowModalConfirmCondition(!showModalConfirmCondition)
+                  }
+                />
+                <span>
+                  Activar modal para preguntar: ¿Por favor confirmar que estás
+                  de acuerdo con las condiciones ofrecidas?{" "}
+                  <span style={{ color: "red" }}>(Opcional*)</span>
+                </span>
+              </div>
               <div className={styles.field} style={{ marginBlock: "3rem" }}>
                 <label style={{ marginBlockEnd: "1rem" }}>
                   Descripción del puesto:
@@ -378,8 +415,8 @@ const UpdateService = () => {
               </div>
               <button
                 type={role !== "ADMIN_ROLE" ? "button" : "submit"}
-                className={`${styles.button} ${
-                  role !== "ADMIN_ROLE" ? styles.inactive : ""
+                className={`bg-blue-500 text-white rounded-lg px-3 py-2 hover:bg-blue-700 transition ease ${
+                  role !== "ADMIN_ROLE" ? "bg-gray-300 text-white" : ""
                 }`}
                 // disabled={true}
               >
@@ -405,3 +442,4 @@ const UpdateService = () => {
 // };
 
 export default UpdateService;
+

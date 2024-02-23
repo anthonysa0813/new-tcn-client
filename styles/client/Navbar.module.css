@@ -1,6 +1,6 @@
 .header {
-  background-color: var(--bg-blueLight);
-  border-bottom: 1px solid var(--bg-gray100);
+  
+  /*border-bottom: 1px solid var(--bg-gray100);*/
   padding: 1rem;
 }
 

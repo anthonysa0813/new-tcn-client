@@ -33,17 +33,12 @@
 }
 
 .button {
-  background: var(--bg-black);
-  color: white;
   cursor: pointer;
   padding: 0.5rem 1.5rem;
   border-radius: 0.25rem;
   width: 100%;
 }
 
-.button:hover {
-  background: var(--bg-black100);
-}
 
 .fieldSecondary {
   margin-block-start: 2rem;

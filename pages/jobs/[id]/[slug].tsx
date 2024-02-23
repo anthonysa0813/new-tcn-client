@@ -14,7 +14,9 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import { EmployeeApi } from "../../../apis/employee";
 import { TokenContext } from "../../../context/CurrentToken";
-import { Button, Grid } from "@nextui-org/react";
+import { Button, Grid, Text } from "@nextui-org/react";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import Link from "next/link";
 
 interface Prop {
   id: string;
@@ -28,9 +30,7 @@ const PageByJob = ({ id }: Prop) => {
   const { privateToken, setPrivateToken } = useContext(TokenContext);
 
   useEffect(() => {
-    // console.log(query.id);
     if (id) {
-      console.log(query.id);
       ServiceApi.get(`${id}`).then((res) => {
         console.log(res);
         setJobState(res.data);
@@ -65,7 +65,6 @@ const PageByJob = ({ id }: Prop) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log("data", data);
         if (data.message) {
           const notifyError = () => toast.error(data.message);
           notifyError();
@@ -80,10 +79,21 @@ const PageByJob = ({ id }: Prop) => {
   return (
     <>
       <Head>
-        <title>Contact BPO | Puestos Disponibles</title>
+        <title>Contact BPO | {jobState.title}</title>
         <meta
           name="description"
           content="Puestos de trabajo disponibles con relación a Contact BPO."
+        />
+        <meta property="og:title" content={`${jobState.title || ""}`} />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:description"
+          content="Explora oportunidades laborales emocionantes y descubre tu próximo paso profesional en Contact BPO "
+        />
+        <meta property="og:url" content="https://work.contactamericas.com/" />
+        <meta
+          property="og:image"
+          content="https://res.cloudinary.com/da0d2neas/image/upload/v1694022571/grupo-personas-trabajando-plan-negocios-oficina_1_f3megn.jpg"
         />
       </Head>
       <Navbar />
@@ -93,7 +103,10 @@ const PageByJob = ({ id }: Prop) => {
         <div className={styles.wrapper}>
           <div className={styles.infoGrid}>
             <div className={styles.infoHero}>
-              <div className={styles.iconContainer}>
+              <Link
+                className={`${styles.iconContainer} cursor-pointer`}
+                href="/"
+              >
                 <div className={styles.icon}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +115,6 @@ const PageByJob = ({ id }: Prop) => {
                     strokeWidth={1.5}
                     stroke="currentColor"
                     className="w-6 h-6"
-                    onClick={() => back()}
                   >
                     <path
                       strokeLinecap="round"
@@ -112,17 +124,18 @@ const PageByJob = ({ id }: Prop) => {
                   </svg>
                 </div>
                 <span>Volver</span>
-              </div>
+              </Link>
               <h1>{jobState.title}</h1>
-              <div className="infoJornada">
+              <div className="flex items-center gap-2">
                 <span>Remoto</span>
-                <span>Tipo de trabajo: Jornada Completa</span>
+                <span>- Jornada Completa</span>
               </div>
             </div>
 
             <Button
               shadow
               color="primary"
+              className="bg-blue-500 text-white"
               auto
               onClick={() => applicationJob(jobState._id)}
             >
@@ -142,29 +155,48 @@ const PageByJob = ({ id }: Prop) => {
             <p dangerouslySetInnerHTML={{ __html: jobState.requirements }}></p>
           </div>
         </div>
-        <div className="characters">
-          <Grid.Container gap={2}>
-            <Grid>
-              <Button bordered color="primary" auto>
-                <span className={styles.textSm}>{jobState.salary}</span>
-              </Button>
-            </Grid>
-            <Grid>
-              <Button bordered color="primary" auto>
-                <span className={styles.textSm}>{jobState.schedule}</span>
-              </Button>
-            </Grid>
-            <Grid>
-              <Button bordered color="primary" auto>
-                <span className={styles.textSm}>{jobState.type}</span>
-              </Button>
-            </Grid>
-            <Grid>
-              <Button bordered color="primary" auto>
-                <span className={styles.textSm}>{jobState.typeJob}</span>
-              </Button>
-            </Grid>
-          </Grid.Container>
+        <div className="">
+          <Text size={18}>
+            ¿Aún tienes dudas? Puedes preguntarnos en nuestro canal de WhatsApp.
+          </Text>
+          <Link
+            href={
+              `https://wa.me/${
+                jobState.localCurrency == "PEN"
+                  ? `51${jobState.whatsapp}`
+                  : `1${jobState.whatsapp}`
+              }?text=${encodeURIComponent(
+                `¡Hola! Quiero postular al puesto ${jobState.title}`
+              )}` || ""
+            }
+            target="_blank"
+          >
+            <button
+              type="button"
+              className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-700 transition ease flex items-center gap-2"
+            >
+              <WhatsAppIcon />
+              <span className="font-semibold">WhatsApp</span>
+            </button>
+          </Link>
+        </div>
+        <div className="mt-5">
+          <div className="flex items-center gap-3 flex-wrap">
+            <div className="p-2 rounded-lg border-blue-500 border-2 text-blue-500 font-semibold">
+                <span>  {jobState.localCurrency == "PEN" ? "S/" : "$"}
+                  {jobState.salary}</span>
+          </div>
+        <div className="p-2 rounded-lg border-blue-500 border-2 text-blue-500 font-semibold">
+                <span>{jobState.schedule}</span>
+          </div>
+	 <div className="p-2 rounded-lg border-blue-500 border-2 text-blue-500 font-semibold">
+                <span>{jobState.type}</span>
+          </div>
+   	  <div className="p-2 rounded-lg border-blue-500 border-2 text-blue-500 font-semibold ">
+                <span>{jobState.typeJob}</span>
+          </div>
+            
+          </div>
         </div>
       </main>
     </>
@@ -183,3 +215,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 export default PageByJob;
+

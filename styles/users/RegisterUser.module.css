@@ -25,7 +25,7 @@
 }
 
 .field span {
-  color: var(--bg-red);
+ 
 }
 
 .registerSection {
@@ -35,7 +35,6 @@
 }
 
 .registerSection h1 {
-  color: var(--bg-blue200);
   margin-block-start: 2rem;
 }
 
@@ -56,7 +55,7 @@
 
 .wrapper p {
   margin-block-end: 1rem;
-  color: var(--bg-gray300);
+ 
 }
 
 .formContent {
@@ -67,7 +66,7 @@
   gap: 1rem;
 }
 .cvText {
-  color: var(--bg-blue200);
+
 }
 
 .field {
@@ -90,7 +89,6 @@
 }
 
 .subText {
-  color: var(--bg-gray300);
   font-size: 10px;
 }
 
@@ -142,7 +140,6 @@
 
 .custom-file-upload label {
   font-size: 0.85rem;
-  color: var(--bg-gray300);
 }
 .field input[type="file"]::file-selector-button {
   border: 2px solid var(--bg-bluePrimary);
@@ -164,7 +161,6 @@
 }
 
 .titlePdf {
-  color: var(--bg-gray200);
 }
 
 .buttonField {
@@ -176,9 +172,7 @@
   align-items: center;
 }
 
-.buttonField .register {
-  background-color: var(--bg-black);
-  color: white;
+.buttonField .register{
   padding: 0.5rem;
   border-radius: 0.25rem;
   transition: 0.3s all ease;
@@ -192,7 +186,6 @@
 .account {
   border: none;
   background: none;
-  color: var(--bg-purple);
 }
 
 .fieldButton {

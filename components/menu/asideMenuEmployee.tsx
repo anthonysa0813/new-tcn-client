@@ -37,16 +37,16 @@ const AsideMenuEmployee = () => {
   };
 
   return (
-    <div className={`${styles.asideMenu} ${showMenu ? styles.active : ""}`}>
+    <div className={`${styles.asideMenu} md:bg-slate-100 ${showMenu ? styles.active : ""}  ${showMenu ? "bg-slate-100 border-r-[1px]" : ""}`}>
       <div className={styles.boxMenu} onClick={() => setShowMenu(!showMenu)}>
-        <MenuIcon />
+        <MenuIcon className="text-gray-700 hover:text-white" />
       </div>
       {showMenu && (
         <nav className={`${styles.navigation} `}>
           <Link
             href="/employee/campaign"
             className={
-              pathActive("/employee/campaign") ? styles.activeLink : ""
+              pathActive("/employee/campaign") ? "p-4 bg-sky-900 rounded-lg text-white" : "text-gray-700"
             }
           >
             <WorkIcon style={{ width: "20px", height: "20px" }} />
@@ -55,7 +55,7 @@ const AsideMenuEmployee = () => {
           <Link
             href="/employee/applications"
             className={
-              pathActive("/employee/applications") ? styles.activeLink : ""
+              pathActive("/employee/applications") ? "p-4 bg-sky-900 rounded-lg text-white" : "text-gray-700"
             }
           >
             <ArrowIcon />
@@ -64,7 +64,7 @@ const AsideMenuEmployee = () => {
 
           <Link
             href="/employee/edit"
-            className={pathActive("/employee/edit") ? styles.activeLink : ""}
+            className={pathActive("/employee/edit") ? "p-4 bg-sky-900 rounded-lg text-white" : "text-gray-700"}
           >
             <EditIcon />
             Completar mi perfil

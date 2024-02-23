@@ -26,8 +26,20 @@ const ListUsersPage = () => {
   const [offsetNumber, setOffsetNumber] = useState(0);
   const [titleState, setTitleState] = useState("Lista de Todos los usuarios");
   const [firstData, setFirstData] = useState(true);
+  const [totalEmployees, setTotalEmployees] = useState(0);
+
   useEffect(() => {
-    EmployeeApi.get(`/employees?offset=${offsetNumber}&limit=10`, {
+    EmployeeApi.get("/employees", {
+      headers: {
+        Authorization: `${privateToken.token}`,
+      },
+    }).then((res) => {
+      setTotalEmployees(res.data.users.length);
+    });
+  }, []);
+
+  useEffect(() => {
+    EmployeeApi.get(`/employees?offset=${10 * pageNumber}&limit=10`, {
       headers: {
         Authorization: `${privateToken.token}`,
       },
@@ -35,48 +47,31 @@ const ListUsersPage = () => {
       setGetAllUsers(res.data.users);
       setGetUserNotApply(res.data.usersNotApply);
     });
-  }, []);
+  }, [pageNumber]);
 
   return (
     <>
       <Head>
-        <title>Contact Bpo Admin | Lista de usuarios</title>
+        <title>Contact Americas Admin | Lista de usuarios</title>
       </Head>
       <LayoutDashboard>
         <div className={styles.navbar}>
-          <h1>{titleState}</h1>
-          <Dropdown>
-            <Dropdown.Button flat>Filtros de búsqueda</Dropdown.Button>
-            <Dropdown.Menu aria-label="Static Actions">
-              <Dropdown.Item key="unapply">
-                <span
-                  onClick={() => {
-                    setFirstData(true);
-                    setTitleState("Lista de Todos los usuarios");
-                  }}
-                >
-                  Todos los usuarios
-                </span>
-              </Dropdown.Item>
-              <Dropdown.Item key="apply">
-                <span
-                  onClick={() => {
-                    setFirstData(false);
-
-                    setTitleState("Lista de Usuarios que NO aplicaron ");
-                  }}
-                >
-                  No aplicaron
-                </span>
-              </Dropdown.Item>
-              {/* <Dropdown.Item key="country">país</Dropdown.Item> */}
-            </Dropdown.Menu>
-          </Dropdown>
+          <h1 className="text-4xl">{titleState}</h1>
+          <p className="text-2xl font-semibold">
+            Número total de usuarios registrados:{" "}
+            <span className="text-blue-500">{totalEmployees}</span>{" "}
+          </p>
         </div>
         <div className="">
           <div className="wrapper">
             {firstData ? (
-              <TableList data={getAllUsers} offsetSliceValue={0} total={5} />
+              <TableList
+                data={getAllUsers}
+                offsetSliceValue={0}
+                total={5}
+                pageNumber={pageNumber}
+                setPageNumber={setPageNumber}
+              />
             ) : (
               <TableList
                 data={getUserNotApply}
@@ -92,3 +87,4 @@ const ListUsersPage = () => {
 };
 
 export default ListUsersPage;
+

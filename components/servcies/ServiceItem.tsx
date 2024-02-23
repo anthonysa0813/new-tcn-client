@@ -58,58 +58,76 @@ const ServiceItem = ({
   return (
     <>
       <div key={currentService._id} className={styles.tableService}>
-        <div className={styles.tableHead}>
-          <h4 className={styles.title}>{currentService.title}</h4>
-          <Button
-            size={"xs"}
-            style={{ padding: ".5rem" }}
-            color={currentService.status ? "success" : "error"}
-            onClick={() => changeStatusService()}
-          >
-            {" "}
-            {currentService.status ? "Activo" : "Finalizado"}
-          </Button>
-          <Link href={`/admin/listServices/${currentService._id}`}>
+        <div
+          className={
+            "flex md:justify-between md:items-center flex-col md:flex-row"
+          }
+        >
+          <h4 className={styles.title}>
+            {currentService.title} - ({currentService.employees?.length}{" "}
+            Postulaciones)
+          </h4>
+          <div className="flex gap-2 items-center flex-wrap">
             <Button
               size={"xs"}
               style={{ padding: ".5rem" }}
-              color={"gradient"}
-              type="button"
-              // onClick={() => watchAllEmployee(currentService.employees || [])}
+              color={currentService.status ? "success" : "error"}
+              onClick={() => changeStatusService()}
+              className={`${
+                currentService.status
+                  ? "bg-green-500 text-white"
+                  : "bg-red-500 text-white"
+              }`}
             >
               {" "}
-              Ver Todos
+              {currentService.status ? "Activo" : "Finalizado"}
             </Button>
-          </Link>
-          <Button
-            size={"xs"}
-            style={{ padding: ".5rem" }}
-            color={"default"}
-            onClick={() => generateExcelFile(currentService.employees)}
-          >
-            {" "}
-            Descargar Lista
-          </Button>
-          <Link href={`/admin/${currentService._id}/updateService`}>
+            <Link href={`/admin/listServices/${currentService._id}`}>
+              <Button
+                size={"xs"}
+                style={{ padding: ".5rem" }}
+                color={"gradient"}
+                type="button"
+                className="bg-purple-500 text-white"
+                // onClick={() => watchAllEmployee(currentService.employees || [])}
+              >
+                {" "}
+                Ver Todos los postulantes
+              </Button>
+            </Link>
             <Button
               size={"xs"}
               style={{ padding: ".5rem" }}
-              color={"warning"}
-              onClick={() => console.log("editando")}
+              color={"default"}
+              className="bg-green-700 text-white"
+              onClick={() => generateExcelFile(currentService.employees)}
             >
               {" "}
-              Editar
+              Descargar Lista de postulantes
             </Button>
-          </Link>
-          <Button
-            size={"xs"}
-            style={{ padding: ".5rem" }}
-            color={"error"}
-            onClick={() => setInfoJob(currentService.title)}
-          >
-            {" "}
-            Eliminar Puesto
-          </Button>
+            <Link href={`/admin/${currentService._id}/updateService`}>
+              <Button
+                size={"xs"}
+                style={{ padding: ".5rem" }}
+                color={"warning"}
+                className="bg-yellow-500 text-white"
+                onClick={() => console.log("editando")}
+              >
+                {" "}
+                Editar Puesto
+              </Button>
+            </Link>
+            <Button
+              size={"xs"}
+              style={{ padding: ".5rem" }}
+              color={"error"}
+              className="bg-red-500 text-white"
+              onClick={() => setInfoJob(currentService.title)}
+            >
+              {" "}
+              Eliminar Puesto
+            </Button>
+          </div>
         </div>
         <TableListStaticData
           data={currentService.employees || []}
@@ -152,3 +170,4 @@ const ServiceItem = ({
 };
 
 export default ServiceItem;
+

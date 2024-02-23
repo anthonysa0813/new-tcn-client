@@ -26,7 +26,7 @@
   padding: 1rem;
   width: auto;
   /* box-shadow: 5px 5px 80px #e1e1e1, -2px -2px 80px #ffffff; */
-  background-color: var(--bg-blueLight);
+  /*background-color: var(--bg-blueLight);*/
   position: absolute;
   top: 0;
   /* border: 2px solid brown; */
@@ -39,7 +39,6 @@
   width: 100%;
   position: fixed;
   height: 100%;
-  background-color: var(--bg-blueLight);
   z-index: 50000;
 }
 
@@ -74,7 +73,7 @@
 
 .boxMenu:hover {
   background-color: var(--bg-black);
-  color: var(--bg-white);
+  color: white;
 }
 
 .navigation {
@@ -95,7 +94,7 @@
 }
 
 .activeLink {
-  background-color: white;
+  /*background-color: white;*/
   padding: 1rem;
   border-radius: 0.5rem;
 }

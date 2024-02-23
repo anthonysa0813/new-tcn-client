@@ -27,7 +27,6 @@ export const getExperienceByEmployee = async (
   idEmployee: string,
   token: string
 ) => {
-  console.log(`${process.env.NEXT_PUBLIC_DB_URL}/${endpoint}/${idEmployee}`);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_DB_URL}/${endpoint}/${idEmployee}`,
     {
@@ -38,6 +37,23 @@ export const getExperienceByEmployee = async (
   );
   const data = await response.json();
   return data;
+};
+
+export const getSalaryEmployeeToPosition = async (
+  idEmployee: string,
+  idService: string
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_DB_URL}/services/salary-position/${idEmployee}/${idService}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    return {
+      message: error.message,
+    };
+  }
 };
 
 export const deleteExperience = async (

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import LayoutEmployee from "./layoutEmployee";
 import styles from "../../styles/client/Campaign.module.css";
-import { GetServerSideProps } from "next/types";
 import { Service, ServiceI } from "../../interfaces";
 import dynamic from "next/dynamic";
-import NotFoundJobs from "../../components/cards/NotFoundJobs";
 import { TokenContext } from "../../context/CurrentToken";
 const Head = dynamic(() => import("next/head").then((res) => res.default));
 import { API_URL } from "../../utils/constanstApi";
+import { Loading } from "@nextui-org/react";
+import { BounceLoader } from "react-spinners";
 
 interface ServiceProp {
   services: ServiceI[] | [];
@@ -25,6 +25,7 @@ const CampaignEmployees = () => {
     privateToken: { token },
     setPrivateToken,
   } = useContext(TokenContext);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${API_URL}/services`)
@@ -32,8 +33,12 @@ const CampaignEmployees = () => {
         return res.json();
       })
       .then((serv) => {
-        console.log(serv.services);
-        setServices(serv.services);
+        const servicesActive = serv.services.filter(
+          (service: ServiceI) => service.status
+        );
+
+        setServices(servicesActive);
+        setLoading(false);
       });
   }, []);
 
@@ -47,13 +52,25 @@ const CampaignEmployees = () => {
         />
       </Head>
       <LayoutEmployee>
+        <>
+          {loading && (
+            <div className={styles.loadingContainer}>
+              <h3>Cargando Puestos...</h3>
+              <BounceLoader color="#0072f5" />
+            </div>
+          )}
+        </>
         <main className={styles.main}>
           <div className={styles.wrapper}>
             <div className={styles.mainContainer}>
               {services?.length > 0 ? (
-                <h3>Puestos de trabajo</h3>
+                <>
+                  <h3>Puestos de trabajo</h3>
+                </>
               ) : (
-                <h3>No hay puestos disponibles por el momento</h3>
+                <div className={styles.loadingContainer}>
+                  <h3>No existe puestos disponibles</h3>
+                </div>
               )}
               <div className={styles.servicesGrid}>
                 {services?.map((service: ServiceI) => {

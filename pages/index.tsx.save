@@ -1,0 +1,102 @@
+import React, { useState, useEffect, useContext } from "react";
+import LayoutEmployee from "./employee/layoutEmployee";
+import styles from "../styles/client/Campaign.module.css";
+import { GetServerSideProps } from "next/types";
+import { Service, ServiceI } from "../interfaces";
+import dynamic from "next/dynamic";
+import NotFoundJobs from "../components/cards/NotFoundJobs";
+import { TokenContext } from "../context/CurrentToken";
+const Head = dynamic(() => import("next/head").then((res) => res.default));
+import { API_URL } from "../utils/constanstApi";
+import { BounceLoader } from "react-spinners";
+
+interface ServiceProp {
+  services: ServiceI[] | [];
+}
+const ServiceCard = dynamic(
+  () => import("../components/dashboard/clients/ServiceCard"),
+  {
+    ssr: false,
+  }
+);
+
+const CampaignEmployees = () => {
+  const [services, setServices] = useState([]);
+  const {
+    privateToken: { token },
+    setPrivateToken,
+  } = useContext(TokenContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`${API_URL}/services`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((serv) => {
+        const servciesActives = serv.services.filter(
+          (service: ServiceI) => service.status
+        );
+        console.log({ services: servciesActives });
+        setServices(servciesActives);
+        setLoading(false);
+      });
+  }, []);
+
+  return (
+    <>
+      <Head>
+        <title>Contact BPO | Puestos Disponibles</title>
+        <meta
+          name="description"
+          content="Puestos de trabajo disponibles con relación a Contact BPO."
+        />
+      </Head>
+      <LayoutEmployee>
+        <>
+          {loading && (
+            <div className={styles.loadingContainer}>
+              <h3 className="text-3xl">Cargando Puestos...</h3>
+              <BounceLoader color="#0072f5" />
+            </div>
+          )}
+        </>
+        <main className={styles.main}>
+          <div className={styles.wrapper}>
+            <div className={styles.mainContainer}>
+              {services?.length > 0 ? (
+                <h3>Puestos de trabajo</h3>
+              ) : (
+                <div className={"text-3xl"}>
+                  <h3>No tenemos puestos disponibles por el momento</h3>
+		  <p className="tex-">Síguenos en nuestras redes sociales para mantenerte al tanto</p>
+		  <div className="flex items-center gap-2">
+		    <span>
+		    	<a href="https://www.facebook.com/ContactBPO" target="_blank">Facebook</a>
+		    </span>
+		  <span>
+                        <a href="https://www.instagram.com/contactbpo/" target="_blank">Instagram</a>
+                    </span>
+                   <span>
+                        <a href="https://www.linkedin.com/company/contactamericas/" target="_blank">Linkedln</a>
+                    </span>
+		  </div>
+                </div>
+              )}
+              <div className={styles.servicesGrid}>
+                {services?.map((service: ServiceI) => {
+                  return (
+                    <>
+                      <ServiceCard key={service._id} service={service} />
+                    </>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </main>
+      </LayoutEmployee>
+    </>
+  );
+};
+export default CampaignEmployees;

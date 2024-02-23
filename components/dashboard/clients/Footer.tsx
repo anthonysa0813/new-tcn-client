@@ -8,9 +8,9 @@ const CopyrightIcon = dynamic(() =>
 
 const Footer = () => {
   return (
-    <div className={styles.footer}>
-      <span>
-        Contact BPO | Copyright {new Date().getFullYear()} <CopyrightIcon />
+    <div className={`${styles.footer} bg-sky-50 dark:bg-sky-100`}>
+      <span className="dark:text-gray-700">
+        Desarrollado por Contact Americas {new Date().getFullYear()} <CopyrightIcon />
       </span>
     </div>
   );

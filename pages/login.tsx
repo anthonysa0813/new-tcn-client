@@ -40,7 +40,7 @@ const LoginPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* <Navbar /> */}
-      <main className={styles.mainLogin}>
+      <main className={`${styles.mainLogin} dark:bg-white`}>
         <div className={styles.drawContainer}>
           <Image
             src="/images/draw1.svg"

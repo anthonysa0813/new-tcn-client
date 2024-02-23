@@ -87,6 +87,9 @@ const LoginAdminFormComponent = ({ setShowForgetPass }: Prop) => {
           Cookies.set("auth", JSON.stringify(user), {
             expires: expirationDate,
           });
+	   Cookies.set("status", "true", {
+            expires: expirationDate,
+          });
           toastSuccess("Bienvenido...");
           if (token && Boolean(Object.keys(user).length > 0)) {
             router.push("/admin/listServices");
@@ -113,7 +116,7 @@ const LoginAdminFormComponent = ({ setShowForgetPass }: Prop) => {
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.imageContainer}>
           <Image
-            src="/images/logos/LogoContact.png"
+            src="/images/logos/logocontact.jpeg"
             alt="Logo de Contact bpo"
             width={200}
             height={80}
@@ -129,6 +132,7 @@ const LoginAdminFormComponent = ({ setShowForgetPass }: Prop) => {
               variant="outlined"
               size="small"
               style={{ width: "100%" }}
+	      type="email"
               sx={{ width: "100%" }}
               {...getFieldProps("email")}
             />
@@ -178,6 +182,7 @@ const LoginAdminFormComponent = ({ setShowForgetPass }: Prop) => {
             sx={{ width: "100%" }}
             variant="contained"
             type="submit"
+	    className="bg-blue-500 text-white"
           >
             Entrar
           </Button>

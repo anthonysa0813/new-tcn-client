@@ -6,8 +6,24 @@ import myMiddleware from "./mymiddleware";
 
 //3S1unaM3ssagePubl1c
 export async function middleware(request: NextRequest) {
-  const jwt = request.cookies.get("token");
-  if (!jwt) return NextResponse.redirect(new URL("/", request.url));
+    const jwt = request.cookies.get("token");
+  const status = request.cookies.get("status")!;
+  console.log(status);
+  if (!status === undefined) {
+    const responseUrl = NextResponse.redirect(new URL("/", request.url));
+    return responseUrl;
+  }
+  if (!jwt || !JSON.stringify(status.value)) {
+    request.cookies.clear();
+    request.cookies.set("employee", "");
+    const responseUrl = NextResponse.redirect(new URL("/", request.url));
+    responseUrl.cookies.set("employee", "");
+    responseUrl.cookies.delete("employee");
+    responseUrl.cookies.delete("token");
+    responseUrl.cookies.delete("status");
+
+    return responseUrl;
+  }
 }
 
 export const config = {

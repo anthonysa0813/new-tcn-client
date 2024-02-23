@@ -565,6 +565,7 @@ const FormExperienceSecondary: NextPage<Prop> = ({
           <h5>Descripción del puesto:</h5>
           <TextareaAutosize
             maxRows={4}
+	    className="border border-gray-700"
             style={{ width: "100%", padding: ".54rem", minHeight: "100px" }}
             {...getFieldProps("descriptionJob")}
           />
@@ -573,9 +574,12 @@ const FormExperienceSecondary: NextPage<Prop> = ({
           )}
         </div>
       </div>
-      <Button variant="contained" disableElevation type="submit">
+<button type="submit" className="px-3 py-2 rounded-lg bg-blue-700 hover:bg-blue-900 text-white rounded-lg flex justify-center items-center">
+         {isLoading ? <BeatLoader color="#fff" /> : "Guardar"}
+</button>
+    {/*  <Button variant="contained" disableElevation type="submit">
         {isLoading ? <BeatLoader color="#fff" /> : "Guardar"}
-      </Button>
+      </Button> */}
     </form>
   );
 };

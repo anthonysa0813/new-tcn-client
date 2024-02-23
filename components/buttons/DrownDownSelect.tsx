@@ -42,7 +42,7 @@ const DropDownSelect = ({
   );
   const { privateToken } = useContext(TokenContext);
   const notifySuccess = () =>
-    toast.success("Se enviado el mensaje al usuario...");
+    toast.success("Se ha enviado el mensaje al usuario...");
 
   useEffect(() => {
     getJobApplication(`/employees/get-applications-jobs/${idUser}`);
@@ -100,12 +100,13 @@ const DropDownSelect = ({
       <ToastContainer />
 
       <Dropdown>
-        <Dropdown.Button flat>{stateStatus}</Dropdown.Button>
+        <Dropdown.Button flat className="border border-blue-500">{stateStatus}</Dropdown.Button>
         <Dropdown.Menu aria-label="Dynamic Actions" items={menuItems}>
           {menuItems.map((item) => {
             return (
               <Dropdown.Item
                 key={item.key}
+		className="border"
                 color={item.key === "delete" ? "error" : "default"}
               >
                 <span onClick={() => changeStatus(item.name)}>{item.name}</span>

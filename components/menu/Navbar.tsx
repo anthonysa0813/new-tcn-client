@@ -44,7 +44,7 @@ const Navbar = () => {
     // localStorage.removeItem("email");
     Cookies.remove("token");
     Cookies.remove("employee");
-
+    Cookies.remove("status");
     router.push("/");
   };
 
@@ -61,12 +61,12 @@ const Navbar = () => {
 
   return (
     <>
-      <header className={styles.header}>
+      <header className={` border-b-[2px] shadow-lg dark:bg-white`}>
         <div className="wrapper">
           <div className={styles.headerContainer}>
             <div className={styles.logoContainer}>
               <Image
-                src={"/images/logos/LogoContact.png"}
+                src={"/images/logos/logocontact.jpeg"}
                 alt="Logo de Contact BPO"
                 width={150}
                 height={90}
@@ -83,15 +83,15 @@ const Navbar = () => {
               )}
               {!name && (
                 <>
-                  <Link href="/login" className={styles.btn}>
-                    <span>Iniciar sesión</span>
+                  <Link href="/login" className={"bg-blue-700 text-sky-50 p-2 rounded-lg hover:bg-blue-800 hover:text-stone-200 transition ease"}>
+                    <span className="text-stone-200">Iniciar sesión</span>
                   </Link>
                 </>
               )}
               {!name && (
                 <>
-                  <Link href="/user/register" className={styles.btn}>
-                    <span>Regístrate</span>
+                  <Link href="/user/register" className={"border border-blue-500 text-blue-500 p-2 rounded-lg hover:bg-blue-800 hover:text-white  transition ease"}>
+                    <span className="hover:text-white">Regístrate</span>
                   </Link>
                 </>
               )}

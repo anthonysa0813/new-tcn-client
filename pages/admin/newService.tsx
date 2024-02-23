@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
-import { Input } from "@nextui-org/react";
+import { Input, Text } from "@nextui-org/react";
 import useForm from "../../hooks/useForm";
 import { createNewServicefetch } from "../../helpers/employeeFetch";
 import styles from "../../styles/admin/form/NewServiceForm.module.css";
@@ -35,6 +35,7 @@ interface FormProp {
   slug?: string;
   supervisor?: string;
   whatsapp?: string;
+  localCurrency?: string;
 }
 
 const notify = () => toast.success("Se creó el servicio!");
@@ -43,6 +44,9 @@ const notifyWarning = (message: string) => toast.warning(message);
 const NewServicePage = () => {
   const [descriptionState, setDescriptionState] = useState("");
   const [requirementsState, setRequirementsState] = useState("");
+  const [showModalSalary, setShowModalSalary] = useState(false);
+  const [showModalConfirmCondition, setShowModalConfirmCondition] =
+    useState(false);
 
   const [initialValues, setInitialValues] = useState<FormProp>({
     title: "",
@@ -65,6 +69,8 @@ const NewServicePage = () => {
     slug,
     supervisor,
     whatsapp,
+    localCurrency,
+    setForm,
   } = useForm<FormProp>(initialValues);
   const [error, setError] = useState(false);
   const { userGlobal } = useContext(UserContext);
@@ -123,10 +129,11 @@ const NewServicePage = () => {
         slug: initialValues.slug,
         whatsapp,
         supervisor,
+        modalSalary: showModalSalary,
+        modalConfirm: showModalConfirmCondition,
       },
       privateToken.token
     ).then((res) => {
-      console.log({ res });
       notify();
       setDescriptionState("");
       setInitialValues({
@@ -189,17 +196,41 @@ const NewServicePage = () => {
                     placeholder="L - V (8am -6pm)"
                   />
                 </div>
-                <div className={styles.subField}>
-                  <label>Salario:</label>
-                  <Input
-                    type="text"
-                    clearable
-                    underlined
-                    name="salary"
-                    value={salary}
-                    onChange={onChange}
-                    placeholder="2000"
-                  />
+                <div className={styles.currencyField}>
+                  <div className={styles.subField}>
+                    <label>Salario:</label>
+                    <Input
+                      type="text"
+                      clearable
+                      underlined
+                      name="salary"
+                      value={salary}
+                      onChange={onChange}
+                      placeholder="2000"
+                    />
+                  </div>
+                  <div className={styles.subField}>
+                    <label>Tipo de moneda:</label>
+                    <NativeSelect
+                      defaultValue={30}
+                      inputProps={{
+                        name: "type",
+                        id: "uncontrolled-native",
+                      }}
+                      value={localCurrency}
+                      name="localCurrency"
+                      onChange={(e) =>
+                        setForm((state) => ({
+                          ...state,
+                          localCurrency: e.target.value,
+                        }))
+                      }
+                    >
+                      <option value={""}>Seleccione</option>
+                      <option value={"PEN"}>PEN</option>
+                      <option value={"USD"}>USD</option>
+                    </NativeSelect>
+                  </div>
                 </div>
               </div>
               <div className={styles.fieldSecondary}>
@@ -244,8 +275,8 @@ const NewServicePage = () => {
                     }
                   >
                     <option value={""}>Seleccione</option>
-                    <option value={"J.Completa"}>Jornada Completa</option>
-                    <option value={"J.Part time"}>Jornada Part time</option>
+                    <option value={"Full Time"}>Full Time</option>
+                    <option value={"Part time"}>Part Time</option>
                   </NativeSelect>
                 </div>
               </div>
@@ -264,16 +295,51 @@ const NewServicePage = () => {
                 </div>
                 <div className={styles.subField}>
                   <label>Enlace de whatsapp:</label>
-                  <Input
-                    type="text"
-                    clearable
-                    underlined
-                    name="whatsapp"
-                    value={whatsapp}
-                    onChange={onChange}
-                    placeholder="link de whatsapp"
-                  />
+                  <div className="">
+                    <Input
+                      type="text"
+                      clearable
+                      underlined
+                      name="whatsapp"
+                      value={whatsapp}
+                      onChange={onChange}
+                      placeholder="link de whatsapp"
+                    />
+                    {whatsapp && (
+                      <Text size={14} color="primary">
+                        https://wa.me/51{whatsapp}?text="¡Hola!, quiero postular
+                        al puesto puesto {title}"
+                      </Text>
+                    )}
+                  </div>
                 </div>
+              </div>
+              <div className={styles.fieldSecondary}>
+                <input
+                  type="checkbox"
+                  name="modalSalary"
+                  checked={showModalSalary}
+                  onClick={() => setShowModalSalary(!showModalSalary)}
+                />
+                <span>
+                  Activar modal para preguntar: ¿Cuánto es su pretención
+                  salarial? <span style={{ color: "red" }}>(Opcional*)</span>
+                </span>
+              </div>
+              <div className={styles.fieldSecondary}>
+                <input
+                  type="checkbox"
+                  name="modalConfirm"
+                  checked={showModalConfirmCondition}
+                  onClick={() =>
+                    setShowModalConfirmCondition(!showModalConfirmCondition)
+                  }
+                />
+                <span>
+                  Activar modal para preguntar: ¿Por favor confirmar que estás
+                  de acuerdo con las condiciones ofrecidas?{" "}
+                  <span style={{ color: "red" }}>(Opcional*)</span>
+                </span>
               </div>
               <div className={styles.field} style={{ marginBlock: "3rem" }}>
                 <label style={{ marginBlockEnd: "1rem" }}>
@@ -296,21 +362,11 @@ const NewServicePage = () => {
                 />
               </div>
 
-              {/* <div className={styles.field}>
-                <label>Requerimientos:</label>
-                <Input
-                  type="text"
-                  clearable
-                  underlined
-                  name="requirements"
-                  value={requirements}
-                  onChange={onChange}
-                  placeholder="habilidades blandas, experiencia en ventas,etc..."
-                />
-              </div> */}
               <button
                 type={role !== "ADMIN_ROLE" ? "button" : "submit"}
-                className={`${styles.button} ${
+                className={`${
+                  styles.button
+                } bg-blue-500  dark:bg-blue-700 bg-blue-700 text-white  dark:text-white ${
                   role !== "ADMIN_ROLE" ? styles.inactive : ""
                 }`}
                 // disabled={true}
@@ -326,3 +382,4 @@ const NewServicePage = () => {
 };
 
 export default NewServicePage;
+

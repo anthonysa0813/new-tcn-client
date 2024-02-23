@@ -24,7 +24,7 @@ const LayoutEmployee = ({ children }: Prop) => {
   return (
     <div className={styles.mainLayout}>
       <Navbar />
-      <main>
+      <main className={"dark:bg-white"}>
         <div className={styles.profileGrid}>
           {Boolean(Object.keys(employeeGlobal).length) && <AsideMenuEmployee />}
 

@@ -15,7 +15,7 @@
   padding-block: 5rem;
   padding-inline: 0.5rem;
   backdrop-filter: blur(5px);
-  z-index: 20000;
+  z-index: 200000000;
 }
 .centerModal {
   display: flex;

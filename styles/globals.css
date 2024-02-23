@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700&display=swap");
 * {
   box-sizing: border-box;
@@ -28,6 +31,7 @@
   --bg-blue100: #cce6f4;
   --bg-blueLight: #f2f6f7;
 }
+
 
 html {
   scroll-behavior: smooth;
@@ -93,15 +97,6 @@ a {
   text-align: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
-}
 
 .btn {
   border: none;

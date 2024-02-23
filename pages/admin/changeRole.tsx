@@ -58,7 +58,8 @@ const ChangeRole = () => {
     setShowUniqueUser(true);
 
     setShowAllUsers(false);
-    searchUserAuth(`auth/search/${email}`).then((res) => {
+    searchUserAuth(`auth/search/${email}`, privateToken.token).then((res) => {
+      console.log({ res });
       if (res.message) {
         toastError(res.message);
         setLoading(false);
@@ -75,25 +76,29 @@ const ChangeRole = () => {
   };
 
   const activeUser = (user: UserResponse) => {
-    updateUserAuth("auth", { ...user, role: "ADMIN_ROLE" }, token).then(
-      (res) => {
-        setUser(res.user);
-        toastSuccess(
-          `el usuario ${user.email} ha sido actualizado como administrador`
-        );
-      }
-    );
+    updateUserAuth(
+      "auth",
+      { ...user, role: "ADMIN_ROLE", superAdmin: true },
+      token
+    ).then((res) => {
+      setUser(res.user);
+      toastSuccess(
+        `el usuario ${user.email} ha sido actualizado como administrador`
+      );
+    });
   };
 
   const desactiveUser = (user: UserResponse) => {
-    updateUserAuth("auth", { ...user, role: "USER_ROLE" }, token).then(
-      (res) => {
-        setUser(res.user);
-        toastSuccess(
-          `el usuario ${user.email} ha sido actualizado como USER_ROLE`
-        );
-      }
-    );
+    updateUserAuth(
+      "auth",
+      { ...user, role: "USER_ROLE", superAdmin: false },
+      token
+    ).then((res) => {
+      setUser(res.user);
+      toastSuccess(
+        `el usuario ${user.email} ha sido actualizado como USER_ROLE`
+      );
+    });
   };
 
   const changeStatusFunction = (user: UserResponse) => {
@@ -120,7 +125,11 @@ const ChangeRole = () => {
           <h1>Busca y activa una cuenta como administrador</h1>
           <ToastContainer />
 
-          <SearchForm onSubmit={onSubmit} email={email} onChange={onChange} />
+          <SearchForm
+            setUserUniqueInfo={setUserUniqueInfo}
+            setShowAllUsers={setShowAllUsers}
+            setShowUniqueUser={setShowUniqueUser}
+          />
           <div className="actionWatchAllUsers">
             <button
               className={styles.watchAllUsersButton}
