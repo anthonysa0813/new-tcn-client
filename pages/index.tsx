@@ -100,7 +100,7 @@ fetch(apiUrl, requestOptions)
 	<meta property="og:type" content="website" />
 	<meta property="og:description" content="Explora oportunidades laborales emocionantes y descubre tu próximo paso profesional en Contact Americas " />
 	<meta property="og:url" content="https://work.contactamericas.com/" />
-	<meta property="og:image" content="https://res.cloudinary.com/da0d2neas/image/upload/v1694022571/grupo-personas-trabajando-plan-negocios-oficina_1_f3megn.jpg" /> 
+	<meta property="og:image" content="https://res.cloudinary.com/da0d2neas/image/upload/v1709087979/Imagen_TCN.png" /> 
       </Head>
       <LayoutEmployee>
         <>

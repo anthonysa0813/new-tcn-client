@@ -96,7 +96,7 @@ const PageByJob = ({ slug }: Prop) => {
         <meta property="og:url" content="https://work.contactamericas.com/" />
         <meta
           property="og:image"
-          content="https://res.cloudinary.com/da0d2neas/image/upload/v1694022571/grupo-personas-trabajando-plan-negocios-oficina_1_f3megn.jpg"
+          content="https://res.cloudinary.com/da0d2neas/image/upload/v1709087979/Imagen_TCN.png"
         />
       </Head>
       <Navbar />
@@ -130,8 +130,8 @@ const PageByJob = ({ slug }: Prop) => {
               </Link>
               <h1>{jobState.title}</h1>
               <div className="flex items-center gap-2">
-                <span>Remoto</span>
-                <span>- Jornada Completa</span>
+                <span>{ jobState.type }</span>
+                <span>- {  jobState.typeJob }</span>
               </div>
             </div>
 
@@ -149,11 +149,11 @@ const PageByJob = ({ slug }: Prop) => {
       </section>
       <main className="wrapper">
         <div className={styles.details}>
-          <h2>Detalles:</h2>
+          <h2 className="text-2xl font-semibold text-blue-900">Detalles:</h2>
           <div className={styles.infoContainer}>
             <p dangerouslySetInnerHTML={{ __html: jobState.description }}></p>
           </div>
-          <h2>Requerimientos:</h2>
+          <h2 className="text-2xl font-semibold text-blue-900">Requerimientos:</h2>
           <div className={styles.infoContainer}>
             <p dangerouslySetInnerHTML={{ __html: jobState.requirements }}></p>
           </div>

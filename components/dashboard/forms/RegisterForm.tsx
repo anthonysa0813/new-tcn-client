@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useContext } from "react";
 import styles from "../../../styles/users/RegisterUser.module.css";
 import * as Yup from "yup";
@@ -191,7 +192,7 @@ const RegisterForm = ({ setActiveModalRegisterDone }: Prop) => {
       });
       const data = await res.json();
    
-      if (data.message === "El email ya está registrado") {
+      if (data.message === "El email ya está registrado" || data.message === "El DNI ya está registrado") {
         notifyError(data.message);
         setIsLoading(false);
       } else {
@@ -239,8 +240,10 @@ const RegisterForm = ({ setActiveModalRegisterDone }: Prop) => {
     dataform.append("cv", cvValue);
     //  dataform.append("typeJob", typeJob || "");
     dataform.append("phone", phone || "");
+    dataform.append("dni", dni || "");
     dataform.append("address", address || "");
     dataform.append("district", district || "");
+    dataform.append("findUssocial", currentSocial || "");
     dataform.append("birthday", birthday || "");
     dataform.append("social", social || "");
 
@@ -277,19 +280,13 @@ const RegisterForm = ({ setActiveModalRegisterDone }: Prop) => {
    useEffect(() => {
      // apply function if the lenght dni value is greater than 7
      if (dni.length > 7) {
-       const accessToken =
-         "TfMpUlxJ62UurAnGV56Cq7RczQMlg5ffdF4Zw1wsqx7NxogeFzg4HiwQ8vvE";
-       // const dniNumber = "70502697"; // Reemplaza con el número de DNI que desees consultar
+       // Reemplaza con el número de DNI que desees consultar
 
        // Construir la URL de la solicitud con el número de DNI
-       const apiUrl = `https://api.peruapis.com/v1/dni?document=${dni}`;
-
+       const apiUrl = `${process.env.NEXT_PUBLIC_DB_URL}/employees/peruapis/${dni}`;
        // Configurar la solicitud GET
        const requestOptions = {
          method: "GET",
-         headers: {
-           Authorization: `Bearer ${accessToken}`,
-         },
        };
 
        // Realizar la solicitud utilizando fetch
@@ -560,7 +557,11 @@ const RegisterForm = ({ setActiveModalRegisterDone }: Prop) => {
                     id="social"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     onChange={(e) => setCurrentSocial(e.target.value)}
+		    value={currentSocial}
                     >
+	            <option value="" disabled>
+                        Seleccionar
+                    </option>
                     <option value="facebook">Facebook</option>
                     <option value="linkedin">Linkedin</option>
                     <option value="instagram">Instagram</option>

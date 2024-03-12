@@ -43,6 +43,19 @@ html {
   font-size: 12px;
 }
 
+/* add icon in the list type ul li before the content */
+
+ul li::before {
+  content: "\2022";
+  color: var(--bg-blueSecondary500);
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+
+
 .bg-2 {
   padding: 0.5rem 0.25rem;
 }
