@@ -19,6 +19,7 @@ import { EmployeeJobApi } from "../../../apis/employeeJob";
 import SkillsByUserPills from "../../pills/SkillsByUserPills";
 import { SelectEmployeeContext } from "../../../context/selectUser";
 import DropDownMui from "../../buttons/DropDownMui";
+import { ToastContainer, toast } from "react-toastify";
 // import { DropDownMui } from "../../buttons/DropDownMui";
 
 type Props = {
@@ -27,6 +28,7 @@ type Props = {
   offsetSliceValue: number;
   idService: string;
   supervisor?: string;
+  isSpamTable?: boolean;
 };
 
 interface SkillProp {
@@ -51,6 +53,7 @@ const TableListStaticData2 = ({
   offsetSliceValue = 5,
   idService,
   supervisor,
+  isSpamTable
 }: Props) => {
   const { setVisible, bindings } = useModal();
   const [currentEmployee, setCurrentEmployee] = useState<EmployeeInterface>(
@@ -75,15 +78,13 @@ const TableListStaticData2 = ({
     type: "",
     jornada: "",
     salary: "",
+    employee: "",
   });
    const [listServiceApply, setListServiceApply] = useState<
      ServiceInterface[] | []
    >([]);
 
   useEffect(() => {
-    console.log({
-      currentEmployee
-    })
     if (currentData.length > 0) {
       EmployeeJobApi.get(
         `/employeeJob/getinfo?idUser=${currentEmployee.id}&idService=${idService}`
@@ -109,10 +110,7 @@ const TableListStaticData2 = ({
         privateToken.token
       ).then((res) => {});
 
-      console.log({
-        idService,
-        idEmployee: currentEmployee.id || "",
-      });
+
 
       getSalaryEmployeeToPosition(currentEmployee.id || "", idService).then(
         (res) => {
@@ -141,6 +139,7 @@ const TableListStaticData2 = ({
         currentEmployee.id || "",
         privateToken.token
       ).then((res) => {
+        
         // console.log("res", res.data);
       });
     }
@@ -197,8 +196,57 @@ const TableListStaticData2 = ({
     }
   };
 
+  const sentEmployeeToSpam = (idEmployee: string) => {
+    if (isSpamTable) {
+       console.log({ idEmployee });
+       EmployeeApi.put(`/spamJob/update-spam-job`, {
+         isSpam: false,
+         idEmployee,
+         idService: idService,
+       })
+         .then((res) => {
+           // apply filter in currentData except employee with idEmployee
+           const newCurrentData = currentData.filter(
+             (employee) => employee.id !== idEmployee
+           );
+           setcurrentData(newCurrentData);
+           toast.success("Empleado regresado a la lista");
+           console.log({ res });
+         })
+         .catch((err) => {
+           console.log({ error: err });
+           toast.error("Error al enviar a spam");
+         });
+    } else {
+       console.log({ idEmployee });
+       EmployeeApi.put(`/spamJob/update-spam-job`, {
+         isSpam: true,
+         idEmployee,
+         idService: idService,
+       })
+         .then((res) => {
+           // apply filter in currentData except employee with idEmployee
+           const newCurrentData = currentData.filter(
+             (employee) => employee.id !== idEmployee
+           );
+           setcurrentData(newCurrentData);
+           toast.success("Empleado enviado a spam");
+           console.log({ res });
+         })
+         .catch((err) => {
+           console.log({ error: err });
+           toast.error("Error al enviar a spam");
+         });
+    }
+  }
+
+  const backToListTable = (idEmployee: string) => {
+    
+  }
+
   return (
     <>
+      <ToastContainer />
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -301,7 +349,16 @@ const TableListStaticData2 = ({
                     />
                   </td>
                   <td className="p-4">
-                      <button className="px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-900 transition ease">Mandar a Spam</button>
+                    <button
+                      onClick={() => sentEmployeeToSpam(user.id || "")}
+                      className={`${
+                        isSpamTable
+                          ? "bg-blue-500 hover:bg-blue-900"
+                          : "bg-green-500 hover:bg-green-900"
+                      }  px-4 py-2 rounded-lg  text-white font-semibold  transition ease`}
+                    >
+                      {isSpamTable ? "Regresar a lista" : "Enviar a spam"}
+                    </button>
                   </td>
                 </tr>
               );
@@ -317,9 +374,14 @@ const TableListStaticData2 = ({
         {...bindings}
       >
         <Modal.Header>
-          <Text id="modal-title" size={24} className={styles.title}>
-            {currentEmployee.name} {currentEmployee.surnames}
-          </Text>
+          <div className="flex flex-col gap-2 justify-center">
+            <Text id="modal-title" size={24} className={styles.title}>
+              {currentEmployee.name} {currentEmployee.surnames}
+            </Text>
+            <span className="text-sm font-semibold">
+              ID: {currentEmployee.id}
+            </span>
+          </div>
         </Modal.Header>
         <Modal.Body>
           <div className={styles.gridBody}>
@@ -349,6 +411,21 @@ const TableListStaticData2 = ({
               <strong>Número telefónico:</strong>
               <p>{currentEmployee.phone}</p>
             </div>
+            {fieldSalary && (
+              <div className={styles.field}>
+                <h5 className="font-semibold text-blue-500">
+                  Información adicional
+                </h5>
+                <strong>Pregunta: ¿Cuál es su pretención salarial?</strong>
+                <p className="font-semibold text-indigo-700">
+                  Respuesta: {infoSalary.type === "USD" ? "$." : "S./"}
+                  {infoSalary.salary} -{" "}
+                  {infoSalary.jornada === "mensual" ? "Mensual" : "x Hora"}
+                </p>
+                <span>id del usuario: { infoSalary.employee }</span>
+              </div>
+            )}
+
             <div className={styles.field}>
               <strong>LinkedIn:</strong>
               <p>

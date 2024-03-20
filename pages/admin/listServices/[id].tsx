@@ -17,10 +17,12 @@ import { SelectEmployeeContext } from "../../../context/selectUser";
 import { generateExcelFile } from "../../../helpers/exportFileExcel";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Link from "next/link";
+import { Switch } from "@nextui-org/react";
 
 import { useRouter } from "next/router";
 import TableListStaticData2 from "../../../components/dashboard/clients/TableListStaticData2";
-
+import { SpamJobInterface } from "../../../interfaces/spamJob";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
 
 interface Prop {
@@ -65,6 +67,63 @@ const ListUsersByPositionJobPage = ({ id }: Prop) => {
   const { setVisible, bindings } = useModal();
   const [currentPuesto, setCurrentPuesto] = useState("");
   const router = useRouter();
+  const [isSpamTable, setIsSpamTable] = useState(false);
+  const [allUserSpamJob, setAllUserSpamJob] = useState<SpamJobInterface[] | []>([]);
+
+
+  useEffect(() => {
+    getDataService().then((res: any) => {
+      // setServicesEmployees(res);
+      console.log({
+        currentDataByFilter: res.employees
+      })
+    });
+  }, [])
+
+  useEffect(() => {
+    if (isSpamTable) {
+      // console.log({allUserSpamJob})
+      // const selectIsSpamFalse = allUserSpamJob.filter((item: any) => item.isSpam === true);
+      // console.log({selectIsSpamFalse})
+      // const selectOnlyEmployees = selectIsSpamFalse.map((item: any) => item.employee);
+      // setCurrentDataByFilter(selectOnlyEmployees);
+      getDataService().then((res: any) => {
+        const selectIsSpamFalse = res.filter(
+          (item: any) => item.isSpam === true
+        );
+        console.log({
+          response: res,
+        });
+        const selectOnlyEmployees = selectIsSpamFalse.map(
+          (item: any) => item.employee
+        );
+        setCurrentDataByFilter(selectOnlyEmployees);
+      });
+    } else {
+      getDataService().then((res: any) => {
+        const selectIsSpamFalse = res.filter((item: any) => item.isSpam === false);
+        console.log({
+          response: res
+        })
+        const selectOnlyEmployees = selectIsSpamFalse.map((item: any) => item.employee);
+        setCurrentDataByFilter(selectOnlyEmployees);
+      })
+    }
+  }, [isSpamTable])
+
+  const getDataService = async () => {
+    const data = await fetch(
+      `${process.env.NEXT_PUBLIC_DB_URL}/spamJob/get-spam-job-by-id-service`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({idService: id})
+      }
+    );
+    const res = await data.json();
+    return res.spamJob;
+  }
 
 
   useEffect(() => {
@@ -87,8 +146,13 @@ const ListUsersByPositionJobPage = ({ id }: Prop) => {
     console.log(id);
     if (privateToken.token) {
       getInfo();
+      // getDataService().then((res: any) => {
+      //   const selectIsSpamFalse = res.filter((item: any) => item.isSpam === false);
+      //   console.log({selectIsSpamFalse})
+      //   setCurrentDataByFilter(selectIsSpamFalse);
+      // })
     }
-  }, [privateToken.token]);
+  }, [id]);
 
   const getInfo = async () => {
     const { data } = await ServiceApi.get(`/${id}`, {
@@ -96,10 +160,17 @@ const ListUsersByPositionJobPage = ({ id }: Prop) => {
         Authorization: privateToken.token,
       },
     });
+    getDataService().then((res: any) => {
+      const selectIsSpamFalse = res.filter((item: any) => item.isSpam === false);
+      const selectOnlyEmployees = selectIsSpamFalse.map((item: any) => item.employee);
+      // console.log({ user: res });
+      setAllUserSpamJob(res);
+      setCurrentDataByFilter(selectOnlyEmployees);
+    })
 
     setServicesEmployees(data);
     // console.log(data);
-    setCurrentDataByFilter(data.employees);
+    // setCurrentDataByFilter(data.employees);
   };
 
   const changeStatusService = async (currentService: ServiceI) => {
@@ -186,10 +257,17 @@ const ListUsersByPositionJobPage = ({ id }: Prop) => {
         idService={id}
       />
       <LayoutDashboard>
-        <div className="flex items-center justify-between gap-5">
-          <div className="mb-10">
-            <div className="flex gap-8 items-center justify-between mb-10">
+        <div className="flex items-center justify-between  flex-wrap gap-5">
+          <div className="md:mb-10">
+            <div className="flex gap-8 items-center justify-between  md:mb-10 ">
               <div className="">
+                <Link
+                  href="/admin/listServices"
+                  className="flex items-center gap-2 mb-3 hover:text-blue-600 transition ease-out cursor-pointer"
+                >
+                  <KeyboardBackspaceIcon className="cursor-pointer" />
+                  <span>Atrás</span>
+                </Link>
                 <h1 className="md:text-2xl text-sm font-semibold">
                   {servicesEmployees.title}
                 </h1>
@@ -234,7 +312,7 @@ const ListUsersByPositionJobPage = ({ id }: Prop) => {
                 </Button>
               </div>
             </div>
-            <Dropdown>
+            {/* <Dropdown>
               <Dropdown.Button flat>Aplicar Filtros</Dropdown.Button>
               <Dropdown.Menu aria-label="Static Actions">
                 {filterItems.map((item) => {
@@ -252,9 +330,9 @@ const ListUsersByPositionJobPage = ({ id }: Prop) => {
                   );
                 })}
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
           </div>
-          <div className="flex items-center flex-wrap gap-5">
+          <div className="flex items-center flex-wrap md:gap-5 gap-2 mb-4 ">
             <button
               className="py-2 text-sm px-3 rounded-md text-white font-semibold bg-slate-800 hover:bg-slate-950 transition ease hover:cursor-pointer"
               onClick={() => generateExcelFile(currentDataByFilter)}
@@ -271,11 +349,28 @@ const ListUsersByPositionJobPage = ({ id }: Prop) => {
             </button>
           </div>
         </div>
-        <TableListStaticData2
+        <div className="flex items-center gap-2 mb-3">
+          <span className="font-semibold">
+            Seleccionar los usuarios en SPAM:
+          </span>
+          <Switch
+            checked={isSpamTable}
+            onChange={() => setIsSpamTable(!isSpamTable)}
+            aria-label="Automatic updates"
+          />
+        </div>
+        {
+          currentDataByFilter.length > 0 ? (
+            <TableListStaticData2
+              isSpamTable={isSpamTable}
           data={currentDataByFilter || []}
           idService={servicesEmployees._id || ""}
           offsetSliceValue={servicesEmployees.employees?.length || 5}
-        />
+            />
+          ) : (
+            <span>Aún no hay usuarios registrados aquí...</span>
+          )
+        }
       </LayoutDashboard>
     </>
   );

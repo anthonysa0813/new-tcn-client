@@ -36,7 +36,9 @@ const HomeAdmin = () => {
 
 
 
-    useEffect(() => {
+  useEffect(() => {
+      // console.log({ privateToken });
+      
       EmployeeApi.get("/employees", {
         headers: {
           Authorization: `${privateToken.token}`,
@@ -55,19 +57,23 @@ const HomeAdmin = () => {
           );
           setServicesDataList(servciesActives);
         });
-      
+      // console.log({ privateToken })
       fetch(`${API_URL}/auth`, {
         headers: {
           Authorization: `${privateToken.token}`,
         },
       })
         .then((res) => {
+          
           return res.json();
         })
         .then((auth) => {
-         setAuthDataList(auth);
-        });
-  
+          setAuthDataList(auth);
+        }).catch((err) => {
+          console.log({
+            error: err
+          })
+         });
     }, []);
 
   return (
