@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import "react-quill/dist/quill.snow.css";
+//import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 import { Input, Text } from "@nextui-org/react";
 import useForm from "../../hooks/useForm";
@@ -9,13 +9,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../../context/UserContext";
 import { TokenContext } from "../../context/CurrentToken";
-import { InputLabel, NativeSelect } from "@material-ui/core";
+import { InputLabel, NativeSelect } from "@mui/material";
 import { EmployeeContext } from "../../context/EmployeeContext";
+import Tiptap from "../../components/texteditor/TextEditor";
 
-const QuillNoSSRWrapper = dynamic(import("react-quill"), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-});
+//const QuillNoSSRWrapper = dynamic(import("react-quill"), {
+//  ssr: false,
+//  loading: () => <p>Loading ...</p>,
+//});
 
 const Head = dynamic(() => import("next/head").then((res) => res.default));
 
@@ -345,21 +346,21 @@ const NewServicePage = () => {
                 <label style={{ marginBlockEnd: "1rem" }}>
                   Descripción del puesto:
                 </label>
-                <QuillNoSSRWrapper
-                  value={descriptionState}
+                <Tiptap
                   onChange={handleChangeDescription}
-                  theme="snow"
+                  content={descriptionState}
                 />
+                {/* <span>{descriptionState}</span> */}
               </div>
               <div className={styles.field} style={{ marginBlock: "3rem" }}>
                 <label style={{ marginBlockEnd: "1rem" }}>
                   Requerimientos:
                 </label>
-                <QuillNoSSRWrapper
-                  value={requirementsState}
+                <Tiptap
                   onChange={handleChangeRequirements}
-                  theme="snow"
+                  content={requirementsState}
                 />
+                {/* <p> {requirementsState}</p> */}
               </div>
 
               <button
@@ -382,4 +383,6 @@ const NewServicePage = () => {
 };
 
 export default NewServicePage;
+
+
 

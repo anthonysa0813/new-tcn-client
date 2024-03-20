@@ -651,3 +651,4 @@ const MoreDetails = () => {
 };
 
 export default MoreDetails;
+

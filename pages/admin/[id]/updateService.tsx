@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useContext, useEffect } from "react";
-import "react-quill/dist/quill.snow.css";
+// import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 import { Input, Text } from "@nextui-org/react";
 import useForm from "../../../hooks/useForm";
@@ -13,7 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../../../context/UserContext";
 import { TokenContext } from "../../../context/CurrentToken";
-import { InputLabel, NativeSelect } from "@material-ui/core";
+import { InputLabel, NativeSelect } from "@mui/material";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { ServiceApi } from "../../../apis/services";
@@ -22,11 +22,15 @@ import {
   EmployeeContext,
   EmployeeContextProps,
 } from "../../../context/EmployeeContext";
+import Tiptap from "../../../components/texteditor/TextEditor";
+// import ReactQuill from "react-quill";
+// import QuillEditor from "../../../components/texteditor/TextEditor";
+// import TextEditor from "../../../components/texteditor/TextEditor";
 
-const QuillNoSSRWrapper = dynamic(import("react-quill"), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-});
+
+// const ReactQuill = dynamic(import("react-quill"), {
+//   ssr: false,
+// });
 
 const Head = dynamic(() => import("next/head").then((res) => res.default));
 
@@ -397,21 +401,37 @@ const UpdateService = () => {
                 <label style={{ marginBlockEnd: "1rem" }}>
                   Descripción del puesto:
                 </label>
-                <QuillNoSSRWrapper
-                  value={descriptionState}
+                {/*<QuillNoSSRWrapper
+                  
                   onChange={handleChangeDescription}
                   theme="snow"
-                />
+                /> */}
+                {/* <ReactQuill value={descriptionState} theme="snow" onChange={handleChangeDescription} /> */}
+                {
+                  descriptionState && (
+                    <Tiptap
+                      onChange={handleChangeDescription}
+                      content={descriptionState}
+                    />
+                  )
+                }
+                {/* <p>{ descriptionState }</p>	 */}
               </div>
               <div className={styles.field} style={{ marginBlock: "3rem" }}>
                 <label style={{ marginBlockEnd: "1rem" }}>
                   Requerimientos:
                 </label>
-                <QuillNoSSRWrapper
-                  value={requirementsState}
-                  onChange={handleChangeRequirements}
-                  theme="snow"
-                />
+                {
+                  requirementsState && (
+                    <Tiptap
+                      onChange={handleChangeRequirements}
+                      content={requirementsState}
+                    />
+                  )
+                }
+                {/* <p>{ requirementsState }</p> */}
+
+                {/* <p>{ requirementsState }</p> */}
               </div>
               <button
                 type={role !== "ADMIN_ROLE" ? "button" : "submit"}
@@ -442,4 +462,6 @@ const UpdateService = () => {
 // };
 
 export default UpdateService;
+
+
 

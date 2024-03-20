@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styles from "../styles/client/LoginPage.module.css";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import ForgetAccountByDni from "../components/dashboard/clients/ForgetAccountByDni";
+import ActivateAccountEmployee from "../components/forms/ActivateAccountEmployee";
 
 const ForgetPassForm = dynamic(() =>
   import("../components/dashboard/clients/ForgetPassForm").then(
@@ -31,6 +33,11 @@ const ArrowBackIosNewIcon = dynamic(() =>
 
 const LoginPage = () => {
   const [showForgetPasswordForm, setShowForgetPasswordForm] = useState(false);
+  const [showLoginForm, setshowLoginForm] = useState(true);
+  const [showForgetByEmail, setShowForgetByEmail] = useState(false);
+  const [showForgetByDni, setShowForgetByDni] = useState(false);
+  const [showActivateAccount, setShowActivateAccount] = useState(false);
+
   const router = useRouter();
   return (
     <>
@@ -61,15 +68,44 @@ const LoginPage = () => {
             </span>
           </div>
           <Paper elevation={2} className={styles.formPaper}>
-            {showForgetPasswordForm ? (
+            {showLoginForm && (
+              <LoginClient
+                setShowForgetPasswordForm={setShowForgetByEmail}
+                setShowForgetByDni={setShowForgetByDni}
+                setShowLoginForm={setshowLoginForm}
+                setShowActivateAccount={setShowActivateAccount}
+              />
+            )}
+            {showForgetByEmail && (
               <ForgetPassForm
+                setShowForgetByDni={setShowForgetByDni}
+                setShowForgetByEmail={setShowForgetByEmail}
+                setShowLoginForm={setshowLoginForm}
                 setShowForgetPasswordForm={setShowForgetPasswordForm}
               />
+            )}
+            {showForgetByDni && (
+              <ForgetAccountByDni
+                setShowForgetByDni={setShowForgetByDni}
+                setShowForgetByEmail={setShowForgetByEmail}
+                setShowLoginForm={setshowLoginForm}
+                setShowForgetPasswordForm={setShowForgetPasswordForm}
+              />
+            )}
+            {showActivateAccount && (
+              <ActivateAccountEmployee
+                setShowLoginForm={setshowLoginForm}
+                setShowActivateAccount={setShowActivateAccount}
+              />
+            )}
+
+            {/* {showForgetPasswordForm ? (
+              
             ) : (
               <LoginClient
                 setShowForgetPasswordForm={setShowForgetPasswordForm}
               />
-            )}
+            )} */}
           </Paper>
         </div>
         <Footer />
@@ -79,3 +115,5 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+

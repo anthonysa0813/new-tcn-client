@@ -1,4 +1,5 @@
 import "../styles/globals.css";
+import { Suspense } from "react";
 import type { AppProps } from "next/app";
 import UserContextProvider from "../context/UserContext";
 import { NextUIProvider } from "@nextui-org/react";
@@ -18,6 +19,7 @@ import WithAutoReload from "../components/autoreaload/WithAutoReload";
 import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
 import SelectEmployeeContextProvider from "../context/selectUser";
 import { CurrentRegisterInfoProvider } from "../context/CurrentRegisterInfo";
+import { FacebookPixelEvents } from "../components/meta/meta-pixel";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const middlewares = [myMiddleware];
@@ -115,6 +117,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                           />
                           <meta name="theme-color" content="#ffffff"></meta>
                         </Head>
+                        <Suspense fallback={null}>
+                          <FacebookPixelEvents />
+                        </Suspense>
                         <Component {...pageProps} />
                       </NextUIProvider>
                     </CurrentRegisterInfoProvider>
@@ -130,5 +135,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export default MyApp;
+
 
 

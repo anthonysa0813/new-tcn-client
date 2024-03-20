@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import { UserResponse } from "../../interfaces";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import HomeIcon from "@mui/icons-material/Home";
 
 const Image = dynamic(() => import("next/image").then((res) => res.default));
 
@@ -81,16 +82,19 @@ const AsideDash = () => {
     Cookies.remove("token");
     Cookies.remove("auth");
     Cookies.remove("status");
+    // localStorage.clear();
+    localStorage.clear();
+
     sessionStorage.clear();
     sessionStorage.removeItem("auth");
-    router.push("/admin");
+    router.push("/admin/login");
   };
 
   return (
     <>
       <aside className={styles.aside}>
         <div
-          className={styles.boxIcon}
+          className={`${styles.boxIcon} cursor-pointer`}
           onClick={() => {
             setShowMenu((state) => !state);
           }}
@@ -98,7 +102,7 @@ const AsideDash = () => {
           {showMenu ? (
             <>
               <Image
-                src="/images/logos/logocontact.jpeg"
+                src="https://res.cloudinary.com/da0d2neas/image/upload/v1710485097/logocontact-removebg-preview.png"
                 alt="Logo de Contact bpo"
                 width={150}
                 height={70}
@@ -136,6 +140,21 @@ const AsideDash = () => {
                 </span>
               </Link>
             </Tooltip> */}
+            <Tooltip title="Crear Nuevo Puesto" arrow placement="right">
+              <Link
+                href="/admin"
+                className={pathActive("admin") ? styles.activeLink : ""}
+              >
+                <HomeIcon />
+
+                <span
+                  className={`${showMenu ? styles.textBlock : styles.textNone}`}
+                >
+                  {" "}
+                  Home
+                </span>
+              </Link>
+            </Tooltip>
             <Tooltip title="Crear Nuevo Puesto" arrow placement="right">
               <Link
                 href="/admin/newService"
@@ -264,15 +283,18 @@ const AsideDash = () => {
               </Link>
             </Tooltip>
           </nav>
-          <div className={styles.profile}>
+          <div
+            className={`${styles.profile} px-3 py-2 rounded-lg text-white font-semibold bg-slate-700 hover:bg-slate-950 transition ease`}
+            onClick={outSession}
+          >
             <h4
               onClick={outSession}
-              className={`${showMenu ? styles.TextBlock : styles.textNone}`}
+              className={`${showMenu ? styles.TextBlock : styles.textNone} `}
             >
-              Salir
+              Logout
             </h4>
 
-            <LogoutIcon onClick={outSession} />
+            <LogoutIcon />
           </div>
         </div>
       </aside>
@@ -281,3 +303,4 @@ const AsideDash = () => {
 };
 
 export default AsideDash;
+

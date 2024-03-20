@@ -15,6 +15,7 @@ import { EmployeeApi } from "../../apis/employee";
 import { TokenContext } from "../../context/CurrentToken";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const Head = dynamic(() => import("next/head").then((res) => res.default));
 
@@ -81,11 +82,34 @@ const ApplicationsPage = () => {
       </Head>
       <LayoutEmployee name="aplicaciones de trabajo">
         <div className={styles.wrapper}>
-          {applicationsState.length > 0 && <h4 className="text-3xl my-3">Mis Postulaciones</h4>}
+          {applicationsState.length > 0 && (
+            <h4 className="text-3xl my-3">Mis Postulaciones</h4>
+          )}
 
           <div className={styles.applicationsGrid}>
             {applicationsState.length === 0 && (
-              <h3>No tienes postulaciones abiertas</h3>
+              <div className="md:h-[50vh] w-full bg-sky-50 p-3 rounded-lg grid grid-cols-4 gap-2">
+                <div className="md:col-span-2 col-span-full flex items-center justify-center">
+                  <Image
+                    src="https://res.cloudinary.com/da0d2neas/image/upload/v1710483912/users.png"
+                    height={200}
+                    width={200}
+                    alt="empty"
+                    className="md:w-56 w-32 h-32 md:h-56 rounded-full object-contain"
+                  />
+                </div>
+                <div className="md:col-span-2 col-span-full flex items-center flex-col text-center md:text-left justify-center">
+                  <span className="md:text-4xl text-2xl  font-bold text-blue-500">
+                    No haz aplicado a ningún puesto
+                  </span>
+                  <Link
+                    href="/employee/campaign"
+                    className="px-3 py-2 rounded-lg text-center bg-slate-950 text-white font-semibold mt-4 md:self-start hover:bg-yellow-500 hover:text-slate-950 transition ease "
+                  >
+                    Ver Puestos Disponibles
+                  </Link>
+                </div>
+              </div>
             )}
             {applicationsState.map((service: Service, index) => {
               return (
@@ -104,3 +128,4 @@ const ApplicationsPage = () => {
 };
 
 export default ApplicationsPage;
+

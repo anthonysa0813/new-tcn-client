@@ -7,6 +7,7 @@ import styles from "../../styles/admin/Login.module.css";
 import { loginFetchApi } from "../../helpers/useFetch";
 import { UserContext } from "../../context/UserContext";
 import Cookies from "js-cookie";
+
 import { useRouter } from "next/router";
 import { TokenContext } from "../../context/CurrentToken";
 const BeatLoader = dynamic(() =>
@@ -75,26 +76,20 @@ const LoginAdminFormComponent = ({ setShowForgetPass }: Prop) => {
           setLoading(false);
           toastWarning(res.message);
         } else {
-          const { token, user } = res;
-          console.log({ res });
-          setUserGlobal(user);
-          setPrivateToken({ token });
-          const expirationDate = new Date();
-          expirationDate.setTime(expirationDate.getTime() + 30 * 60 * 1000); //
-          // localStorage.setItem("auth", JSON.stringify(user));
-          // sessionStorage.setItem("token", token);
-          Cookies.set("token", token, { expires: expirationDate });
-          Cookies.set("auth", JSON.stringify(user), {
-            expires: expirationDate,
-          });
-	   Cookies.set("status", "true", {
-            expires: expirationDate,
-          });
-          toastSuccess("Bienvenido...");
-          if (token && Boolean(Object.keys(user).length > 0)) {
-            router.push("/admin/listServices");
-            setShowLoading(false);
-          }
+            const { token, user } = res;
+            console.log({ res });
+            setUserGlobal(user);
+            setPrivateToken({ token });
+            const expirationDate = new Date();
+            expirationDate.setTime(expirationDate.getTime() + 30 * 60 * 1000); //
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("status", "true");
+            toastSuccess("Bienvenido...");
+            if (token && Boolean(Object.keys(user).length > 0)) {
+              router.push("/admin");
+              setShowLoading(false);
+            }
         }
       });
       setShowLoading(true);
@@ -196,3 +191,4 @@ const LoginAdminFormComponent = ({ setShowForgetPass }: Prop) => {
 };
 
 export default LoginAdminFormComponent;
+

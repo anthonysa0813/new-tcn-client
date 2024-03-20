@@ -1,28 +1,37 @@
 import React, { useEffect, useState, useContext } from "react";
 import dynamic from "next/dynamic";
-import Navbar from "../../../components/menu/Navbar";
-import { Router, useRouter } from "next/router";
+// import Navbar from "../../../components/menu/Navbar";
+import { useRouter } from "next/router";
 const Head = dynamic(() => import("next/head").then((res) => res.default));
 import styles from "../../../styles/jobs/JobByIdStyles.module.css";
 import { ServiceApi } from "../../../apis/services";
 import { ServiceI } from "../../../interfaces";
 import { GetServerSideProps } from "next";
+
+import { ToastContainer, toast } from "react-toastify";
+import { EmployeeApi } from "../../../apis/employee";
+import { TokenContext } from "../../../context/CurrentToken";
+import { Button, Text } from "@nextui-org/react";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import Link from "next/link";
+import Navbar from "../../../components/menu/Navbar";
 import {
   EmployeeContext,
   EmployeeContextProps,
 } from "../../../context/EmployeeContext";
-import { ToastContainer, toast } from "react-toastify";
-import { EmployeeApi } from "../../../apis/employee";
-import { TokenContext } from "../../../context/CurrentToken";
-import { Button, Grid, Text } from "@nextui-org/react";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import Link from "next/link";
+
+import Cookies from "js-cookie";
+import Image from "next/image";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+
 
 interface Prop {
-  id: string;
+  slug: string;
 }
 
-const PageByJob = ({ id }: Prop) => {
+const PageByJob = ({ slug }: Prop) => {
   const { query, back, push } = useRouter();
   const [jobState, setJobState] = useState({} as ServiceI);
   const { employeeGlobal, setEmployeeGlobal } =
@@ -30,16 +39,19 @@ const PageByJob = ({ id }: Prop) => {
   const { privateToken, setPrivateToken } = useContext(TokenContext);
 
   useEffect(() => {
-    if (id) {
-      ServiceApi.get(`${id}`).then((res) => {
+    if (slug) {
+      ServiceApi.get(`/slug/${slug}`).then((res) => {
         console.log(res);
         setJobState(res.data);
       });
     }
-  }, [id]);
+  }, [slug]);
 
   const applicationJob = async (idJob: string = "") => {
     if (!employeeGlobal.id) {
+      const expirationDate = new Date();
+      expirationDate.setTime(expirationDate.getTime() + 30 * 60 * 1000); //
+      Cookies.set("idJob", idJob, { expires: expirationDate });
       const notify = () => toast.error("Necesitas de una cuenta registrada");
       notify();
       setTimeout(() => {
@@ -79,21 +91,21 @@ const PageByJob = ({ id }: Prop) => {
   return (
     <>
       <Head>
-        <title>Contact BPO | {jobState.title}</title>
+        <title>Contact Americas | {jobState.title}</title>
         <meta
           name="description"
-          content="Puestos de trabajo disponibles con relación a Contact BPO."
+          content="Puestos de trabajo disponibles con relación a Contact Americas."
         />
         <meta property="og:title" content={`${jobState.title || ""}`} />
         <meta property="og:type" content="website" />
         <meta
           property="og:description"
-          content="Explora oportunidades laborales emocionantes y descubre tu próximo paso profesional en Contact BPO "
+          content="Explora oportunidades laborales emocionantes y descubre tu próximo paso profesional en Contact Americas "
         />
         <meta property="og:url" content="https://work.contactamericas.com/" />
         <meta
           property="og:image"
-          content="https://res.cloudinary.com/da0d2neas/image/upload/v1694022571/grupo-personas-trabajando-plan-negocios-oficina_1_f3megn.jpg"
+          content="https://res.cloudinary.com/da0d2neas/image/upload/v1709087979/Imagen_TCN.png"
         />
       </Head>
       <Navbar />
@@ -127,8 +139,8 @@ const PageByJob = ({ id }: Prop) => {
               </Link>
               <h1>{jobState.title}</h1>
               <div className="flex items-center gap-2">
-                <span>Remoto</span>
-                <span>- Jornada Completa</span>
+                <span>{jobState.type}</span>
+                <span>- {jobState.typeJob}</span>
               </div>
             </div>
 
@@ -145,57 +157,146 @@ const PageByJob = ({ id }: Prop) => {
         </div>
       </section>
       <main className="wrapper">
-        <div className={styles.details}>
-          <h2>Detalles:</h2>
-          <div className={styles.infoContainer}>
-            <p dangerouslySetInnerHTML={{ __html: jobState.description }}></p>
+        <div className="flex lg:flex-nowrap flex-wrap md:gap-10 md:w-[90%]">
+          <div className="">
+            <div className={styles.details}>
+              <h2 className="text-2xl font-semibold text-blue-900">
+                Detalles:
+              </h2>
+              <div className={styles.infoContainer}>
+                <p
+                  dangerouslySetInnerHTML={{ __html: jobState.description }}
+                ></p>
+              </div>
+              <h2 className="text-2xl font-semibold text-blue-900">
+                Requerimientos:
+              </h2>
+              <div className={styles.infoContainer}>
+                <p
+                  dangerouslySetInnerHTML={{ __html: jobState.requirements }}
+                ></p>
+              </div>
+            </div>
+            <div className="">
+              <Text size={18}>
+                ¿Aún tienes dudas? Puedes preguntarnos en nuestro canal de
+                WhatsApp.
+              </Text>
+              <Link
+                href={
+                  `https://wa.me/${
+                    jobState.localCurrency == "PEN"
+                      ? `51${jobState.whatsapp}`
+                      : `1${jobState.whatsapp}`
+                  }?text=${encodeURIComponent(
+                    `¡Hola! Quiero postular al puesto ${jobState.title}`
+                  )}` || ""
+                }
+                target="_blank"
+              >
+                <button
+                  type="button"
+                  className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-700 transition ease flex items-center gap-2"
+                >
+                  <WhatsAppIcon />
+                  <span className="font-semibold">WhatsApp</span>
+                </button>
+              </Link>
+            </div>
+            <div className="my-5 ">
+              <div className="flex items-center gap-3 flex-wrap">
+                <div className="p-2 rounded-lg border-blue-500 border-2 text-blue-500 font-semibold">
+                  <span>
+                    {" "}
+                    {jobState.localCurrency == "PEN" ? "S/" : "$"}
+                    {jobState.salary}
+                  </span>
+                </div>
+                <div className="p-2 rounded-lg border-blue-500 border-2 text-blue-500 font-semibold">
+                  <span>{jobState.schedule}</span>
+                </div>
+                <div className="p-2 rounded-lg border-blue-500 border-2 text-blue-500 font-semibold">
+                  <span>{jobState.type}</span>
+                </div>
+                <div className="p-2 rounded-lg border-blue-500 border-2 text-blue-500 font-semibold ">
+                  <span>{jobState.typeJob}</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <h2>Requerimientos:</h2>
-          <div className={styles.infoContainer}>
-            <p dangerouslySetInnerHTML={{ __html: jobState.requirements }}></p>
-          </div>
-        </div>
-        <div className="">
-          <Text size={18}>
-            ¿Aún tienes dudas? Puedes preguntarnos en nuestro canal de WhatsApp.
-          </Text>
-          <Link
-            href={
-              `https://wa.me/${
-                jobState.localCurrency == "PEN"
-                  ? `51${jobState.whatsapp}`
-                  : `1${jobState.whatsapp}`
-              }?text=${encodeURIComponent(
-                `¡Hola! Quiero postular al puesto ${jobState.title}`
-              )}` || ""
-            }
-            target="_blank"
-          >
-            <button
-              type="button"
-              className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-700 transition ease flex items-center gap-2"
-            >
-              <WhatsAppIcon />
-              <span className="font-semibold">WhatsApp</span>
-            </button>
-          </Link>
-        </div>
-        <div className="mt-5">
-          <div className="flex items-center gap-3 flex-wrap">
-            <div className="p-2 rounded-lg border-blue-500 border-2 text-blue-500 font-semibold">
-                <span>  {jobState.localCurrency == "PEN" ? "S/" : "$"}
-                  {jobState.salary}</span>
-          </div>
-        <div className="p-2 rounded-lg border-blue-500 border-2 text-blue-500 font-semibold">
-                <span>{jobState.schedule}</span>
-          </div>
-	 <div className="p-2 rounded-lg border-blue-500 border-2 text-blue-500 font-semibold">
-                <span>{jobState.type}</span>
-          </div>
-   	  <div className="p-2 rounded-lg border-blue-500 border-2 text-blue-500 font-semibold ">
-                <span>{jobState.typeJob}</span>
-          </div>
-            
+          <div className="md:w-full lg:mt-10 mb-10">
+            <div className="flex flex-wrap gap-2   ">
+              <div className="">
+                <Image
+                  src={
+                    "https://res.cloudinary.com/da0d2neas/image/upload/v1710720358/410854940_778548617623857_5433103938503023123_n.jpg"
+                  }
+                  alt={""}
+                  width={700}
+                  height={600}
+                  className="w-40 h-40 aspect-video object-cover rounded-md md:w-full lg:w-44 lg:h-44"
+                />
+              </div>
+              <div className="">
+                <Image
+                  src={
+                    "https://res.cloudinary.com/da0d2neas/image/upload/v1710720362/410795412_778548584290527_4184241231428360036_n.jpg"
+                  }
+                  alt={""}
+                  width={700}
+                  height={600}
+                  className="w-40 h-40 aspect-video object-cover rounded-md md:w-full lg:w-44 lg:h-44"
+                />
+              </div>
+              <div className="">
+                <Image
+                  src={
+                    "https://res.cloudinary.com/da0d2neas/image/upload/v1710720354/420143824_794859459326106_3381224388367741244_n.jpg"
+                  }
+                  alt={""}
+                  width={400}
+                  height={300}
+                  className="w-40 h-40 aspect-auto rounded-md md:w-full lg:w-44 lg:h-44"
+                />
+              </div>
+              <div className="">
+                <Image
+                  src={
+                    "https://res.cloudinary.com/da0d2neas/image/upload/v1710720350/426126555_810125367799515_4321708370018438253_n.jpg"
+                  }
+                  alt={""}
+                  width={500}
+                  height={400}
+                  className="w-40 h-40 aspect-video object-cover rounded-md md:w-full  lg:w-44 lg:h-44"
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-4 mt-2 ">
+              <a
+                href="https://www.facebook.com/ContactBPO"
+                target="_blank"
+                className="flex items-center gap-1 text-sm hover:text-blue-500 transition ease"
+              >
+                <FacebookIcon />
+                {/* <span>Facebook</span> */}
+              </a>
+              <a
+                href="https://www.instagram.com/contactbpo/"
+                target="_blank"
+                className="flex items-center hover:text-rose-500  transition ease  gap-1 text-sm"
+              >
+                <InstagramIcon />
+                {/* <span>Instagram</span> */}
+              </a>
+              <a
+                href="https://www.linkedin.com/company/contactamericas/"
+                target="_blank"
+                className="flex items-center gap-1 text-sm hover:text-blue-700  transition ease"
+              >
+                <LinkedInIcon />
+                {/* <span>Linkedln</span> */}
+              </a>
+            </div>
           </div>
         </div>
       </main>
@@ -204,15 +305,16 @@ const PageByJob = ({ id }: Prop) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { id } = ctx.params as { id: string };
-  console.log({ id });
+  const { slug } = ctx.params as { slug: string };
+  // console.log({ slug });
 
   return {
     props: {
-      id,
+      slug,
     },
   };
 };
 
 export default PageByJob;
+
 

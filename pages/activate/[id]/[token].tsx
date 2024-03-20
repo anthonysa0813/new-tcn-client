@@ -33,10 +33,9 @@ const ActivateAccountPage = () => {
     }
 
     const idJob = Cookies.get("idJob");
-
-
     if (idJob) {
-      applyJobIfExistId(idJob);
+      console.log("idJob", idJob);
+      applyJobIfExistId(idJob)
     }
    
   }, [id]);
@@ -44,11 +43,12 @@ const ActivateAccountPage = () => {
 
   const applyJobIfExistId = async (idJob: string) => {
 
-    await EmployeeApi.post("/employees/status-job", {
-      idEmployee: id,
-      idService: idJob,
-      status: "",
-     });
+    // await EmployeeApi.post("/employees/status-job", {
+    //   idEmployee: id,
+    //   idService: idJob,
+    //   status: "",
+    // });
+    console.log(`${process.env.NEXT_PUBLIC_DB_URL}/employees/${id}/${idJob}`);
     fetch(
       `${process.env.NEXT_PUBLIC_DB_URL}/employees/${id}/${idJob}`,
       {
@@ -60,7 +60,7 @@ const ActivateAccountPage = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        // console.log({data});
+        console.log({data});
         if (data.message) {
           const notifyError = () => toast.error(data.message);
           notifyError();
@@ -105,4 +105,5 @@ const ActivateAccountPage = () => {
 };
 
 export default ActivateAccountPage;
+
 

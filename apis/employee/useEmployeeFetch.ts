@@ -2,6 +2,7 @@ import {
   ChangeStatusRequest,
   RequestResetPassword,
   RequestSendNewPassword,
+  RequestSendNewPasswordByDni,
 } from "../../interfaces";
 
 // http://localhost:5050/api/knoledge/?hability=Desarrollador front-end
@@ -92,6 +93,25 @@ export const sendEmailToNewPassword = async (
   const dataResponse = await response.json();
   return dataResponse;
 };
+
+export const sendEmailToNewPasswordByDni = async (
+  endpoint: string,
+  data: RequestSendNewPasswordByDni
+) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_DB_URL}/${endpoint}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
+  const dataResponse = await response.json();
+  return dataResponse;
+};
+
 
 export const resetPassword = async (
   endpoint: string,

@@ -58,20 +58,48 @@ export interface EmployeeInterface {
   cv?: any;
   callingCode?: string;
   typeJob?: string;
-  service?: string[] | [];
+  service?: ServiceInterface[] | [];
   servicesId?: string[] | [];
   password: string;
   message?: string;
   linkedin?: string;
   github?: string;
   confirmPassword?: string;
+  address?: string;
+  birthday?: string;
   district?: string;
   statusJob?: string;
+  findSocial?: string;
+  findUssocial?: string;
   dni?: string;
   languages?: LangObject[] | [];
   experiences?: Experience[] | [];
   skills?: any;
+  createdAt?: string;
 }
+
+export interface ServiceInterface {
+  _id: string,
+  title: string,
+  schedule: string,
+  salary: string,
+  description: string,
+  requirements: string,
+  status: boolean,
+  localCurrency: string,
+  type: string,
+  typeJob: string,
+  slug: string,
+  supervisor: string,
+  whatsapp: string,
+  modalSalary: boolean,
+  employees: EmployeeInterface[] | [],
+  createdAt: string,
+  updatedAt: string,
+  __v: number,
+  modalConfirm: boolean
+}
+
 
 export interface ChangeStatusRequest {
   idEmployee: string;
@@ -177,6 +205,10 @@ export interface KnoledgeInterface {
 
 export interface RequestSendNewPassword {
   email: string;
+}
+
+export interface RequestSendNewPasswordByDni {
+  dni: string;
 }
 
 export interface RequestResetPassword {

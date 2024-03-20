@@ -80,14 +80,14 @@ const ServiceCard = ({ service }: Prop) => {
     if (service.modalSalary && !service.modalConfirm) {
       setOptionShowModal("1");
       setExistModal(true);
-      console.log({ ...service, stateShow: "1" });
+      // console.log({ ...service, stateShow: "1" });
     } else if (!service.modalSalary && service.modalConfirm) {
       setOptionShowModal("2");
       setExistModal(true);
-      console.log({ ...service, stateShow: "2" });
+      // console.log({ ...service, stateShow: "2" });
     } else if (service.modalSalary && service.modalConfirm) {
       setOptionShowModal("3");
-      console.log({ ...service, stateShow: "3" });
+      // console.log({ ...service, stateShow: "3" });
       setExistModal(true);
     } else {
       // setOptionShowModal("");
@@ -143,11 +143,19 @@ const ServiceCard = ({ service }: Prop) => {
       status: "",
     });
 
+    await EmployeeApi.post("/spamJob/create-spam-job", {
+      employee: employeeGlobal.id,
+      service: idJob,
+      isSpam: false,
+    }).then((res) => {
+      console.log({spamJob: res});
+    })
+
     if (existModal) {
       setVisible(true);
     }
-    // if (showModalSalaryByUser) {
-    // }
+    if (showModalSalaryByUser) {
+    }
 
     fetch(
       `${process.env.NEXT_PUBLIC_DB_URL}/employees/${employeeId}/${idJob}`,
@@ -179,7 +187,7 @@ const ServiceCard = ({ service }: Prop) => {
         }
       })
       .catch((err) => console.error(err));
-      };
+  };
 
   const handleSubmitSalary = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -210,7 +218,7 @@ const ServiceCard = ({ service }: Prop) => {
         if (showModalConfirmSalary) {
           setShowModalConfirmSalary(true);
         }
-        console.log(data);
+        // console.log(data);
         if (data.error) {
           const notifyError = () =>
             toast.error("Ouch!, inténtalo más tarde...");
@@ -255,7 +263,7 @@ const ServiceCard = ({ service }: Prop) => {
         }
         console.log(data);
         if (data.error) {
-          console.log(data);
+          // console.log(data);
           const notifyError = () =>
             toast.error("Ouch!, inténtalo más tarde...");
           notifyError();
@@ -643,5 +651,6 @@ const ServiceCard = ({ service }: Prop) => {
 };
 
 export default ServiceCard;
+
 
 

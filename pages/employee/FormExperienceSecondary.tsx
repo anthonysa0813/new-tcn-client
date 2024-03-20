@@ -58,7 +58,7 @@ const initialCurrent = {
 interface Prop {
   openExperience?: () => void;
   dataListExperiences?: Experience[] | [];
-  setDataListExperiences: React.Dispatch<SetStateAction<[] | Experience[]>>;
+  setDataListExperiences?: React.Dispatch<SetStateAction<[] | Experience[]>>;
   editMode?: boolean;
   currentExperience?: Experience;
   setEditMode?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -213,7 +213,9 @@ const FormExperienceSecondary: NextPage<Prop> = ({
           router.reload();
           notifySuccess("Se ha actualizado la experiencia.");
           setIsLoading(false);
-          setDataListExperiences([...dataListExperiences, res]);
+          if (setDataListExperiences) {
+              setDataListExperiences([...(dataListExperiences ?? []), res]);
+          }
           // setTimeout(() => {
           //   openExperience();
           // }, 2000);
@@ -232,7 +234,9 @@ const FormExperienceSecondary: NextPage<Prop> = ({
         .then((res: any) => {
           notifySuccess("Se ha guardado la experiencia...");
           setIsLoading(false);
-          setDataListExperiences([...dataListExperiences, res]);
+          if (setDataListExperiences) {
+            setDataListExperiences([...dataListExperiences, res]);
+          }
           setTimeout(() => {
             // openExperience();
             router.reload();
@@ -563,21 +567,29 @@ const FormExperienceSecondary: NextPage<Prop> = ({
         </div>
         <div className={styles.fieldTextArea}>
           <h5>Descripción del puesto:</h5>
-          <TextareaAutosize
+          {/* <TextareaAutosize
             maxRows={4}
 	    className="border border-gray-700"
             style={{ width: "100%", padding: ".54rem", minHeight: "100px" }}
             {...getFieldProps("descriptionJob")}
-          />
+          /> */}
+          <textarea
+            {...getFieldProps("descriptionJob")}
+            id=""
+            className="w-full border-2 border-blue-950 p-3"
+          ></textarea>
           {errors.descriptionJob && touched.descriptionJob && (
             <span className="text-danger ">{errors.descriptionJob} </span>
           )}
         </div>
       </div>
-<button type="submit" className="px-3 py-2 rounded-lg bg-blue-700 hover:bg-blue-900 text-white rounded-lg flex justify-center items-center">
-         {isLoading ? <BeatLoader color="#fff" /> : "Guardar"}
-</button>
-    {/*  <Button variant="contained" disableElevation type="submit">
+      <button
+        type="submit"
+        className="px-3 py-2 rounded-lg bg-blue-700 hover:bg-blue-900 text-white rounded-lg flex justify-center items-center"
+      >
+        {isLoading ? <BeatLoader color="#fff" /> : "Guardar"}
+      </button>
+      {/*  <Button variant="contained" disableElevation type="submit">
         {isLoading ? <BeatLoader color="#fff" /> : "Guardar"}
       </Button> */}
     </form>
@@ -585,3 +597,5 @@ const FormExperienceSecondary: NextPage<Prop> = ({
 };
 
 export default FormExperienceSecondary;
+
+

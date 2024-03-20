@@ -30,9 +30,10 @@ export const TokenContextProvider = ({ children }: ChildrenType) => {
 
   useEffect(() => {
     const cookieToken = Cookies.get("token");
-    if (cookieToken) {
+    const cokkieTokenFromLocalStorage = localStorage.getItem("token");
+    if (cokkieTokenFromLocalStorage) {
       // const tokenSecret = sessionStorage.getItem("token");
-      setPrivateToken({ token: cookieToken || "" });
+      setPrivateToken({ token: cokkieTokenFromLocalStorage || "" });
     }
   }, []);
 
@@ -42,3 +43,4 @@ export const TokenContextProvider = ({ children }: ChildrenType) => {
     </TokenContext.Provider>
   );
 };
+

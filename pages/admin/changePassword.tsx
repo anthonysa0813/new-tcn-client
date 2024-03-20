@@ -84,15 +84,15 @@ const ChangePassword = () => {
             />
           </div>
           <div className={styles.fieldButton}>
-            {/* <button type="submit">Editar</button> */}
-            <Button
+            <button type="submit" className="px-3 py-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-700 transition ease">Editar</button>
+            {/* <Button
               color="primary"
               sx={{ width: "100%" }}
               variant="contained"
               type="submit"
             >
               Editar
-            </Button>
+            </Button> */}
           </div>
         </form>
       </LayoutDashboard>
@@ -101,3 +101,4 @@ const ChangePassword = () => {
 };
 
 export default ChangePassword;
+

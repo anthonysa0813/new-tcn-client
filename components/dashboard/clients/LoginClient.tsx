@@ -1,3 +1,4 @@
+
 import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import styles from "../../../styles/client/LoginPage.module.css";
 import { useFormik } from "formik";
@@ -12,9 +13,13 @@ import {
 import { loginFetchApi } from "../../../helpers/useFetch";
 import dynamic from "next/dynamic";
 import { TokenContext } from "../../../context/CurrentToken";
+import InfoIcon from "@mui/icons-material/Info";
 
 interface Prop {
   setShowForgetPasswordForm: Dispatch<SetStateAction<boolean>>;
+  setShowForgetByDni: Dispatch<SetStateAction<boolean>>;
+  setShowLoginForm: Dispatch<SetStateAction<boolean>>;
+  setShowActivateAccount: Dispatch<SetStateAction<boolean>>;
 }
 
 const Visibility = dynamic(() =>
@@ -47,13 +52,21 @@ const OutlinedInput = dynamic(() =>
 const TextField = dynamic(() =>
   import("@mui/material/TextField").then((res) => res.default)
 );
+const Tooltip = dynamic(() =>
+  import("@mui/material/Tooltip").then((res) => res.default)
+);
 
 const BeatLoader = dynamic(() =>
   import("react-spinners/BeatLoader").then((res) => res.default)
 );
 const Link = dynamic(() => import("next/link").then((res) => res.default));
 
-const LoginClient = ({ setShowForgetPasswordForm }: Prop) => {
+const LoginClient = ({
+  setShowForgetPasswordForm,
+  setShowForgetByDni,
+  setShowLoginForm,
+  setShowActivateAccount,
+}: Prop) => {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -96,7 +109,7 @@ const LoginClient = ({ setShowForgetPasswordForm }: Prop) => {
             Cookies.set("employee", JSON.stringify(res.employee), {
               expires: expirationDate,
             });
-	     Cookies.set("status", JSON.stringify(res.employee.status), {
+            Cookies.set("status", JSON.stringify(res.employee.status), {
               expires: expirationDate,
             });
             setEmployeeGlobal(res.employee);
@@ -112,7 +125,10 @@ const LoginClient = ({ setShowForgetPasswordForm }: Prop) => {
       });
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Debe de ser un email").required("Requerido").lowercase(),
+      email: Yup.string()
+        .email("Debe de ser un email")
+        .required("Requerido")
+        .lowercase(),
       password: Yup.string().required("Requerido"),
     }),
   });
@@ -124,7 +140,7 @@ const LoginClient = ({ setShowForgetPasswordForm }: Prop) => {
     });
   };
 
-const lowercaseEmail = getFieldProps("email").value.toLowerCase();
+  const lowercaseEmail = getFieldProps("email").value.toLowerCase();
 
   return (
     <>
@@ -137,11 +153,11 @@ const lowercaseEmail = getFieldProps("email").value.toLowerCase();
           <TextField
             id="outlined-basic"
             label="Email"
-	   type="email"
+            type="email"
             variant="outlined"
             size="small"
             {...getFieldProps("email")}
-	    className="lowercase"
+            className="lowercase"
           />
           {errors.email && touched.email && (
             <span className="text-red-500 ">{errors.email} </span>
@@ -176,14 +192,35 @@ const lowercaseEmail = getFieldProps("email").value.toLowerCase();
         <div className={styles.field}>
           <span
             className={styles.textSm}
-            onClick={() => setShowForgetPasswordForm(true)}
+            onClick={() => {
+              setShowLoginForm(false);
+              setShowForgetPasswordForm(true);
+            }}
           >
             olvidé mi contraseña
           </span>
         </div>
+        <div className={styles.field}>
+          <span
+            className="text-sm text-slate-600 hover:text-blue-500 transition ease cursor-pointer"
+            onClick={() => {
+              setShowForgetPasswordForm(false);
+              setShowForgetByDni(false);
+              setShowLoginForm(false);
+              setShowActivateAccount(true);
+            }}
+          >
+            Activar mi cuenta
+          </span>
+        </div>
 
         <div className={styles.field}>
-          <Button color="primary" variant="contained" type="submit" className=" hover:text-white bg-blue-500 text-white">
+          <Button
+            color="primary"
+            variant="contained"
+            type="submit"
+            className=" hover:text-white bg-blue-500 text-white"
+          >
             Entrar
           </Button>
         </div>
@@ -206,3 +243,5 @@ const lowercaseEmail = getFieldProps("email").value.toLowerCase();
 };
 
 export default LoginClient;
+
+

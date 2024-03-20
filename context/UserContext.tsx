@@ -1,3 +1,4 @@
+"use client";
 import {
   createContext,
   Dispatch,
@@ -32,8 +33,11 @@ const UserContextProvider = ({ children }: ChildrenType) => {
 
   useEffect(() => {
     const authValue = Cookies.get("auth");
-    if (authValue) {
-      const auth: UserResponse = JSON.parse(authValue);
+    
+    const authValueFromLocalStorage = localStorage.getItem("user");
+  
+    if (authValueFromLocalStorage) {
+      const auth: UserResponse = JSON.parse(authValueFromLocalStorage);
       setUserGlobal(auth);
     }
   }, []);
@@ -46,3 +50,4 @@ const UserContextProvider = ({ children }: ChildrenType) => {
 };
 
 export default UserContextProvider;
+

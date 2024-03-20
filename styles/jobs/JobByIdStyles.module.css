@@ -56,6 +56,22 @@
   font-size: 20px;
 }
 
+.infoContainer ul li::before {
+  content: "\2022";
+  color: var(--bg-blueSecondary500);
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.infoContainer ul li {
+  display: flex;
+  gap: 0.5rem;
+}
+
+
+
 @media (min-width: 768px) {
   .infoHero h1 {
     font-size: 2.5rem;
@@ -67,3 +83,4 @@
     /* border: 2px solid brown; */
   }
 }
+

@@ -33,36 +33,6 @@ const CampaignEmployees = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const accessToken = 'TfMpUlxJ62UurAnGV56Cq7RczQMlg5ffdF4Zw1wsqx7NxogeFzg4HiwQ8vvE';
-const dniNumber = '70502697'; // Reemplaza con el número de DNI que desees consultar
-
-// Construir la URL de la solicitud con el número de DNI
-const apiUrl = `https://api.peruapis.com/v1/dni?document=${dniNumber}`;
-
-// Configurar la solicitud GET
-const requestOptions = {
-  method: 'GET',
-  headers: {
-    'Authorization': `Bearer ${accessToken}`,
-  },
-};
-
-// Realizar la solicitud utilizando fetch
-fetch(apiUrl, requestOptions)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(data => {
-    //console.log('Respuesta de la API:', data);
-  })
-  .catch(error => {
-    console.error('Error al realizar la solicitud:', error.message);
-  });
-
-
     fetch(`${API_URL}/services`)
       .then((res) => {
         return res.json();
@@ -125,21 +95,21 @@ fetch(apiUrl, requestOptions)
               ) : (
                 <div className={"text-3xl"}>
 		  
-                  <h3>No tenemos puestos disponibles por el momento</h3>
+      <h3>No tenemos puestos disponibles por el momento</h3>
 		  <p className="font-semibold tex-2xl text-gray-500 mt-2">Te invitamos a seguirnos en nuestras redes sociales para mantenerte siempre al tanto</p>
 		  <div className="flex items-center gap-4 mt-2 ">
-		    <a href="https://www.facebook.com/ContactBPO" target="_blank" className="flex items-center gap-1 text-sm hover:text-blue-500 transition ease">
-		    	<FacebookIcon />
-			<span>Facebook</span>
-		    </a>
-		     <a  href="https://www.instagram.com/contactbpo/" target="_blank" className="flex items-center hover:text-rose-500  transition ease  gap-1 text-sm">
-			<InstagramIcon />
-			<span>Instagram</span>
-		    </a>
+          <a href="https://www.facebook.com/ContactBPO" target="_blank" className="flex items-center gap-1 text-sm hover:text-blue-500 transition ease">
+            <FacebookIcon />
+            <span>Facebook</span>
+          </a>
+		      <a  href="https://www.instagram.com/contactbpo/" target="_blank" className="flex items-center hover:text-rose-500  transition ease  gap-1 text-sm">
+            <InstagramIcon />
+            <span>Instagram</span>
+		      </a>
      			<a  href="https://www.linkedin.com/company/contactamericas/" target="_blank" className="flex items-center gap-1 text-sm hover:text-blue-700  transition ease">
-                          <LinkedInIcon />
-			  <span>Linkedln</span>
-                        </a>  
+            <LinkedInIcon />
+			      <span>Linkedln</span>
+          </a>  
 		  </div>
   		     <a href="https://contactamericas.com/" className="cursor-pointer flex items-center gap-1 text-sm mt-5" >   
 		       <ArrowBackIosIcon />
@@ -164,3 +134,4 @@ fetch(apiUrl, requestOptions)
   );
 };
 export default CampaignEmployees;
+

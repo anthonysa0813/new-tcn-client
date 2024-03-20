@@ -585,12 +585,12 @@ const RegisterExperience: NextPage<Prop> = ({
         </div>
         <div className={styles.fieldTextArea}>
           <h5>Descripción del puesto:</h5>
-          <TextareaAutosize
+          {/* <TextareaAutosize
             maxRows={4}
             className="border border-gray-700"
             style={{ width: "100%", padding: ".54rem", minHeight: "100px" }}
             {...getFieldProps("descriptionJob")}
-          />
+          /> */}
           {errors.descriptionJob && touched.descriptionJob && (
             <span className="text-danger ">{errors.descriptionJob} </span>
           )}

@@ -201,12 +201,12 @@ const RegisterForm = ({ setActiveModalRegisterDone }: Prop) => {
         loginFetchApi("auth/employee/login", {
           email: email,
           password: password,
-        }).then((res) => {
+        }).then((res: any) => {
           if (res.employee) {
             const expirationDate = new Date();
             expirationDate.setTime(expirationDate.getTime() + 30 * 60 * 1000); //
             setCurrentToken(res.token);
-            console.log("res.employee", res.employee.id);
+            // console.log("res.employee", res.employee.id);
             setIdEmployee(res.employee.id);
             Cookies.set("token", res.token, { expires: expirationDate });
             Cookies.set("employee", JSON.stringify(res.employee), {
@@ -345,7 +345,7 @@ const RegisterForm = ({ setActiveModalRegisterDone }: Prop) => {
         >
           <div className={styles.wrapper}>
             <p className="text-gray-700">
-              llena el formulario, postula y mantén el seguimiento a tus
+              Llena el formulario, postula y mantén el seguimiento a tus
               postulaciones.
             </p>
             <div className={styles.formContent}>
@@ -551,7 +551,7 @@ const RegisterForm = ({ setActiveModalRegisterDone }: Prop) => {
               <div className={styles.buttonField}>
                 <div className="w-full col-span-2">
                   <InputLabel id="demo-multiple-name-label">
-                    ¿De dónde viene?
+                    ¿Cómo te enteraste de nosotros?
                   </InputLabel>
                   <select
                     id="social"
@@ -604,5 +604,6 @@ const RegisterForm = ({ setActiveModalRegisterDone }: Prop) => {
 };
 
 export default RegisterForm;
+
 
 

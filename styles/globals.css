@@ -45,7 +45,7 @@ html {
 
 /* add icon in the list type ul li before the content */
 
-ul li::before {
+/* ul li::before {
   content: "\2022";
   color: var(--bg-blueSecondary500);
   font-weight: bold;
@@ -53,6 +53,11 @@ ul li::before {
   width: 1em;
   margin-left: -1em;
 }
+
+ul li {
+  display: flex;
+  gap: 0.5rem;
+} */
 
 
 
@@ -210,3 +215,4 @@ input:focus {
     width: auto;
   }
 }
+

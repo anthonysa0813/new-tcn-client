@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import styles from "../../../styles/client/LoginPage.module.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { sendEmailToNewPassword } from "../../../apis/employee/useEmployeeFetch";
+import { sendEmailToNewPassword, sendEmailToNewPasswordByDni } from '../../../apis/employee/useEmployeeFetch';
 import { toast, ToastContainer } from "react-toastify";
 import dynamic from "next/dynamic";
 interface Prop {
@@ -16,11 +16,6 @@ const ArrowBackIosNewIcon = dynamic(() =>
   import("@mui/icons-material/ArrowBackIosNew").then((res) => res.default)
 );
 
-//import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-const ArrowNextIosIcon = dynamic(() =>
-  import("@mui/icons-material/ArrowForwardIos").then((res) => res.default)
-);
-
 const Button = dynamic(() =>
   import("@mui/material/Button").then((res) => res.default)
 );
@@ -29,21 +24,24 @@ const TextField = dynamic(() =>
   import("@mui/material/TextField").then((res) => res.default)
 );
 
-const ForgetPassForm = ({
+const ForgetAccountByDni = ({
   setShowForgetPasswordForm,
   setShowLoginForm,
   setShowForgetByEmail,
   setShowForgetByDni
+
 }: Prop) => {
   const toastAlertNotExistEmail = () => toast.error("El email no existe");
   const toastAlertSuccess = () =>
     toast.success("hemos enviado un mensaje a tu correo...");
   const { handleSubmit, errors, touched, getFieldProps } = useFormik({
     initialValues: {
-      email: "",
+      dni: "",
     },
     onSubmit: (values) => {
-      sendEmailToNewPassword("employees/forget-password", values).then(
+      sendEmailToNewPasswordByDni("employees/forget-password/dni", {
+        dni: values.dni
+      }).then(
         (res) => {
           console.log("res", res, values);
           // localStorage.setItem("email", values.email);
@@ -54,56 +52,42 @@ const ForgetPassForm = ({
           }
         }
       );
+
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Debe de ser un email").required("Requerido"),
+      dni: Yup.string().required("Requerido"),
     }),
   });
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <div className="flex justify-between items-center">
-        <div
-          className={styles.menu}
-          onClick={() => {
-            setShowLoginForm((state) => !state);
-            setShowForgetPasswordForm((state) => !state);
-            setShowForgetByEmail((state) => !state);
-          }}
-        >
-          <span>
-            <ArrowBackIosNewIcon />
-            Volver
-          </span>
-        </div>
-        <div
-          className={styles.menu}
-          onClick={() => {
-            setShowLoginForm(false);
-            setShowForgetPasswordForm(false);
-            setShowForgetByEmail(false);
-            setShowForgetByDni(true);
-          }}
-        >
-          <span className="text-sm">
-            <ArrowNextIosIcon />
-            Recuperar por DNI
-          </span>
-        </div>
+      <div
+        className={styles.menu}
+        onClick={() => {
+          setShowLoginForm(false);
+          setShowForgetPasswordForm(false);
+          setShowForgetByEmail(true);
+          setShowForgetByDni(false);
+        }}
+      >
+        <span>
+          <ArrowBackIosNewIcon />
+          atrás
+        </span>
       </div>
-      <h4>Restauración de contraseña</h4>
-      <p>Te enviaremos los siguientes pasos a tu correo</p>
+      <h4>Restauración de contraseña por DNI</h4>
+      <p>Escribe tu dni y te enviaremos al correo asociado los siguientes pasos:</p>
       <ToastContainer />
       <div className={styles.field}>
         <TextField
           id="outlined-basic"
-          label="Email"
+          label="DNI:"
           variant="outlined"
           size="small"
-          {...getFieldProps("email")}
+          {...getFieldProps("dni")}
         />
-        {errors.email && touched.email && (
-          <span className="text-red-500 ">{errors.email} </span>
+        {errors.dni && touched.dni && (
+          <span className="text-red-500 ">{errors.dni} </span>
         )}
       </div>
 
@@ -121,5 +105,5 @@ const ForgetPassForm = ({
   );
 };
 
-export default ForgetPassForm;
+export default ForgetAccountByDni;
 

@@ -19,6 +19,7 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Link from "next/link";
 
 import { useRouter } from "next/router";
+import TableListStaticData2 from "../../../components/dashboard/clients/TableListStaticData2";
 
 
 
@@ -188,44 +189,49 @@ const ListUsersByPositionJobPage = ({ id }: Prop) => {
         <div className="flex items-center justify-between gap-5">
           <div className="mb-10">
             <div className="flex gap-8 items-center justify-between mb-10">
-              <h1 className="text-2xl font-semibold">{servicesEmployees.title}</h1>
-              <div className="flex items-center gap-2">
-            <Button
-              size={"xs"}
-              style={{ padding: ".5rem" }}
-              color={servicesEmployees.status ? "success" : "error"}
-              onClick={() => changeStatusService(servicesEmployees)}
-              className={`${
-                servicesEmployees.status
-                  ? "bg-green-500 text-white"
-                  : "bg-red-500 text-white"
-              }`}
-            >
-              {" "}
-              {servicesEmployees.status ? "Activo" : "Finalizado"}
+              <div className="">
+                <h1 className="md:text-2xl text-sm font-semibold">
+                  {servicesEmployees.title}
+                </h1>
+                <span>ID: {servicesEmployees._id}</span>
+              </div>
+              <div className="flex items-center flex-wrap gap-2">
+                <Button
+                  size={"xs"}
+                  style={{ padding: ".5rem" }}
+                  color={servicesEmployees.status ? "success" : "error"}
+                  onClick={() => changeStatusService(servicesEmployees)}
+                  className={`${
+                    servicesEmployees.status
+                      ? "bg-green-500 text-white"
+                      : "bg-red-500 text-white"
+                  }`}
+                >
+                  {" "}
+                  {servicesEmployees.status ? "Activo" : "Finalizado"}
                 </Button>
-            <Link href={`/admin/${servicesEmployees._id}/updateService`}>
-              <Button
-                size={"xs"}
-                style={{ padding: ".5rem" }}
-                color={"warning"}
-                className="bg-yellow-500 text-white"
-                onClick={() => console.log("editando")}
-              >
-                {" "}
-                Editar Puesto
-              </Button>
+                <Link href={`/admin/${servicesEmployees._id}/updateService`}>
+                  <Button
+                    size={"xs"}
+                    style={{ padding: ".5rem" }}
+                    color={"warning"}
+                    className="bg-yellow-500 text-white"
+                    onClick={() => console.log("editando")}
+                  >
+                    {" "}
+                    Editar Puesto
+                  </Button>
                 </Link>
-                 <Button
-              size={"xs"}
-              style={{ padding: ".5rem" }}
-              color={"error"}
-              className="bg-red-500 text-white"
-              onClick={() => setInfoJob(servicesEmployees.title)}
-            >
-              {" "}
-              Eliminar Puesto
-            </Button>
+                <Button
+                  size={"xs"}
+                  style={{ padding: ".5rem" }}
+                  color={"error"}
+                  className="bg-red-500 text-white"
+                  onClick={() => setInfoJob(servicesEmployees.title)}
+                >
+                  {" "}
+                  Eliminar Puesto
+                </Button>
               </div>
             </div>
             <Dropdown>
@@ -248,7 +254,7 @@ const ListUsersByPositionJobPage = ({ id }: Prop) => {
               </Dropdown.Menu>
             </Dropdown>
           </div>
-          <div className="flex items-center gap-5">
+          <div className="flex items-center flex-wrap gap-5">
             <button
               className="py-2 text-sm px-3 rounded-md text-white font-semibold bg-slate-800 hover:bg-slate-950 transition ease hover:cursor-pointer"
               onClick={() => generateExcelFile(currentDataByFilter)}
@@ -265,7 +271,7 @@ const ListUsersByPositionJobPage = ({ id }: Prop) => {
             </button>
           </div>
         </div>
-        <TableListStaticData
+        <TableListStaticData2
           data={currentDataByFilter || []}
           idService={servicesEmployees._id || ""}
           offsetSliceValue={servicesEmployees.employees?.length || 5}
@@ -290,4 +296,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 export default ListUsersByPositionJobPage;
+
 

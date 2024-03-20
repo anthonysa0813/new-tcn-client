@@ -39,9 +39,9 @@ const Navbar = () => {
   const router = useRouter();
   const logout = () => {
     setEmployeeGlobal({} as EmployeeInterface);
-    // localStorage.removeItem("countries");
-    // localStorage.removeItem("employee");
-    // localStorage.removeItem("email");
+    localStorage.removeItem("countries");
+    localStorage.removeItem("employee");
+    localStorage.removeItem("email");
     Cookies.remove("token");
     Cookies.remove("employee");
     Cookies.remove("status");
@@ -116,3 +116,4 @@ const Navbar = () => {
 // };
 
 export default Navbar;
+
